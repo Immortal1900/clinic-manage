@@ -32,27 +32,27 @@ const EditPersonDetails =(props)=> {
   
 
   const initState= async()=>{
-    console.log(props);
+    console.log(props.personDetails?.uId);
     setpersonDetails((personDetails)=>({...personDetails,
-       uid:myprops.personDetails.uId,
-       address: myprops.personDetails.address,
-       amount:myprops.personDetails.amount,
-       age: myprops.personDetails.age,
-       birthdate: myprops.personDetails.birthdate,
-       bloodgroup: myprops.personDetails.bloodgroup,
-       city: myprops.personDetails.city,
-       email: myprops.personDetails.email,
-       firstName: myprops.personDetails.firstName,
-       imageUrl: myprops.personDetails.imageUrl,
-       lastName: myprops.personDetails.lastName,
-       pNo: myprops.personDetails.pNo,
-       gender: myprops.personDetails.gender,
-       state: myprops.personDetails.state,
-       zip: myprops.personDetails.zip,
+       uid:myprops.personDetails?.uId,
+       address: myprops.personDetails?.address,
+       amount:myprops.personDetails?.amount,
+       age: myprops.personDetails?.age,
+       birthdate: myprops.personDetails?.birthdate,
+       bloodgroup: myprops.personDetails?.bloodgroup,
+       city: myprops.personDetails?.city,
+       email: myprops.personDetails?.email,
+       firstName: myprops.personDetails?.firstName,
+       imageUrl: myprops.personDetails?.imageUrl,
+       lastName: myprops.personDetails?.lastName,
+       pNo: myprops.personDetails?.pNo,
+       gender: myprops.personDetails?.gender,
+       state: myprops.personDetails?.state,
+       zip: myprops.personDetails?.zip,
        collectionName: myprops.collectionName,
 }))
 setinitialized(()=>true);
-updatePersonData(personDetails);
+
   }
   
     const onEdit = (event)=>{
@@ -61,7 +61,10 @@ updatePersonData(personDetails);
       setpersonDetails((personDetails)=>({...personDetails,[name]:value}))
     }
 
-
+const updatePers=()=>{
+  console.log("CAKKKKKKKKKKEd");
+  updatePersonData(personDetails);
+}
 
     return  (
       <div className="editpersondetailspage">
@@ -87,6 +90,7 @@ updatePersonData(personDetails);
         // date={personDetails.date}
         // handleChange={this.handleChange}
           personDetails={personDetails}
+          update={updatePers}
           setpersonDetails={setpersonDetails}
         //profileHtmlelEment={personDetails.profileHtmlelEment}
         //onImageRemove={this.onImageRemove}

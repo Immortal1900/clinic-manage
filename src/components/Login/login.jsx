@@ -71,6 +71,7 @@ class LoginPage extends Component {
                       type="email"
                       placeholder="admin@example.com"
                       onChange={this.onEdit}
+       
                       autocomplete="off"
                       required
                     />
@@ -78,6 +79,7 @@ class LoginPage extends Component {
                       class="form-control form-control-lg"
                       type="password"
                       placeholder="123456"
+              
                       name="password"
                       onChange={this.onEdit}
                       required

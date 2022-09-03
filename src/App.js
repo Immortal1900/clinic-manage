@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import SideNavBar from "./components/sideNavBar";
-import firebase from "./firebase";
+
 import LoginPage from "./components/Login/login";
 import { setLogInDetails } from "./actions/setpersondetailsaction";
 import { connect } from "react-redux";
@@ -11,29 +11,16 @@ class App extends Component {
     this.state = {
       user: null,
     };
-    this.authListener = this.authListener.bind(this);
   }
-  componentDidMount() {
-    this.authListener();
-  }
-  authListener() {
-    firebase.auth().onAuthStateChanged((user) => {
-      console.log(user);
-      if (user) {
-        const loginDetails = { isLoggedIn: true };
-        this.setState({ user });
-        this.props.setOnLogInDetails(loginDetails);
-        // localStorage.setItem("user", user.uid);
-      } else {
-        this.setState({ user: null });
-        // localStorage.removeItem("user");
-      }
-    });
-  }
+
+
   render() {
     return (
       <div className="App">
-        { true /*this.props.loginDetails.isLoggedIn */ ? <SideNavBar /> : <LoginPage />}
+        {  
+        // this.props.loginDetails.isLoggedIn 
+        true
+        ? <SideNavBar /> : <LoginPage />}
       </div>
     );
   }

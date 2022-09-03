@@ -24,9 +24,11 @@ import { getSpecified } from '../../Service/fetch';
   useEffect (()=>{
 
     const fetchData = async ()=> {
-      const data = await getSpecified()
-      .then((res)=>{console.log(res)
-      setlist(res);}
+      const data = await getSpecified().then((res)=>{
+        console.log(res)
+        console.log("RESPONSE IS",res)
+      setlist(res);
+    }
       ).
       catch((e)=>{console.log(e)})  ;
     }

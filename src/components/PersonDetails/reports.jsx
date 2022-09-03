@@ -13,19 +13,19 @@ class Reports extends Component {
     };
   }
   componentDidMount() {
-    console.log(this.props.reportDetails);
-    if (this.props.reportDetails.deathreportid !== "") {
-      this.fetchDeathReport();
-    }
-    if (this.props.reportDetails.birthreportid !== "") {
-      this.fetchBirthReport();
-    }
-    if (this.props.reportDetails.operationreportid !== "") {
-      this.fetchOperationReport();
-    }
-    if (this.props.reportDetails.bedallotementid !== "") {
-      this.fetchBedAllotmentDetais();
-    }
+ //   console.log(this.props.reportDetails);
+ //   if (this.props.reportDetails.deathreportid !== "") {
+ //     this.fetchDeathReport();
+ //   }
+ //   if (this.props.reportDetails.birthreportid !== "") {
+ //     this.fetchBirthReport();
+ //   }
+ //   if (this.props.reportDetails.operationreportid !== "") {
+ //     this.fetchOperationReport();
+ //   }
+ //   if (this.props.reportDetails.bedallotementid !== "") {
+ //     this.fetchBedAllotmentDetais();
+ //   }
   }
   async fetchDeathReport() {
     const fetchedDataList = await Service.getDataWithoutLimit(

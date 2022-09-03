@@ -32,7 +32,7 @@ useEffect(()=>{
           <hr />
           <div className="row">
             <div className="col-sm-8 first_section">
-              <form onSubmit={null}>
+              <form>
                 <div className="form-row">
                   <div className="col-md-6 mb-3">
                     <label htmlFor="validationDefault01">First name</label>
@@ -229,7 +229,7 @@ useEffect(()=>{
                   ></textarea>
                 </div>
 
-                <button className="btn btn-success update_btn" type="submit">
+                <button className="btn btn-success update_btn" type="button"  onClick={props.update}>
                   Update
                 </button>
               </form>
@@ -263,7 +263,7 @@ useEffect(()=>{
           </div>
           {props.personDetails.collectionName === "patients" ? (
             <div className="thrid_section">
-              <Reports personDetails={props.personDetails}></Reports>
+   {/* <Reports personDetails={props.personDetails}></Reports>  */}
             </div>
           ) : null}
         </div>

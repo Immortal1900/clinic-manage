@@ -8,8 +8,7 @@ import "./dailogboses.css";
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
-
-export default function FormPrompt(props) {
+const FormPrompt=(props)=> {
   return (
     <Dialog
       className="dialogBox"
@@ -51,3 +50,4 @@ export default function FormPrompt(props) {
     </Dialog>
   );
 }
+export default FormPrompt;

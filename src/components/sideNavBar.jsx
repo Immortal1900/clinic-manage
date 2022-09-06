@@ -116,7 +116,23 @@ class SideNavBar extends Component {
           <div className="sidebar">
             <div className="noSubCat">
               <ul>
-                <Link to="/">
+             
+            
+                <Link to="/patientlist">
+                  <li
+                    className={
+                      this.state.selectedCat === "Patient" ? "active" : ""
+                    }
+                    onClick={() => this.setTitleActive("Patient")}
+                  >
+                    <span className="icon">
+                      <i className="fa fa-user" aria-hidden="true"></i>
+                    </span>
+                    <span className="title">User</span>
+                  </li>
+                </Link>
+{/* 
+                   <Link to="/">
                   <li
                     className={
                       this.state.selectedCat === "Dashboard" ? "active" : ""
@@ -129,19 +145,7 @@ class SideNavBar extends Component {
                     <span className="title">Dashboard</span>
                   </li>
                 </Link>
-                <Link to="/patientlist">
-                  <li
-                    className={
-                      this.state.selectedCat === "Patient" ? "active" : ""
-                    }
-                    onClick={() => this.setTitleActive("Patient")}
-                  >
-                    <span className="icon">
-                      <i className="fa fa-user" aria-hidden="true"></i>
-                    </span>
-                    <span className="title">Patient</span>
-                  </li>
-                </Link>
+
                 <Link to="/doctorslist">
                   <li
                     className={
@@ -212,12 +216,12 @@ class SideNavBar extends Component {
                     </span>
                     <span className="title">Receptionist</span>
                   </li>
-                </Link>
+                </Link> */}
               </ul>
             </div>
             <hr />
 
-            <div className="withsubcat">
+            {/* <div className="withsubcat">
               <div className="maincat">
                 <ul>
                   <li onClick={this.toggleTitle}>
@@ -357,13 +361,13 @@ class SideNavBar extends Component {
 
                 <hr />
               </div>
-            </div>
+            </div> */}
           </div>
 
           <div className="main_container">
             <Switch>
               <Route exact path="/">
-                <Dashboard />
+                <PatienList />
               </Route>
               <Route path="/patientlist">
                 <PatienList />
@@ -377,7 +381,7 @@ class SideNavBar extends Component {
                 <EditPersonDetails />
               </Route>
 
-              <Route path="/doctorslist">
+              {/* <Route path="/doctorslist">
                 <DoctorsLis />
               </Route>
               <Route path="/bedlist">
@@ -432,7 +436,7 @@ class SideNavBar extends Component {
               </Route>
               <Route path="/payrolllist">
                 <PayrollList />
-              </Route>
+              </Route> */}
               <Redirect to="" />
             </Switch>
           </div>

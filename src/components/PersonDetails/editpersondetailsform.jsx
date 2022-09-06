@@ -32,7 +32,7 @@ useEffect(()=>{
           <hr />
           <div className="row">
             <div className="col-sm-8 first_section">
-              <form>
+              <form onSubmit={props.update}>
                 <div className="form-row">
                   <div className="col-md-6 mb-3">
                     <label htmlFor="validationDefault01">First name</label>
@@ -146,6 +146,7 @@ useEffect(()=>{
                       id="validationDefault03"
                       value={props.personDetails.pNo}
                       onChange={props.onEdit}
+                      required
                     />
                   </div>
                 </div>
@@ -229,7 +230,7 @@ useEffect(()=>{
                   ></textarea>
                 </div>
 
-                <button className="btn btn-success update_btn" type="button"  onClick={props.update}>
+                <button className="btn btn-success update_btn" type="submit"  >
                   Update
                 </button>
               </form>

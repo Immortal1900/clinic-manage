@@ -13,46 +13,65 @@ import ConfirmDialogBox from "../DailogBoxes/confirmdailogbox";
 import ErorrDialogBox from "../DailogBoxes/errordaologbox";
 import Service from "../../Service/firebase";
 import  { useState, useEffect } from 'react';
-import { getSpecified } from '../../Service/fetch';
+import { getSearchedData, getSpecified } from '../../Service/fetch';
+import { useLocation } from 'react-router-dom'
+import { Button } from "@material-ui/core";
 
- const PatienList= ()=> {
+ const PatienList= (props)=> {
   const [list,setlist] = useState([]);
   const [count,setcount] = useState(0);
   const mycount = 0;
+  const [totalitem,setTotalItem] = useState();
+  const location = useLocation()
+  const myprops = location?.state;
+  const [searchitem,setSearchitem] = useState("");
+  const [searched, setSearchClicked] = useState(false);
+
+
+
+  
 
 
   useEffect (()=>{
 
-    const fetchData = async ()=> {
-      const data = await getSpecified().then((res)=>{
-        console.log(res)
-        console.log("RESPONSE IS",res)
-      setlist(res);
-    }
-      ).
-      catch((e)=>{console.log(e)})  ;
-    }
+
     console.log(" RAN ONCE");
     
    
     fetchData();
   },[])
 
+  const fetchData = async ()=> {
+    const data = await getSpecified().then((res)=>{
+      console.log(res)
+      setTotalItem(()=>res.length)
+      console.log("RESPONSE IS",res)
+    setlist(res);
+  }
+    ).
+    catch((e)=>{console.log(e)})  ;
+  }
+
   const countNumbering=()=>{
     console.log("CALLEd");
    // setcount((count)=>(count +1));
     mycount++;
   }
+const getSearchedItem=()=>{
+  console.log("SREARCH")
+  console.log(searchitem);
+  setSearchClicked(()=>true);
+  getSearchedData(searchitem).then((res)=>{
+    console.log(res);
+    setlist(()=>res);
+  })
 
+}
 
   return (
  
     <div className="patientlistpage">
-      
     <div className="main_section">
-
-      
-
       <div className="topheader">
         <ul>
           <li>
@@ -75,36 +94,57 @@ import { getSpecified } from '../../Service/fetch';
                 <input
                   type="text"
                   className="searchTerm"
+                  name="search"
                   placeholder="Search patient by full name"
-              
+                  value={ searchitem}
+                  onChange={(e)=>setSearchitem((e.target.value))}
           
                 />
 
                 <button
-          
+                onClick={()=>getSearchedItem()}
                   type="submit"
                   className="searchButton"
                 >
                   <i className="fa fa-search"></i>
+
+                
                 </button>
               </div>
             </li>
             <li style={{ fontSize: "12px" }}> #</li>
             <li tyle={{ fontSize: "12px" }}>
-   length
+  {totalitem}
               
               {" "}
             </li>
           </ul>
+
+          {searched == true ? <button className="btn btn-info" onClick={()=>{
+  setSearchClicked(false);
+  window.location.reload();
+}}> See All </button> : null }
+
         </div>
 
-        <button
+<Link to={{pathname: "addpatient",
+                    state:{  
+                      showmodal: true,
+                   
+                    }
+                    
+                    }}  >
+<button
           type="button"
           className="btn btn-warning"
         
         >
           + Add Patient
         </button>
+</Link>
+
+
+       
       </div>
       <table className="table table-striped">
         <thead className="thead tablehead">
@@ -114,12 +154,10 @@ import { getSpecified } from '../../Service/fetch';
             <th scope="col">Name</th>
             <th scope="col">Sex</th>
             <th scope="col">Age</th>
-            <th scope="col">Blood Group</th>
             <th scope="col">Mobile</th>
             {/* <th scope="col">Email</th> */}
             <th scope="col">City</th>
             <th scope="col">Date</th>
-            <th scope="col">Amount</th>
             <th scope="col">Option</th>
           </tr>
         </thead>
@@ -149,26 +187,23 @@ import { getSpecified } from '../../Service/fetch';
                    {p?.firstName + " "+ p?.lastName} 
                         </td>
                         <td className="align-middle">
-                    {p?.gender}
+                    {p?.gender == "undefined" ? null : p?.gender}
                         </td>
                         <td className="align-middle">
-                    {p?.age}
+                       {p?.age == "und" ? null : p?.age}
                         </td>
-                        <td className="align-middle">
-                    {p?.gender}
-                        </td>
+                     
                         <td className="align-middle">
                     {p?.pNo +" " + p?.phone }
                         </td>
                         <td className="align-middle">
-                    {p?.city}
+           
+                    {p?.city == "undefined" ? null : p?.city}
                         </td>
                         <td className="align-middle">
                     {p?.createdTimeStamp}
                         </td>
-                        <td className="align-middle">
-                    {p?.amount}
-                        </td>
+                     
                  
                     <td className="align-middle">
                       <Link to={{pathname: "editpersondetails",

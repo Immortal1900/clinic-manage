@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import SideNavBar from "./components/sideNavBar";
-
+import "./App.css"
 import LoginPage from "./components/Login/login";
 import { setLogInDetails } from "./actions/setpersondetailsaction";
 import { connect } from "react-redux";

@@ -42,7 +42,7 @@ export function getSpecified(val, values) {
    
    
       }).then((res)=>{
-
+          console.log(res.txt);
           console.log(res.data[0].age);
           let data = res.data[0].age;
           return data;
@@ -58,20 +58,43 @@ export function getSpecified(val, values) {
 
     
 }
+export  async function  getSearchedData  (params) {
+  
+  // const ms = Date.now();
+  //   let res = await fetch(URLS.SEARCH + params,{
+  //     'Cache-Control': 'no-cache',
+  //     "Content-Type": "multipart/form-data" 
+  //   });
 
+  //   let json = await res.json();
+  //   console.log("JSON IS " , json);
+
+   
+      
+      return new Promise((resolve, reject) => {
+        axios({
+          method:'get',
+          url:URLS.SEARCH + params ,
+      }).then((res)=>{
+        console.log(res);
+        console.log(res.data);
+        let data = res.data
+          resolve(data);
+      }).catch((e)=>{
+          console.log(e)
+          reject(e);
+      })
+    })
+}
 
 export  async function  updatePersonData  (params) {
-  
   console.log("called",params);
   let formData = new FormData();    //formdata object
-
-
   for (var key in params) {
     if (params.hasOwnProperty(key)) {
         console.log(key + " -> " + params[key]);
     }
 }
-
   formData.append('firstName', params.firstName);   //append the values with key, value pair
   formData.append('lastName',params.lastName );
   formData.append('mrd', params.mrd);
@@ -80,25 +103,70 @@ export  async function  updatePersonData  (params) {
   formData.append('uId', params.uid);
   formData.append('gender', params.gender);
   formData.append('age', params.age);
+  formData.append('pNo', params.pNo);
 
 
+  
   return new Promise((resolve, reject) => {
     axios({
       method:'post',
       url: URLS.UPDATE_USER,
-      body: formData+"ASDAsD",
+      data: formData,
+      headers: { "Content-Type": "multipart/form-data" },
   }).then((res)=>{
       console.log(res);
-
       if(res.data == "success"){
         resolve(res.data);
       }
       else if(res.data == "error"){
         reject('error')
       }
-      else{
-        reject(res.data)
+    //  else{
+    //    reject(res.data)
+    //  }
+  }).catch((e)=>{
+      console.log(e)
+      reject(e);
+  })
+})
+
+
+}
+
+export  async function  addPersondetail  (params) {
+  console.log("DATA",params.firstname);
+  let formData = new FormData();    //formdata object
+  for (var key in params) {
+    if (params.hasOwnProperty(key)) {
+        console.log(key + " -> " + params[key]);
+    }
+}
+  formData.append('firstName', params.firstname);   //append the values with key, value pair
+  formData.append('lastName',params.lastname );
+  formData.append('mrd', params.mrd);
+  formData.append('city', params.city);
+  formData.append('email', params.email);
+  //formData.append('uId', params.uid);
+  formData.append('gender', params.sex);
+  formData.append('age', params.age);
+  formData.append('pNo', params.phonenumber);
+
+  return new Promise((resolve, reject) => {
+    axios({
+      method:'post',
+      url: URLS.ADD_USER,
+      data : formData,
+  }).then((res)=>{
+      console.log(res);
+      if(res.data == "success"){
+        resolve(res.data);
       }
+      else if(res.data == "error"){
+        reject('error')
+      }
+    //  else{
+    //    reject(res.data)
+    //  }
   }).catch((e)=>{
       console.log(e)
       reject(e);

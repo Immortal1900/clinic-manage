@@ -89,7 +89,7 @@ class NewPersonDetailsForm extends Component {
               autoComplete="off"
             /> */}
             </div>
-            <div className="col-md-6 mb-3">
+            {/* <div className="col-md-6 mb-3">
               <label htmlFor="validationDefault13">Blood Group</label>
               <select
                 name="bloodgroup"
@@ -109,14 +109,14 @@ class NewPersonDetailsForm extends Component {
                 <option>O-</option>
               </select>
 
-              {/* <input
+              <input
               name="bloodgroup"
               type="text"
               className="form-control"
               id="bloodgroup"
               onChange={this.props.onEdit}
-            /> */}
-            </div>
+            /> 
+            </div> */}
           </div>
 
           <div className="form-row">
@@ -128,6 +128,7 @@ class NewPersonDetailsForm extends Component {
                 className="form-control"
                 id="phonenumber"
                 onChange={this.props.onEdit}
+                required
               />
             </div>
           </div>
@@ -143,7 +144,7 @@ class NewPersonDetailsForm extends Component {
               />
             </div>
           </div>
-          <div className="form-row">
+          {/* <div className="form-row">
             <div className="col-md-12 mb-3">
               <label htmlFor="validationDefault05">Address</label>
               <input
@@ -154,7 +155,7 @@ class NewPersonDetailsForm extends Component {
                 onChange={this.props.onEdit}
               />
             </div>
-          </div>
+          </div> */}
           <div className="form-row">
             <div className="col-md-6 mb-3">
               <label htmlFor="validationDefault06">City</label>
@@ -166,6 +167,8 @@ class NewPersonDetailsForm extends Component {
                 onChange={this.props.onEdit}
               />
             </div>
+          </div>
+             {/*
             <div className="col-md-3 mb-3">
               <label htmlFor="validationDefault07">State</label>
               <select
@@ -190,9 +193,9 @@ class NewPersonDetailsForm extends Component {
                 onChange={this.props.onEdit}
               />
             </div>
-          </div>
+          </div> */}
 
-          <div className="form-group">
+          {/* <div className="form-group">
             <label htmlFor="validationDefault09">Remarks</label>
             <textarea
               name="remarks"
@@ -201,7 +204,7 @@ class NewPersonDetailsForm extends Component {
               onChange={this.props.onEdit}
               rows="3"
             ></textarea>
-          </div>
+          </div> */}
         </div>
 
         <div className="container">
@@ -231,7 +234,7 @@ class NewPersonDetailsForm extends Component {
             </div>
           </div>
         </div>
-        <button className="btn btn-success savebtn" type="submit">
+        <button className="btn btn-success savebtn" type="submit" >
           Save
         </button>
       </form>

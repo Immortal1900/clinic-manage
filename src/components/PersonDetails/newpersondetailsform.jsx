@@ -33,6 +33,16 @@ class NewPersonDetailsForm extends Component {
             </div>
           </div>
           <div className="form-row">
+          <div className="col-md-6 mb-3">
+          <label htmlFor="validationDefault06">Civil ID</label>
+              <input
+                name="civil_id"
+                type="text"
+                className="form-control"
+                id="civil_id"
+                onChange={this.props.onEdit}
+              />
+            </div>
             <div className="col-md-6 mb-3">
               <label htmlFor="validationDefault10">Sex</label>
               <select
@@ -48,7 +58,7 @@ class NewPersonDetailsForm extends Component {
                 <option>Other</option>
               </select>
             </div>
-            <div className="col-md-6 mb-3">
+            {/* <div className="col-md-6 mb-3">
               <label htmlFor="validationDefault11">Age</label>
               <input
                 name="age"
@@ -57,7 +67,7 @@ class NewPersonDetailsForm extends Component {
                 id="age"
                 onChange={this.props.onEdit}
               />
-            </div>
+            </div> */}
           </div>
 
           <div className="form-row">
@@ -69,15 +79,16 @@ class NewPersonDetailsForm extends Component {
                     padding: "0px 10px",
                     border: "1px solid rgb(197, 197, 197)",
                   }}
-                  name="birthdate"
+                  name="dob"
+                  id="dob"
                   className="  form-control"
                   InputProps={{
                     disableUnderline: true,
                   }}
-                  value={this.props.date}
-                  onChange={this.props.handleChange}
+                  value={this.props.dob}
+                  onChange={this.props.ondateChange}
                   autoComplete="off"
-                  format="MM/dd/yyyy"
+                  format="yyyy-MM-dd"
                 />
               </MuiPickersUtilsProvider>
               {/* <DatePicker
@@ -207,7 +218,7 @@ class NewPersonDetailsForm extends Component {
           </div> */}
         </div>
 
-        <div className="container">
+        {/* <div className="container">
           <div className="row second_section">
             <div className="clo-sm-6">
               <div className="profileimage">{this.props.htmlelement}</div>
@@ -233,7 +244,7 @@ class NewPersonDetailsForm extends Component {
               </button>
             </div>
           </div>
-        </div>
+        </div> */}
         <button className="btn btn-success savebtn" type="submit" >
           Save
         </button>

@@ -114,6 +114,9 @@
 .patientlistpage .main_section .table .tablebody th {
   line-height: 20px;
 }
+.float-left{
+  float: left;
+}
 
 .patientlistpage .main_section .table .tablebody .btn {
   width: 40px;
@@ -125,10 +128,21 @@
   margin: 0px 5px;
 }
 
+.align-middle{
+  text-align: left;
+}
+
 .patientlistpage .loadmoredatasection {
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  margin-right: 10px;
+}
+
+.patientlistpage .loadmoredatasections {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   margin-right: 10px;
 }
 .patientlistpage .loadmoredatasection .loadmoredataspinner {

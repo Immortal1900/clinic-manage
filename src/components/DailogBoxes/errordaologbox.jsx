@@ -12,13 +12,13 @@ const Transition = React.forwardRef(function Transition(props, ref) {
 });
 
 export default function ErorrDialogBox(props) {
-  const handleClose = () => {
-    props.onSetOpenDailog();
+  const handleClose = (e) => {
+    props.closedialog(e);
   };
 
   return (
     <Dialog
-      className="dialogBox"
+      className="dialogBox EEEEEEEEEEEEEEEEE"
       open={props.openDailog}
       TransitionComponent={Transition}
       keepMounted
@@ -31,11 +31,13 @@ export default function ErorrDialogBox(props) {
       </DialogTitle>
       <DialogContent>
         <DialogContentText id="alert-dialog-slide-description">
-          <span className="children">props.des</span>
+          <span style={{
+            color:"red"
+          }} className="children">{props.des}</span>
         </DialogContentText>
       </DialogContent>
       <DialogActions>
-        <button type="button" className="btn btn-success" onClick={handleClose}>
+        <button type="button" className="btn btn-danger" onClick={handleClose}>
           Ok
         </button>
       </DialogActions>

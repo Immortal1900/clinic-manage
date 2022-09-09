@@ -10,6 +10,9 @@ import { Link, useLocation } from 'react-router-dom'
 import { addPersondetail } from "../../Service/fetch"
 import AlertDialogBox from "../DailogBoxes/alertdailogbox";
 import { useHistory } from "react-router-dom";
+import { getAge } from "../../Service/helpers";
+import { changeFormat } from "../../Service/helpers";
+import ErorrDialogBox from "../DailogBoxes/errordaologbox";
 
 
 const AddPersonDetails =(props)=> {
@@ -21,7 +24,12 @@ const AddPersonDetails =(props)=> {
   });
   const [alerts,setalerts] = useState({
     dialog:false,
+ 
   })
+
+  const [msg,setMsg] = useState(
+  
+  )
     const [personDetails,setpersonDetails] = useState({
     
       // address:            '',
@@ -39,11 +47,12 @@ const AddPersonDetails =(props)=> {
       // state:               "",
       // zip:                 "",             
       //  collectionName:     "",
+      dob : changeFormat( new Date())
     });
   
 
     useEffect(()=>{
-
+      console.log(personDetails.dob);
       if(myprops != null && myprops != undefined ){
         if(myprops.showmodal == true){
           setModal((modal)=>({...modal,showModal:true}));
@@ -237,9 +246,21 @@ const AddPersonDetails =(props)=> {
     addPersondetail(personDetails).then((res)=>{
       console.log(res);
       if(res == "success"){
+        setMsg("success");
         setalerts((alerts)=>({...alerts,dialog:true}))
         console.log("Added successfully");
       }
+      else if(res =="phone exists"){
+        setMsg("phone_exists");
+       
+        setalerts((alerts)=>({...alerts,dialog:true}))
+      }
+      else if(res =="civi id exists"){
+        setMsg("civil_id_exists");
+      
+        setalerts((alerts)=>({...alerts,dialog:true}))
+      }
+      
       if(res == "already exists"){
         console.log("Already Exists");
       }
@@ -247,7 +268,7 @@ const AddPersonDetails =(props)=> {
       e.preventDefault();
     }
 
-
+  
 
     const closedialog=(e)=>{
       e.preventDefault();
@@ -263,13 +284,25 @@ const AddPersonDetails =(props)=> {
       setModal((modal)=>({...modal,showModal:false}))
       history.push("/patientlist");
       console.log(window.location.href);
-
     }
   
     const onEdit = (event)=>{
       console.log("CALLED")
       const { name, value } = event.target;
+      console.log(value);
       setpersonDetails((personDetails)=>({...personDetails,[name]:value}))
+    }
+    const ondateChange = (e)=>{
+      console.log(e);
+      let mydate =  new Date(e);
+      mydate = changeFormat(e)
+      console.log("MYDDATE" , mydate);
+      let age =  getAge(e);
+    
+        setpersonDetails((personDetails)=>({...personDetails,age:age}))
+
+      setpersonDetails((personDetails)=>({...personDetails,dob:mydate}))
+   
     }
 
     useEffect(()=>{
@@ -278,21 +311,35 @@ const AddPersonDetails =(props)=> {
 
 
 
+  const closeErrorSamepage=(e)=>{
+    e.preventDefault();
+    console.log("CLOSEING")
+    setalerts((alerts)=>({...alerts,dialog: false}));
 
+
+    console.log(window.location.href);
+  
+    
+  }
 
 
     return( <div className="addpersonpage">
         <div className="container main_section">
           <div className="row">
             <div className="col-md-6">
+
+
+
             <FormPrompt
             
             openDailog={modal.showModal}
             title="Add New User"
             onSetOpenDailog={closeModal}
             isCloseBtnAppear={true}
-            
             >
+
+
+{ msg == "success" ? 
               <AlertDialogBox
           openDailog={alerts.dialog}
           closedialog={closedialog}
@@ -303,11 +350,32 @@ const AddPersonDetails =(props)=> {
           title="Update"
           des="successfully updated"
         ></AlertDialogBox>
+:null}
+
+
+
+<ErorrDialogBox
+   openDailog={alerts.dialog}
+          closedialog={closeErrorSamepage}
+  
+         // setOpenDailog={setalerts}
+       //   onSetOpenDailog={setalerts}
+        destination = {"patientlist"}
+          title="Update"
+          des={msg}
+>
+</ErorrDialogBox>
+
+
+
 
 
             <NewPersonDetailsForm
                handleSubmit={addnewUser}
                 onEdit={onEdit}
+                ondateChange={ondateChange}
+                dob = {personDetails.dob}
+
                 // startDate={this.state.startDate}
               //  date={this.state.date}
               //  htmlelement={this.state.htmlelement}

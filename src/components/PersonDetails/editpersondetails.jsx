@@ -11,7 +11,7 @@ import { useEffect } from "react";
 import { Link, useLocation } from 'react-router-dom'
 import { updatePersonData } from "../../Service/fetch"; 
 import { useHistory } from "react-router-dom";
-
+import { getAge,changeFormat } from "../../Service/helpers";
 
 const EditPersonDetails =(props)=> {
 
@@ -49,7 +49,7 @@ const EditPersonDetails =(props)=> {
 
 
   const initState= async()=>{
-    console.log(props.personDetails?.uId);
+    console.log(props.personDetails?.dob);
 
     if(      personDetails != null    ){
       setpersonDetails((personDetails)=>({...personDetails,
@@ -57,8 +57,8 @@ const EditPersonDetails =(props)=> {
         address: myprops.personDetails?.address,
         amount:myprops.personDetails?.amount,
         age: myprops.personDetails?.age,
-        birthdate: myprops.personDetails?.birthdate,
-        bloodgroup: myprops.personDetails?.bloodgroup,
+        dob: myprops.personDetails?.dob,
+        civil_id: myprops.personDetails?.civil_id,
         city: myprops.personDetails?.city,
         email: myprops.personDetails?.email,
         firstName: myprops.personDetails?.firstName,
@@ -80,6 +80,19 @@ setinitialized(()=>true);
       console.log("CALLED")
       const { name, value } = event.target;
       setpersonDetails((personDetails)=>({...personDetails,[name]:value}))
+    }
+
+    const ondateChange = (e)=>{
+      console.log(e);
+      let mydate =  new Date(e);
+      mydate = changeFormat(e)
+      console.log("MYDDATE" , mydate);
+      let age =  getAge(e);
+    
+        setpersonDetails((personDetails)=>({...personDetails,age:age}))
+
+      setpersonDetails((personDetails)=>({...personDetails,dob:mydate}))
+   
     }
 
 const updatePers=(e)=>{
@@ -127,6 +140,7 @@ e.preventDefault();
          onEdit={onEdit}
         // date={personDetails.date}
         // handleChange={this.handleChange}
+        ondateChange={ondateChange}
           personDetails={personDetails}
           update={updatePers}
           setpersonDetails={setpersonDetails}

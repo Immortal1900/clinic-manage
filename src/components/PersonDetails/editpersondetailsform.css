@@ -9,13 +9,12 @@
   top: 50%;
   left: 50%;
 }
-.editd_person_details_formpage .main_section .topheader ul {
+.editd_person_details_formpage .main_section_edit .topheader ul {
   display: flex;
   align-items: center;
+  width: 100px;
 }
-.editd_person_details_formpage .main_section .topheader ul li {
-  margin-right: 5px;
-}
+
 .editd_person_details_formpage .main_section .topheader h5 {
   margin: auto;
 }
@@ -51,7 +50,10 @@
   position: absolute;
   z-index: -1;
 }
-
+.editd_person_details_formpage{
+  border: solid 1px lightgrey;
+  padding: 21px;
+}
 .editd_person_details_formpage .second_section .profileimage .netimage {
   height: 200px;
   width: 200px;

@@ -26,8 +26,8 @@ import { Button } from "@material-ui/core";
   const myprops = location?.state;
   const [searchitem,setSearchitem] = useState("");
   const [searched, setSearchClicked] = useState(false);
-
-
+  const [currenPage,setCurrentpage] = useState(1);
+  const [currentPageLength,setCurrentPageLength] = useState(0);
 
   
 
@@ -41,8 +41,8 @@ import { Button } from "@material-ui/core";
     fetchData();
   },[])
 
-  const fetchData = async ()=> {
-    const data = await getSpecified().then((res)=>{
+  const fetchData = async (page)=> {
+    const data = await getSpecified(currenPage).then((res)=>{
       console.log(res)
       setTotalItem(()=>res.length)
       console.log("RESPONSE IS",res)
@@ -57,13 +57,72 @@ import { Button } from "@material-ui/core";
    // setcount((count)=>(count +1));
     mycount++;
   }
+
+const prevPage= async(page)=>{
+  console.log("PREV PAGE");
+    setCurrentpage(()=>(currenPage-1))
+    if( searched ){
+      const data = await getSearchedData(searchitem , page).then((res)=>{
+        console.log(res)
+        setTotalItem(()=>res.length)
+        console.log("RESPONSE IS",res)
+      setlist(res);
+    }
+      ).
+      catch((e)=>{console.log(e)})  ;
+    }
+    else{
+      const data = await getSpecified(page).then((res)=>{
+        console.log(res)
+        setTotalItem(()=>res.length)
+        console.log("RESPONSE IS",res)
+      setlist(res);
+    }
+      ).
+      catch((e)=>{console.log(e)})  ;
+    }
+ 
+}
+const nextPage= async(page)=>{
+  console.log("NEXT PAGE");
+  setCurrentpage(()=>(currenPage+1))
+  if( searched ){
+    const data = await getSearchedData(searchitem , page).then((res)=>{
+      console.log(res)
+      setTotalItem(()=>res.length)
+      console.log(res.length);
+      console.log("RESPONSE IS",res)
+    setlist(res);
+  }
+    ).
+    catch((e)=>{console.log(e)})  ;
+  }
+  else{
+    const data = await getSpecified(page).then((res)=>{
+      console.log(res)
+      setTotalItem(()=>res.length);
+      console.log(res.length);
+      console.log("RESPONSE IS",res)
+    setlist(res);
+  }
+    ).
+    catch((e)=>{console.log(e)})  ;
+  }
+
+}
+
+
+
+
 const getSearchedItem=()=>{
   console.log("SREARCH")
   console.log(searchitem);
   setSearchClicked(()=>true);
-  getSearchedData(searchitem).then((res)=>{
+  setCurrentpage(()=>1);
+  getSearchedData(searchitem , currenPage).then((res)=>{
     console.log(res);
     setlist(()=>res);
+    setTotalItem(()=>res.length);
   })
 
 }
@@ -120,7 +179,7 @@ const getSearchedItem=()=>{
             </li>
           </ul>
 
-          {searched == true ? <button className="btn btn-info" onClick={()=>{
+          {searched == true ? <button className="btn btn-info float-left" onClick={()=>{
   setSearchClicked(false);
   window.location.reload();
 }}> See All </button> : null }
@@ -178,7 +237,7 @@ const getSearchedItem=()=>{
                 return (
                   <tr key={p}>
                     <td className="align-middle"  >
-                      {index+1}
+                      {((currenPage-1)*10+index) +1 }
                         </td>
                         <td className="align-middle">
                     {p?.imageUrl}
@@ -256,9 +315,16 @@ const getSearchedItem=()=>{
               })}
           </tbody>
         )}
-      </table>
 
- 
+    </table>
+
+    <div class="loadmoredatasections">
+    <div class="nomoredatatext"><button type="button" class="btn btn-warning" onClick={()=>prevPage(currenPage-1)} disabled={currenPage <= 1 ? true:false} >Previous</button>
+    </div>
+   
+      <div class="nomoredatatext"><button type="button" class="btn btn-warning" disabled={totalitem < 10 ? true : false} onClick={()=>nextPage(currenPage+1)}   >Next</button>
+      </div>
+      </div>
     </div>
   </div>
   )

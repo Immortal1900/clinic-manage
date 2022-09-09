@@ -2,16 +2,18 @@
 import axios from "axios";
 import {URLS}  from './config'; 
 
-
+const ms = Date.now();
+const nocache = "&t="+ ms;
 
 axios.defaults.baseURL = URLS.BASE_URL;
 
 
-export function getSpecified(val, values) {
+export function getSpecified(page) {
+  console.log("CURRENT PAGE",page);
   return new Promise((resolve, reject) => {
     axios({
       method:'get',
-      url: URLS.GET_PATIENT,
+      url: URLS.GET_PATIENT + page + nocache,
   }).then((res)=>{
       console.log(res);
       resolve(res.data);
@@ -58,7 +60,7 @@ export function getSpecified(val, values) {
 
     
 }
-export  async function  getSearchedData  (params) {
+export  async function  getSearchedData  (params,page) {
   
   // const ms = Date.now();
   //   let res = await fetch(URLS.SEARCH + params,{
@@ -74,7 +76,7 @@ export  async function  getSearchedData  (params) {
       return new Promise((resolve, reject) => {
         axios({
           method:'get',
-          url:URLS.SEARCH + params ,
+          url:URLS.SEARCH  + params + "&page=" + page  + nocache,
       }).then((res)=>{
         console.log(res);
         console.log(res.data);
@@ -103,6 +105,8 @@ export  async function  updatePersonData  (params) {
   formData.append('uId', params.uid);
   formData.append('gender', params.gender);
   formData.append('age', params.age);
+  formData.append('civil_id', params.civil_id);
+  formData.append('dob', params.dob);
   formData.append('pNo', params.pNo);
 
 
@@ -151,6 +155,11 @@ export  async function  addPersondetail  (params) {
   formData.append('age', params.age);
   formData.append('pNo', params.phonenumber);
 
+  formData.append('civil_id', params.civil_id);
+  formData.append('dob', params.dob);
+
+
+
   return new Promise((resolve, reject) => {
     axios({
       method:'post',
@@ -158,12 +167,14 @@ export  async function  addPersondetail  (params) {
       data : formData,
   }).then((res)=>{
       console.log(res);
-      if(res.data == "success"){
-        resolve(res.data);
-      }
-      else if(res.data == "error"){
+   
+       if(res.data == "error"){
         reject('error')
       }
+      else{
+        resolve(res.data);
+      }
+      
     //  else{
     //    reject(res.data)
     //  }

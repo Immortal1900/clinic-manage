@@ -2,29 +2,10 @@ import React, { Component } from "react";
 import "./sliderNavBar.css";
 import AddPersonDetails from "./PersonDetails/addpersondetails";
 import PatienList from "./Patients/patientlist";
-import DoctorsLis from "./Doctors/doctorslist";
-import BedAllotment from "./Bed/bedallotment";
+
 import EditPersonDetails from "./PersonDetails/editpersondetails";
+import Clinic from "./Clinic/clinic"
 
-import Bedlist from "./Bed/bedlist";
-import MedicineList from "./Medicine/medicinelist";
-import BloodBagList from "./Bloodbag/bloodbaglist";
-import NurseList from "./Nurses/nurselist";
-import PharmacistsList from "./Pharmacistslist/pharmacistslist";
-
-import AccountantList from "./Accountant/accountantlist";
-import ReceptionistList from "./Receptionist/receptionistlist";
-
-import DeathReportList from "./DeathReport/deathreportlist";
-import DeathRepotAllotment from "./DeathReport/deathreportallotment";
-
-import BirthReportList from "./BirthReport/birthreportlsit";
-import BirthRepotAllotment from "./BirthReport/birthreportallotment";
-import PayrollList from "./Payroll/payrolllist";
-import Dashboard from "./Dashboard/dashboard";
-import OperationAllotment from "./OperationReprot/operationallotment";
-import OperationReportList from "./OperationReprot/operationreportlist";
-import CreatePayRoll from "./Payroll/createpayroll";
 import firebase from "../firebase";
 import {
   BrowserRouter as Routers,
@@ -35,6 +16,8 @@ import {
 } from "react-router-dom";
 import { setLogInDetails } from "../actions/setpersondetailsaction";
 import { connect } from "react-redux";
+import AddClinic from "./Clinic/addclinic";
+import EditClinic from "./Clinic/editclinic";
 
 class SideNavBar extends Component {
   state = {
@@ -129,6 +112,20 @@ class SideNavBar extends Component {
                       <i className="fa fa-user" aria-hidden="true"></i>
                     </span>
                     <span className="title">User</span>
+                  </li>
+                </Link>
+
+                <Link to="/clinic">
+                  <li
+                    className={
+                      this.state.selectedCat === "Patient" ? "active" : ""
+                    }
+                    onClick={() => this.setTitleActive("Patient")}
+                  >
+                    <span className="icon">
+                      <i className="fa fa-user" aria-hidden="true"></i>
+                    </span>
+                    <span className="title">Clinic </span>
                   </li>
                 </Link>
 {/* 
@@ -380,6 +377,17 @@ class SideNavBar extends Component {
               <Route path="/editpersondetails">
                 <EditPersonDetails />
               </Route>
+
+              <Route path="/clinic">
+                <Clinic />
+              </Route>
+              <Route path="/addclinic">
+                <AddClinic />
+              </Route>
+              <Route path="/editclinic">
+                <EditClinic />
+              </Route>
+       
 
               {/* <Route path="/doctorslist">
                 <DoctorsLis />

@@ -13,7 +13,7 @@ export function getSpecified(page) {
   return new Promise((resolve, reject) => {
     axios({
       method:'get',
-      url: URLS.GET_PATIENT + page + nocache,
+      url: URLS.GET_CLINIC + page + nocache,
   }).then((res)=>{
       console.log(res);
       resolve(res.data);
@@ -70,13 +70,13 @@ export  async function  getSearchedData  (params,page) {
 
   //   let json = await res.json();
   //   console.log("JSON IS " , json);
-
+    console.log("SEATCHED FOR", params);
    
       
       return new Promise((resolve, reject) => {
         axios({
           method:'get',
-          url:URLS.SEARCH  + params + "&page=" + page  + nocache,
+          url:URLS.GET_CLINIC +page+ "&sr="  + params  + nocache,
       }).then((res)=>{
         console.log(res);
         console.log(res.data);
@@ -97,24 +97,23 @@ export  async function  updatePersonData  (params) {
         console.log(key + " -> " + params[key]);
     }
 }
-  formData.append('firstName', params.firstName);   //append the values with key, value pair
-  formData.append('lastName',params.lastName );
-  formData.append('mrd', params.mrd);
-  formData.append('city', params.city);
-  formData.append('email', params.email);
-  formData.append('uId', params.uid);
-  formData.append('gender', params.gender);
-  formData.append('age', params.age);
-  formData.append('civil_id', params.civil_id);
-  formData.append('dob', params.dob);
-  formData.append('pNo', params.pNo);
+
+formData.append('id', params.id); 
+formData.append('name', params.name);   //append the values with key, value pair
+formData.append('lName',params.lName );
+formData.append('gUrl', params.gUrl);
+formData.append('cityId', params.cityId);
+formData.append('imageUrl', params.imageUrl);
+formData.append('number_reveal', params.number_reveal);
+formData.append('email', params.email);
+formData.append('pass', params.pass);
 
 
   
   return new Promise((resolve, reject) => {
     axios({
       method:'post',
-      url: URLS.UPDATE_USER,
+      url: URLS.UPDATE_CLINIC,
       data: formData,
       headers: { "Content-Type": "multipart/form-data" },
   }).then((res)=>{
@@ -139,32 +138,28 @@ export  async function  updatePersonData  (params) {
 }
 
 export  async function  addPersondetail  (params) {
-  console.log("DATA",params.firstname);
+  console.log("DATA CLININC FETCH" ,params.firstname);
   let formData = new FormData();    //formdata object
   for (var key in params) {
     if (params.hasOwnProperty(key)) {
         console.log(key + " -> " + params[key]);
     }
 }
-  formData.append('firstName', params.firstname);   //append the values with key, value pair
-  formData.append('lastName',params.lastname );
-  formData.append('mrd', params.mrd);
-  formData.append('city', params.city);
+  formData.append('name', params.name);   //append the values with key, value pair
+  formData.append('lName',params.iName );
+  formData.append('gUrl', params.gUrl);
+  formData.append('cityId', params.cityId);
+  formData.append('imageUrl', params.imageUrl);
+  formData.append('number_reveal', params.number_reveal);
   formData.append('email', params.email);
-  //formData.append('uId', params.uid);
-  formData.append('gender', params.sex);
-  formData.append('age', params.age);
-  formData.append('pNo', params.phonenumber);
-
-  formData.append('civil_id', params.civil_id);
-  formData.append('dob', params.dob);
+  formData.append('pass', params.pass);
 
 
 
   return new Promise((resolve, reject) => {
     axios({
       method:'post',
-      url: URLS.ADD_USER,
+      url: URLS.ADD_CLINIC,
       data : formData,
   }).then((res)=>{
       console.log(res);

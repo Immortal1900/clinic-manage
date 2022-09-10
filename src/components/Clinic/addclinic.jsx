@@ -1,13 +1,13 @@
 import React, { Component, useState } from "react";
 import firebase from "../../firebase";
 import "react-datepicker/dist/react-datepicker.css";
-import NewPersonDetailsForm from "./newpersondetailsform";
+import AddClinicForm from "./addclinicform";
 import Service from "../../Service/firebase";
-import "./addpersonDetails.css";
+import "./addclinicform.css";
 import  FormPrompt  from "../DailogBoxes/formprompt";
 import { useEffect } from "react";
 import { Link, useLocation } from 'react-router-dom'
-import { addPersondetail } from "../../Service/fetch"
+import { addPersondetail } from "../../Service/clinic_fetch"
 import AlertDialogBox from "../DailogBoxes/alertdailogbox";
 import { useHistory } from "react-router-dom";
 import { getAge } from "../../Service/helpers";
@@ -15,7 +15,7 @@ import { changeFormat } from "../../Service/helpers";
 import ErorrDialogBox from "../DailogBoxes/errordaologbox";
 
 
-const AddPersonDetails =(props)=> {
+const AddClinic =(props)=> {
   const location = useLocation();
   const myprops = location?.state;
   let history = useHistory();
@@ -276,7 +276,7 @@ const AddPersonDetails =(props)=> {
       console.log("CLOSEING")
       setalerts((alerts)=>({...alerts,dialog: false}));
       closeModal();
-      history.push("/patientlist");
+      history.push("/clinic");
       console.log(window.location.href);
       window.location.reload();
       
@@ -334,7 +334,7 @@ const AddPersonDetails =(props)=> {
             <FormPrompt
             
             openDailog={modal.showModal}
-            title="Add New User"
+            title="Add New Clinic"
             onSetOpenDailog={closeModal}
             isCloseBtnAppear={true}
             >
@@ -347,7 +347,7 @@ const AddPersonDetails =(props)=> {
   
          // setOpenDailog={setalerts}
        //   onSetOpenDailog={setalerts}
-        destination = {"patientlist"}
+        destination = {"clinic"}
           title="Update"
           des="successfully updated"
         ></AlertDialogBox>
@@ -371,7 +371,7 @@ const AddPersonDetails =(props)=> {
 
 
 
-            <NewPersonDetailsForm
+            <AddClinicForm
                handleSubmit={addnewUser}
                 onEdit={onEdit}
                 ondateChange={ondateChange}
@@ -383,8 +383,8 @@ const AddPersonDetails =(props)=> {
              //   handleChange={this.handleChange}
               //  onImageRemove={this.onImageRemove}
                // onImageChange={this.onImageChange}
-              ></NewPersonDetailsForm>
-            </FormPrompt>
+              ></AddClinicForm>
+            </FormPrompt> 
           
             </div>
           </div>
@@ -393,4 +393,4 @@ const AddPersonDetails =(props)=> {
     );
   
 }
-export default AddPersonDetails;
+export default AddClinic;

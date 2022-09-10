@@ -5,15 +5,15 @@ import { setpersonDetails } from "../../actions/setpersondetailsaction";
 import AlertDialogBox from "../DailogBoxes/alertdailogbox";
 import Service from "../../Service/firebase";
 import ErorrDialogBox from "../DailogBoxes/errordaologbox";
-import EditPersonDetailsForm from "./editpersondetailsform";
+import EditClinicForm from "./editclinicform.jsx";
 import { useState } from "react";
 import { useEffect } from "react";
 import { Link, useLocation } from 'react-router-dom'
-import { updatePersonData } from "../../Service/fetch"; 
+import { updatePersonData } from "../../Service/clinic_fetch"; 
 import { useHistory } from "react-router-dom";
 import { getAge,changeFormat } from "../../Service/helpers";
 
-const EditPersonDetails =(props)=> {
+const EditClinic =(props)=> {
 
   const [personDetails,setpersonDetails] = useState({});
   const [initialized,setinitialized] = useState(false);
@@ -34,7 +34,7 @@ const EditPersonDetails =(props)=> {
    const asynccaller = async ()=>{
     await initState();
     }
-    console.log(props);
+    console.log(myprops);
     asynccaller();
   },[])
 
@@ -46,33 +46,28 @@ const EditPersonDetails =(props)=> {
     e.preventDefault();
     console.log("CLOSEING")
     setalerts((alerts)=>({...alerts,dialog: false}));
-    history.push("/patientlist");
+    history.push("/clinic");
     console.log(window.location.href);
     window.location.reload();
   }
 
 
   const initState= async()=>{
-    console.log(props.personDetails?.dob);
+    console.log("CALLED");
+    console.log(myprops);
 
     if(      personDetails != null    ){
       setpersonDetails((personDetails)=>({...personDetails,
-        uid:myprops.personDetails?.uId,
-        address: myprops.personDetails?.address,
-        amount:myprops.personDetails?.amount,
-        age: myprops.personDetails?.age,
-        dob: myprops.personDetails?.dob,
-        civil_id: myprops.personDetails?.civil_id,
-        city: myprops.personDetails?.city,
-        email: myprops.personDetails?.email,
-        firstName: myprops.personDetails?.firstName,
+        id:myprops.personDetails?.id,
+        name:myprops.personDetails?.title,
         imageUrl: myprops.personDetails?.imageUrl,
-        lastName: myprops.personDetails?.lastName,
-        pNo: myprops.personDetails?.pNo,
-        gender: myprops.personDetails?.gender,
-        state: myprops.personDetails?.state,
-        zip: myprops.personDetails?.zip,
-        collectionName: myprops.collectionName,
+        lName:myprops.personDetails?.location_name,
+        gUrl: myprops.personDetails?.location,
+        cityId: myprops.personDetails?.city_id,
+        number_reveal: myprops.personDetails?.number_reveal,
+        pass: myprops.personDetails?.pass,
+        email: myprops.personDetails?.email,
+    
  }))
     }
 
@@ -123,11 +118,20 @@ updatePersonData(personDetails).then((res)=>{
     setMsg("phone_exists");
     setalerts((alerts)=>({...alerts,dialog:true}))
   }
+  else if(res =="name already exists"){
+    setMsg("name already exists");
+    setalerts((alerts)=>({...alerts,dialog:true}))
+  }
+  else if(res =="email already exists"){
+    setMsg("email already exists");
+    setalerts((alerts)=>({...alerts,dialog:true}))
+  }
   else if(res =="civi id exists"){
     setMsg("civil_id_exists");
   
     setalerts((alerts)=>({...alerts,dialog:true}))
   }}
+  
 ).
 catch((e)=>{console.log(e)})  ;
 
@@ -156,18 +160,18 @@ e.preventDefault();
 
 
 
-        <ErorrDialogBox
+        {/* <ErorrDialogBox
       openDailog={alerts.dialog}
       closedialog={closeErrorSamepage}
          // onSetOpenDailog={this.closeErrorDailog}
           title="Error"
           des={msg}
-        ></ErorrDialogBox> 
+        ></ErorrDialogBox>  */}
         
         
         
 
-        {initialized == true ?   <EditPersonDetailsForm
+        {initialized == true ?   <EditClinicForm
         // handleSubmit={this.handleSubmit}
          onEdit={onEdit}
         // date={personDetails.date}
@@ -180,7 +184,7 @@ e.preventDefault();
         //onImageRemove={this.onImageRemove}
         //onImageChange={this.onImageChange}
         //handleImageForUpload={this.handleImageForUpload}
-        ></EditPersonDetailsForm>
+        ></EditClinicForm>
       :
       null}
       
@@ -190,4 +194,4 @@ e.preventDefault();
   
 
 
-export default EditPersonDetails;
+export default EditClinic;

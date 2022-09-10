@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./patientlist.css";
+import "./clinic.css";
 import { Link } from "react-router-dom";
 import { connect, useDispatch } from "react-redux";
 import {
@@ -13,7 +13,7 @@ import ConfirmDialogBox from "../DailogBoxes/confirmdailogbox";
 import ErorrDialogBox from "../DailogBoxes/errordaologbox";
 import Service from "../../Service/firebase";
 import  { useState, useEffect } from 'react';
-import { getSearchedData, getSpecified } from '../../Service/fetch';
+import { getSearchedData, getSpecified } from '../../Service/clinic_fetch';
 import { useLocation } from 'react-router-dom'
 import { Button } from "@material-ui/core";
 import { loadingStart , loadingEnd } from "../../actions/loading";
@@ -21,7 +21,7 @@ import store from "../../store";
 
 
 
- const PatienList= (props)=> {
+ const Clinic= (props)=> {
   const [list,setlist] = useState([]);
   const [count,setcount] = useState(0);
   const mycount = 0;
@@ -155,12 +155,12 @@ const getSearchedItem=()=>{
 }
 
   return store.getState().Loading.isLoading == true?  (
-    <div className="patientlistpage">
+    <div className="cliniclistpage">
               <i className="fas fa-spinner fa-pulse fa-2x "></i>
       </div>
   ):
   (
-    <div className="patientlistpage">
+    <div className="cliniclistpage">
      
          
          
@@ -177,7 +177,7 @@ const getSearchedItem=()=>{
             ></i>
           </li>
           <li>
-            <h5>User</h5>
+            <h5>CLinic</h5>
  
     
 
@@ -226,7 +226,7 @@ const getSearchedItem=()=>{
 
         </div>
 
-<Link to={{pathname: "addpatient",
+<Link to={{pathname: "addclinic",
                     state:{  
                       showmodal: true,
                    
@@ -249,15 +249,14 @@ const getSearchedItem=()=>{
         <thead className="thead tablehead">
           <tr>
             <th scope="col">#</th>
-            <th scope="col">Profile</th>
-            <th scope="col">Name</th>
-            <th scope="col">Sex</th>
-            <th scope="col">Age</th>
-            <th scope="col">Mobile</th>
+            <th scope="col">Title</th>
+            <th scope="col">Email</th>
+            <th scope="col">City Id</th>
+            <th scope="col">Location Name</th>
+            <th scope="col">Creation Timestamp</th>
+            <th scope="col">Options</th>
             {/* <th scope="col">Email</th> */}
-            <th scope="col">City</th>
-            <th scope="col">Date</th>
-            <th scope="col">Option</th>
+       
           </tr>
         </thead>
         { 
@@ -279,36 +278,36 @@ const getSearchedItem=()=>{
                     <td className="align-middle"  >
                       {((currenPage-1)*10+index) +1 }
                         </td>
+
                         <td className="align-middle">
+                    {p?.title  }
+                        </td>
+                        {/* <td className="align-middle">
                     {p?.imageUrl}
-                        </td>
+                        </td> */}
                         <td className="align-middle">
-                   {p?.firstName + " "+ p?.lastName} 
-                        </td>
-                        <td className="align-middle">
-                    {p?.gender == "undefined" ? null : p?.gender}
-                        </td>
-                        <td className="align-middle">
-                       {p?.age == "und" ? null : p?.age}
+                   {p?.email} 
                         </td>
                      
                         <td className="align-middle">
-                    {p?.pNo +" " + p?.phone }
+                       {p?.city_id }
                         </td>
+                     
+                    
                         <td className="align-middle">
            
-                    {p?.city == "undefined" ? null : p?.city}
+                    {p?.location_name}
                         </td>
                         <td className="align-middle">
-                    {p?.createdTimeStamp}
+                    {p?.created_time_stamp}
                         </td>
                      
                  
                     <td className="align-middle">
-                      <Link to={{pathname: "editpersondetails",
+                      <Link to={{pathname: "editclinic",
                     state:{  
                       personDetails: p,
-                      collectionName: "patients",
+                      collectionName: "Clinic",
                     }
                     
                     }}  >
@@ -371,7 +370,7 @@ const getSearchedItem=()=>{
   )
 
 }
-export default PatienList
+export default Clinic
 
 
 

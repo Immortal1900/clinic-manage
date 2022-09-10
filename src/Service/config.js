@@ -7,4 +7,11 @@ export const URLS = {
     UPDATE_USER:"update_user"  + nocache,
     ADD_USER: "add_user" +nocache,
     SEARCH:"get_all_user?sr=" ,
+
+
+    /***********CLINIC*********** */
+
+    GET_CLINIC: "/get_all_clinic?page=",
+    ADD_CLINIC: "add_clinic",
+    UPDATE_CLINIC: "update_clinic",
 }

@@ -10,14 +10,13 @@ import thunkMiddleware from "redux-thunk";
 import { logger } from "redux-logger";
 import { persistStore } from "redux-persist";
 import rootReducer from "./reducers/rootreducer";
+import store from "./store";
+
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const store = createStore(
-  rootReducer,
 
-  composeEnhancers(applyMiddleware(logger, thunkMiddleware))
-);
+
 const persistor = persistStore(store);
 ReactDOM.render(
   <Provider store={store}>

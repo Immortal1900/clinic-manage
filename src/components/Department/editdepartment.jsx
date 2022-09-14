@@ -5,17 +5,15 @@ import { setpersonDetails } from "../../actions/setpersondetailsaction";
 import AlertDialogBox from "../DailogBoxes/alertdailogbox";
 import Service from "../../Service/firebase";
 import ErorrDialogBox from "../DailogBoxes/errordaologbox";
-import EditClinicForm from "./editclinicform.jsx";
+import EditDepartmentForm from "./editdepartmentform.jsx";
 import { useState } from "react";
 import { useEffect } from "react";
 import { Link, useLocation } from 'react-router-dom'
-import { getSpecified, updatePersonData } from "../../Service/clinic_fetch"; 
+import { updatePersonData } from "../../Service/department_fetch"; 
 import { useHistory } from "react-router-dom";
 import { getAge,changeFormat } from "../../Service/helpers";
-import { URLS } from "../../Service/config";
-import { getClinicU } from "../../Service/fetch_general";
 
-const EditClinic =(props)=> {
+const EditDepartment =(props)=> {
 
   const [personDetails,setpersonDetails] = useState({});
   const [initialized,setinitialized] = useState(false);
@@ -24,7 +22,6 @@ const EditClinic =(props)=> {
   })
   let history = useHistory();
   const location = useLocation();
-  const [cityList,setCityList] = useState ([])
   const [msg,setMsg] = useState(
   
     )
@@ -33,7 +30,7 @@ const EditClinic =(props)=> {
     console.log("RAN ONCE EDITPERSONDETAIL");
     console.log(location.state);
 
-    getClinic();
+   
    const asynccaller = async ()=>{
     await initState();
     }
@@ -45,28 +42,11 @@ const EditClinic =(props)=> {
     console.log(personDetails);
   },[personDetails])
   
-
-
-
-  const getClinic = async ()=>{
-    const data = await getClinicU(URLS.GET_CITY).then((res)=>{
-      console.log(res)
-  
-      console.log(res.length);
-      console.log("RESPONSE IS",res)
-      setCityList(res);
-  }
-    ).
-    catch((e)=>{console.log(e)})  ;
-  
-  }
-
-
   const closedialog=(e)=>{
     e.preventDefault();
     console.log("CLOSEING")
     setalerts((alerts)=>({...alerts,dialog: false}));
-    history.push("/clinic");
+    history.push("/department");
     console.log(window.location.href);
     window.location.reload();
   }
@@ -79,14 +59,11 @@ const EditClinic =(props)=> {
     if(      personDetails != null    ){
       setpersonDetails((personDetails)=>({...personDetails,
         id:myprops.personDetails?.id,
-        name:myprops.personDetails?.title,
+        name:myprops.personDetails?.name,
         imageUrl: myprops.personDetails?.imageUrl,
-        lName:myprops.personDetails?.location_name,
-        gUrl: myprops.personDetails?.location,
-        cityId: myprops.personDetails?.city_id,
-        number_reveal: myprops.personDetails?.number_reveal,
-        pass: myprops.personDetails?.pass,
-        email: myprops.personDetails?.email,
+        clinic_id:myprops.personDetails?.clinic_id,
+        city_id: myprops.personDetails?.city_id,
+
     
  }))
     }
@@ -191,12 +168,11 @@ e.preventDefault();
         
         
 
-        {initialized == true ?   <EditClinicForm
+        {initialized == true ?   <EditDepartmentForm
         // handleSubmit={this.handleSubmit}
          onEdit={onEdit}
         // date={personDetails.date}
         // handleChange={this.handleChange}
-        cityList={cityList}
         ondateChange={ondateChange}
           personDetails={personDetails}
           update={updatePers}
@@ -205,7 +181,7 @@ e.preventDefault();
         //onImageRemove={this.onImageRemove}
         //onImageChange={this.onImageChange}
         //handleImageForUpload={this.handleImageForUpload}
-        ></EditClinicForm>
+        ></EditDepartmentForm>
       :
       null}
       
@@ -215,4 +191,4 @@ e.preventDefault();
   
 
 
-export default EditClinic;
+export default EditDepartment;

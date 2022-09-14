@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
-import "./addclinicform.css";
+import "./adddoctorform.css";
 
-class AddClinicForm extends Component {
+class AddDoctorForm extends Component {
   render() {
     return (
       <form onSubmit={this.props.handleSubmit}>
@@ -46,21 +46,13 @@ class AddClinicForm extends Component {
 
             <div className="col-md-6 mb-3">
           <label htmlFor="validationDefault06">City ID</label>
-      
-
-<select     className="form-control"   id="cityId"       name="cityId"
-      onChange={this.props.onEdit}>
-              {
-                this.props.cityList.map((city,index)=>{
-                  return (
-          
-                    <option value={city.id}>{city.cityName}</option>
-           
-          
-                  )
-                })
-              }
-                      </select>
+              <input
+                name="cityId"
+                type="text"
+                className="form-control"
+                id="cityId"
+                onChange={this.props.onEdit}
+              />
             </div>
 
           
@@ -222,4 +214,4 @@ class AddClinicForm extends Component {
   }
 }
 
-export default AddClinicForm;
+export default AddDoctorForm;

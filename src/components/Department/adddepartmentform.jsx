@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
-import "./addclinicform.css";
+import "./adddepartmentform.css";
 
-class AddClinicForm extends Component {
+class AddDepartmentForm extends Component {
   render() {
     return (
       <form onSubmit={this.props.handleSubmit}>
@@ -13,7 +13,7 @@ class AddClinicForm extends Component {
               <label htmlFor="validationDefault01">Name</label>
               <input
                 name="name"
-                type="text"
+                type="text" 
                 className="form-control"
                 id="name"
                 onChange={this.props.onEdit}
@@ -21,12 +21,12 @@ class AddClinicForm extends Component {
               />
             </div>
             <div className="col-md-6 mb-3">
-              <label htmlFor="validationDefault02">iName</label>
+              <label htmlFor="validationDefault02">City ID</label>
               <input
-                name="lName"
+                name="city_id"
                 type="text"
                 className="form-control"
-                id="lName"
+                id="city_id"
                 onChange={this.props.onEdit}
                 required
               />
@@ -34,33 +34,25 @@ class AddClinicForm extends Component {
           </div>
           <div className="form-row">
           <div className="col-md-6 mb-3">
-          <label htmlFor="validationDefault06">Google Map URL</label>
+          <label htmlFor="validationDefault06">Clinic ID</label>
               <input
-                name="gUrl"
+                name="clinic_id"
                 type="text"
                 className="form-control"
-                id="gUrl"
+                id="clinic_id"
                 onChange={this.props.onEdit}
               />
             </div>
 
             <div className="col-md-6 mb-3">
-          <label htmlFor="validationDefault06">City ID</label>
-      
-
-<select     className="form-control"   id="cityId"       name="cityId"
-      onChange={this.props.onEdit}>
-              {
-                this.props.cityList.map((city,index)=>{
-                  return (
-          
-                    <option value={city.id}>{city.cityName}</option>
-           
-          
-                  )
-                })
-              }
-                      </select>
+          <label htmlFor="validationDefault06">Image URL</label>
+              <input
+                name="imageUrl"
+                type="text"
+                className="form-control"
+                id="imageUrl"
+                onChange={this.props.onEdit}
+              />
             </div>
 
           
@@ -109,21 +101,8 @@ class AddClinicForm extends Component {
             </div> */}
           </div>
 
-          <div className="form-row">
-         
-          </div>
-          <div className="form-row">
-            <div className="col-md-12 mb-3">
-              <label htmlFor="validationDefault04">Email</label>
-              <input
-                type="email"
-                name="email"
-                className="form-control"
-                id="email"
-                onChange={this.props.onEdit}
-              />
-            </div>
-          </div>
+     
+  
           {/* <div className="form-row">
             <div className="col-md-12 mb-3">
               <label htmlFor="validationDefault05">Address</label>
@@ -136,18 +115,7 @@ class AddClinicForm extends Component {
               />
             </div>
           </div> */}
-          <div className="form-row">
-            <div className="col-md-6 mb-3">
-              <label htmlFor="validationDefault06">Password</label>
-              <input
-                name="pass"
-                type="text"
-                className="form-control"
-                id="pass"
-                onChange={this.props.onEdit}
-              />
-            </div>
-          </div>
+  
              {/*
             <div className="col-md-3 mb-3">
               <label htmlFor="validationDefault07">State</label>
@@ -222,4 +190,4 @@ class AddClinicForm extends Component {
   }
 }
 
-export default AddClinicForm;
+export default AddDepartmentForm;

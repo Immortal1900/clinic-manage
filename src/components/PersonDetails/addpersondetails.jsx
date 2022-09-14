@@ -283,7 +283,7 @@ const AddPersonDetails =(props)=> {
     }
     const closeModal=()=>{
       setModal((modal)=>({...modal,showModal:false}))
-      //history.push("/patientlist");
+      history.push("/patientlist");
       console.log(window.location.href);
     }
   

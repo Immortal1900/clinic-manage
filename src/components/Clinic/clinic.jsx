@@ -13,7 +13,7 @@ import ConfirmDialogBox from "../DailogBoxes/confirmdailogbox";
 import ErorrDialogBox from "../DailogBoxes/errordaologbox";
 import Service from "../../Service/firebase";
 import  { useState, useEffect } from 'react';
-import { getSearchedData, getSpecified } from '../../Service/clinic_fetch';
+import { deleteEntity, getSearchedData, getSpecified } from '../../Service/clinic_fetch';
 import { useLocation } from 'react-router-dom'
 import { Button } from "@material-ui/core";
 import { loadingStart , loadingEnd } from "../../actions/loading";
@@ -33,6 +33,9 @@ import store from "../../store";
   const [currenPage,setCurrentpage] = useState(1);
   const [currentPageLength,setCurrentPageLength] = useState(0);
   const [loading,setLoading] = useState(false);
+  const [confirmDialog,setConfirmDialog] = useState(false);
+  const [currenDel,setCurreDel] = useState(null);
+
 
   const dispatch = useDispatch();
 
@@ -138,7 +141,25 @@ const nextPage= async(page)=>{
 
 }
 
+const handleDelete= async  (id)=>{
+  setConfirmDialog(()=>true);
+  setCurreDel(()=>id);
+}
 
+
+const onDelete= async () => {
+  const data = await deleteEntity(currenDel).then((res)=>{
+    console.log(res)
+    setConfirmDialog(()=>false);
+    window.location.reload();
+}
+  ).
+  catch((e)=>{
+    setConfirmDialog(()=>false);
+    console.log(e)}
+    
+    )  ;
+}
 
 
 const getSearchedItem=()=>{
@@ -168,6 +189,17 @@ const getSearchedItem=()=>{
     
       
     <div className="main_section">
+    <ConfirmDialogBox
+            openDailog={confirmDialog}
+            onSetOpenDailog={setConfirmDialog}
+            handleConfirmOkBtn={onDelete}
+           // isLoading={this.state.isDeleting}
+            title="Delete"
+            des={
+              "Are you sure to delete "             }
+          >
+          
+          </ConfirmDialogBox>
       <div className="topheader">
         <ul>
           <li>
@@ -238,7 +270,7 @@ const getSearchedItem=()=>{
           className="btn btn-warning"
         
         >
-          + Add Patient
+          + Add Clinic
         </button>
 </Link>
 
@@ -336,15 +368,11 @@ const getSearchedItem=()=>{
 
 
                       </Link>
+                
                       <button
                         type="button"
                         className="btn btn-danger"
-                        onClick={() => {
-                          this.handleOnDelete(
-                            p.firstname + " " + p.lastname,
-                            p.patientid
-                          );
-                        }}
+                        onClick={() => { handleDelete( p.id ) }}
                       >
                         <i className="fa fa-trash" aria-hidden="true"></i>
                       </button>

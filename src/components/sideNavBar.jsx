@@ -18,7 +18,15 @@ import { setLogInDetails } from "../actions/setpersondetailsaction";
 import { connect } from "react-redux";
 import AddClinic from "./Clinic/addclinic";
 import EditClinic from "./Clinic/editclinic";
-
+import AddDoctor from "./Doctors/adddoctor";
+import EditDoctor from "./Doctors/editdoctor";
+import Doctor from "./Doctors/doctor";
+import EditDepartment from "./Department/editdepartment";
+import AddDepartment from "./Department/adddepartment";
+import Department from "./Department/department";
+import AddCity from "./City/addcity";
+import EditCity from "./City/editcity";
+import City from './City/city'
 class SideNavBar extends Component {
   state = {
     addHamburgerClass: false,
@@ -42,9 +50,9 @@ class SideNavBar extends Component {
     this.setState({ togglePymentTitle: !this.state.togglePymentTitle });
   };
   logout = () => {
-    const loginDetails = { isLoggedIn: false };
-    firebase.auth().signOut();
-    this.props.setOnLogInDetails(loginDetails);
+    localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('isLoggedIn');
+    window.location.reload();
   };
   setTitleActive = (selectedCat) => {
     this.setState({
@@ -100,9 +108,9 @@ class SideNavBar extends Component {
             <div className="noSubCat">
               <ul>
              
-            
+            <div className ={  localStorage.getItem('usertype') == 'clinic' ? 'div-hide': 'show' }>
                 <Link to="/patientlist">
-                  <li
+                  <li  
                     className={
                       this.state.selectedCat === "Patient" ? "active" : ""
                     }
@@ -114,13 +122,29 @@ class SideNavBar extends Component {
                     <span className="title">User</span>
                   </li>
                 </Link>
+                </div>
 
+                <Link to="/city">
+                  <li
+                    className={
+                      this.state.selectedCat === "city" ? "active" : ""
+                    }
+                    onClick={() => this.setTitleActive("doctor")}
+                  >
+                    <span className="icon">
+                      <i className="fa fa-user" aria-hidden="true"></i>
+                    </span>
+                    <span className="title">City </span>
+                  </li>
+                </Link>
+
+                
                 <Link to="/clinic">
                   <li
                     className={
-                      this.state.selectedCat === "Patient" ? "active" : ""
+                      this.state.selectedCat === "Clinic" ? "active" : ""
                     }
-                    onClick={() => this.setTitleActive("Patient")}
+                    onClick={() => this.setTitleActive("Clinic")}
                   >
                     <span className="icon">
                       <i className="fa fa-user" aria-hidden="true"></i>
@@ -128,6 +152,38 @@ class SideNavBar extends Component {
                     <span className="title">Clinic </span>
                   </li>
                 </Link>
+
+                <Link to="/department">
+                  <li
+                    className={
+                      this.state.selectedCat === "department" ? "active" : ""
+                    }
+                    onClick={() => this.setTitleActive("department")}
+                  >
+                    <span className="icon">
+                      <i className="fa fa-user" aria-hidden="true"></i>
+                    </span>
+                    <span className="title">Department </span>
+                  </li>
+                </Link>
+
+                <Link to="/doctor">
+                  <li
+                    className={
+                      this.state.selectedCat === "doctor" ? "active" : ""
+                    }
+                    onClick={() => this.setTitleActive("doctor")}
+                  >
+                    <span className="icon">
+                      <i className="fa fa-user" aria-hidden="true"></i>
+                    </span>
+                    <span className="title">Doctor </span>
+                  </li>
+                </Link>
+
+
+          
+              
 {/* 
                    <Link to="/">
                   <li
@@ -388,6 +444,36 @@ class SideNavBar extends Component {
                 <EditClinic />
               </Route>
        
+
+              <Route path="/doctor">
+                <Doctor />
+              </Route>
+              <Route path="/adddoctor">
+                <AddDoctor />
+              </Route>
+              <Route path="/editdoctor">
+                <EditDoctor />
+              </Route>
+
+              <Route path="/department">
+                <Department />
+              </Route>
+              <Route path="/adddepartment">
+                <AddDepartment />
+              </Route>
+              <Route path="/editdepartment">
+                <EditDepartment />
+              </Route>
+
+                  <Route path="/city">
+                <City />
+              </Route>
+              <Route path="/addcity">
+                <AddCity />
+              </Route>
+              <Route path="/editcity">
+                <EditCity />
+              </Route>
 
               {/* <Route path="/doctorslist">
                 <DoctorsLis />

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./patientlist.css";
+import "./doctor.css";
 import { Link } from "react-router-dom";
 import { connect, useDispatch } from "react-redux";
 import {
@@ -13,7 +13,7 @@ import ConfirmDialogBox from "../DailogBoxes/confirmdailogbox";
 import ErorrDialogBox from "../DailogBoxes/errordaologbox";
 import Service from "../../Service/firebase";
 import  { useState, useEffect } from 'react';
-import { getSearchedData, getSpecified } from '../../Service/fetch';
+import { getSearchedData, getSpecified } from '../../Service/doctor_fetch';
 import { useLocation } from 'react-router-dom'
 import { Button } from "@material-ui/core";
 import { loadingStart , loadingEnd } from "../../actions/loading";
@@ -21,7 +21,7 @@ import store from "../../store";
 
 
 
- const PatienList= (props)=> {
+ const Doctor= (props)=> {
   const [list,setlist] = useState([]);
   const [count,setcount] = useState(0);
   const mycount = 0;
@@ -155,12 +155,12 @@ const getSearchedItem=()=>{
 }
 
   return store.getState().Loading.isLoading == true?  (
-    <div className="patientlistpage">
+    <div className="doctorlistpage">
               <i className="fas fa-spinner fa-pulse fa-2x "></i>
       </div>
   ):
   (
-    <div className="patientlistpage">
+    <div className="doctorlistpage">
      
          
          
@@ -177,7 +177,7 @@ const getSearchedItem=()=>{
             ></i>
           </li>
           <li>
-            <h5>User</h5>
+            <h5>doctor</h5>
  
     
 
@@ -226,7 +226,7 @@ const getSearchedItem=()=>{
 
         </div>
 
-<Link to={{pathname: "addpatient",
+<Link to={{pathname: "adddoctor",
                     state:{  
                       showmodal: true,
                    
@@ -238,7 +238,7 @@ const getSearchedItem=()=>{
           className="btn btn-warning"
         
         >
-          + Add User
+          + Add Doctor 
         </button>
 </Link>
 
@@ -249,15 +249,16 @@ const getSearchedItem=()=>{
         <thead className="thead tablehead">
           <tr>
             <th scope="col">#</th>
-            <th scope="col">Profile</th>
             <th scope="col">Name</th>
-            <th scope="col">Sex</th>
-            <th scope="col">Age</th>
-            <th scope="col">Mobile</th>
+            <th scope="col">Email</th>
+            <th scope="col">Subtitle</th>
+            <th scope="col">Designation</th>
+            <th scope="col">City Name</th>
+            <th scope="col">Fee</th>
+            <th scope="col">Whatsapp No</th>
+            <th scope="col">Options</th>
             {/* <th scope="col">Email</th> */}
-            <th scope="col">City</th>
-            <th scope="col">Date</th>
-            <th scope="col">Option</th>
+       
           </tr>
         </thead>
         { 
@@ -279,36 +280,42 @@ const getSearchedItem=()=>{
                     <td className="align-middle"  >
                       {((currenPage-1)*10+index) +1 }
                         </td>
+
                         <td className="align-middle">
+                    {p?.firstName  +   " "  + p?.lastName }
+                        </td>
+                        {/* <td className="align-middle">
                     {p?.imageUrl}
+                        </td> */}
+                        <td className="align-middle">
+                   {p?.email} 
                         </td>
                         <td className="align-middle">
-                   {p?.firstName + " "+ p?.lastName} 
+                       {p?.subTitle }
                         </td>
                         <td className="align-middle">
-                    {p?.gender == "undefined" ? null : p?.gender}
+                       {p?.hName }
                         </td>
+                        
                         <td className="align-middle">
-                       {p?.age == "und" ? null : p?.age}
+                       {p?.cityName }
                         </td>
-                     
-                        <td className="align-middle">
-                    {p?.pNo +" " + p?.phone }
-                        </td>
+                           
+                    
                         <td className="align-middle">
            
-                    {p?.city == "undefined" ? null : p?.city}
+                    {p?.fee}
                         </td>
                         <td className="align-middle">
-                    {p?.createdTimeStamp}
+                    {p?.whatsAppNo}
                         </td>
                      
                  
                     <td className="align-middle">
-                      <Link to={{pathname: "editpersondetails",
+                      <Link to={{pathname: "editdoctor",
                     state:{  
                       personDetails: p,
-                      collectionName: "patients",
+                      collectionName: "doctor",
                     }
                     
                     }}  >
@@ -371,7 +378,7 @@ const getSearchedItem=()=>{
   )
 
 }
-export default PatienList
+export default Doctor
 
 
 

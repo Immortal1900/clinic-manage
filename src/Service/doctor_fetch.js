@@ -13,7 +13,7 @@ export function getSpecified(page) {
   return new Promise((resolve, reject) => {
     axios({
       method:'get',
-      url: URLS.GET_CLINIC + page + nocache,
+      url: URLS.GET_DOCTOR + page + nocache,
   }).then((res)=>{
       console.log(res);
       resolve(res.data);
@@ -76,7 +76,7 @@ export  async function  getSearchedData  (params,page) {
       return new Promise((resolve, reject) => {
         axios({
           method:'get',
-          url:URLS.GET_CLINIC +page+ "&sr="  + params  + nocache,
+          url:URLS.GET_DOCTOR +page+ "&sr="  + params  + nocache,
       }).then((res)=>{
         console.log(res);
         console.log(res.data);
@@ -87,47 +87,6 @@ export  async function  getSearchedData  (params,page) {
           reject(e);
       })
     })
-}
-
-
-export  async function  deleteEntity  (params) {
-  let dbname = "clinic";
-  console.log("called",params);
-  let formData = new FormData();    //formdata object
-  for (var key in params) {
-    if (params.hasOwnProperty(key)) {
-        console.log(key + " -> " + params[key]);
-    }
-}
-
-formData.append('id', params); 
-formData.append('dbName', dbname )
-  
-  return new Promise((resolve, reject) => {
-    axios({
-      method:'post',
-      url: URLS.DELETE_CLINIC,
-      data: formData,
-      headers: { "Content-Type": "multipart/form-data" },
-  }).then((res)=>{
-      console.log(res);
- 
-       if(res.data == "error"){
-        reject('error')
-      }
-      else{
-        resolve(res.data);
-      }
-    //  else{
-    //    reject(res.data)
-    //  }
-  }).catch((e)=>{
-      console.log(e)
-      reject(e);
-  })
-})
-
-
 }
 
 export  async function  updatePersonData  (params) {
@@ -187,7 +146,7 @@ export  async function  addPersondetail  (params) {
     }
 }
   formData.append('name', params.name);   //append the values with key, value pair
-  formData.append('lName',params.lName );
+  formData.append('lName',params.iName );
   formData.append('gUrl', params.gUrl);
   formData.append('cityId', params.cityId);
   formData.append('imageUrl', params.imageUrl);

@@ -8,12 +8,34 @@ const nocache = "&t="+ ms;
 axios.defaults.baseURL = URLS.BASE_URL;
 
 
-export function getSpecified(page) {
+export function getSpecified(url,page = 1) {
+  console.log("URLS.BASE_URL" ,URLS.BASE_URL)
+  console.log("URL IS" ,url)
   console.log("CURRENT PAGE",page);
   return new Promise((resolve, reject) => {
     axios({
       method:'get',
-      url: URLS.GET_CLINIC + page + nocache,
+      url: url  + page + nocache,
+  }).then((res)=>{
+      console.log(res);
+      resolve(res.data);
+  }).catch((e)=>{
+      console.log(e)
+      reject(e);
+  })
+})
+}
+
+
+export function getClinicU(url, ) {
+  let page =1;
+  console.log("URLS.BASE_URL" ,URLS.BASE_URL)
+  console.log("URL IS" ,url)
+  console.log("CURRENT PAGE",page);
+  return new Promise((resolve, reject) => {
+    axios({
+      method:'get',
+      url: url  + page + nocache,
   }).then((res)=>{
       console.log(res);
       resolve(res.data);
@@ -60,7 +82,7 @@ export function getSpecified(page) {
 
     
 }
-export  async function  getSearchedData  (params,page) {
+export  async function  getSearchedData  (url,params,page) {
   
   // const ms = Date.now();
   //   let res = await fetch(URLS.SEARCH + params,{
@@ -70,13 +92,16 @@ export  async function  getSearchedData  (params,page) {
 
   //   let json = await res.json();
   //   console.log("JSON IS " , json);
-    console.log("SEATCHED FOR", params);
+
    
-      
+      console.log("URL IS" , url);
+      console.log("PARAMS" , params);
+      console.log("PAGE IS" . page)
+
       return new Promise((resolve, reject) => {
         axios({
           method:'get',
-          url:URLS.GET_CLINIC +page+ "&sr="  + params  + nocache,
+          url:url  + params + "&page=" + page  + nocache,
       }).then((res)=>{
         console.log(res);
         console.log(res.data);
@@ -89,24 +114,24 @@ export  async function  getSearchedData  (params,page) {
     })
 }
 
-
-export  async function  deleteEntity  (params) {
-  let dbname = "clinic";
+export  async function  updatePersonData  (url,params) {
   console.log("called",params);
   let formData = new FormData();    //formdata object
   for (var key in params) {
     if (params.hasOwnProperty(key)) {
         console.log(key + " -> " + params[key]);
+        formData.append(key, params[key]);
     }
 }
 
-formData.append('id', params); 
-formData.append('dbName', dbname )
+
+
+
   
   return new Promise((resolve, reject) => {
     axios({
       method:'post',
-      url: URLS.DELETE_CLINIC,
+      url: url,
       data: formData,
       headers: { "Content-Type": "multipart/form-data" },
   }).then((res)=>{
@@ -130,77 +155,22 @@ formData.append('dbName', dbname )
 
 }
 
-export  async function  updatePersonData  (params) {
-  console.log("called",params);
+export  async function  addPersondetail  (url,params) {
+  console.log("DATA",params.firstname);
   let formData = new FormData();    //formdata object
   for (var key in params) {
     if (params.hasOwnProperty(key)) {
+     
         console.log(key + " -> " + params[key]);
+        formData.append(key, params[key]);
     }
 }
-
-formData.append('id', params.id); 
-formData.append('name', params.name);   //append the values with key, value pair
-formData.append('lName',params.lName );
-formData.append('gUrl', params.gUrl);
-formData.append('cityId', params.cityId);
-formData.append('imageUrl', params.imageUrl);
-formData.append('number_reveal', params.number_reveal);
-formData.append('email', params.email);
-formData.append('pass', params.pass);
-
-
-  
-  return new Promise((resolve, reject) => {
-    axios({
-      method:'post',
-      url: URLS.UPDATE_CLINIC,
-      data: formData,
-      headers: { "Content-Type": "multipart/form-data" },
-  }).then((res)=>{
-      console.log(res);
- 
-       if(res.data == "error"){
-        reject('error')
-      }
-      else{
-        resolve(res.data);
-      }
-    //  else{
-    //    reject(res.data)
-    //  }
-  }).catch((e)=>{
-      console.log(e)
-      reject(e);
-  })
-})
-
-
-}
-
-export  async function  addPersondetail  (params) {
-  console.log("DATA CLININC FETCH" ,params.firstname);
-  let formData = new FormData();    //formdata object
-  for (var key in params) {
-    if (params.hasOwnProperty(key)) {
-        console.log(key + " -> " + params[key]);
-    }
-}
-  formData.append('name', params.name);   //append the values with key, value pair
-  formData.append('lName',params.lName );
-  formData.append('gUrl', params.gUrl);
-  formData.append('cityId', params.cityId);
-  formData.append('imageUrl', params.imageUrl);
-  formData.append('number_reveal', params.number_reveal);
-  formData.append('email', params.email);
-  formData.append('pass', params.pass);
-
 
 
   return new Promise((resolve, reject) => {
     axios({
       method:'post',
-      url: URLS.ADD_CLINIC,
+      url: url,
       data : formData,
   }).then((res)=>{
       console.log(res);
@@ -227,3 +197,37 @@ export  async function  addPersondetail  (params) {
 
 
 
+export  async function  deleteEntity  (url, dbname ,id ) {
+
+  let formData = new FormData();    //formdata object
+
+
+formData.append('id', id); 
+formData.append('dbName', dbname )
+  
+  return new Promise((resolve, reject) => {
+    axios({
+      method:'post',
+      url:url,
+      data: formData,
+      headers: { "Content-Type": "multipart/form-data" },
+  }).then((res)=>{
+      console.log(res);
+ 
+       if(res.data == "error"){
+        reject('error')
+      }
+      else{
+        resolve(res.data);
+      }
+    //  else{
+    //    reject(res.data)
+    //  }
+  }).catch((e)=>{
+      console.log(e)
+      reject(e);
+  })
+})
+
+
+}

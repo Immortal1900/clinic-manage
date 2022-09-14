@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./patientlist.css";
+import "./city.css";
 import { Link } from "react-router-dom";
 import { connect, useDispatch } from "react-redux";
 import {
@@ -13,15 +13,15 @@ import ConfirmDialogBox from "../DailogBoxes/confirmdailogbox";
 import ErorrDialogBox from "../DailogBoxes/errordaologbox";
 import Service from "../../Service/firebase";
 import  { useState, useEffect } from 'react';
-import { getSearchedData, getSpecified } from '../../Service/fetch';
+import { deleteEntity, getSearchedData, getSpecified } from '../../Service/fetch_general';
 import { useLocation } from 'react-router-dom'
 import { Button } from "@material-ui/core";
 import { loadingStart , loadingEnd } from "../../actions/loading";
 import store from "../../store";
+import { URLS } from "../../Service/config";
 
 
-
- const PatienList= (props)=> {
+ const City= (props)=> {
   const [list,setlist] = useState([]);
   const [count,setcount] = useState(0);
   const mycount = 0;
@@ -33,6 +33,9 @@ import store from "../../store";
   const [currenPage,setCurrentpage] = useState(1);
   const [currentPageLength,setCurrentPageLength] = useState(0);
   const [loading,setLoading] = useState(false);
+  const [confirmDialog,setConfirmDialog] = useState(false);
+  const [currenDel,setCurreDel] = useState(null);
+
 
   const dispatch = useDispatch();
 
@@ -49,7 +52,7 @@ import store from "../../store";
   const fetchData = async (page)=> {
     dispatch({type: "LoadStart"});
     setLoading(()=>true)
-    const data = await getSpecified(currenPage).then((res)=>{
+    const data = await getSpecified(URLS.GET_CITY, currenPage).then((res)=>{
       console.log(res)
 
       setTotalItem(()=>res.length)
@@ -82,7 +85,7 @@ const prevPage= async(page)=>{
     setCurrentpage(()=>(currenPage-1))
     if( searched ){
           setLoading(()=>true)
-      const data = await getSearchedData(searchitem , page).then((res)=>{
+      const data = await getSearchedData( URLS.SEARCH_CITY ,searchitem , page).then((res)=>{
         console.log(res)
         setTotalItem(()=>res.length)
         setLoading(()=>false)
@@ -96,7 +99,7 @@ const prevPage= async(page)=>{
     }
     else{
       setLoading(()=>true)
-      const data = await getSpecified(page).then((res)=>{
+      const data = await getSpecified(URLS.GET_CITY ,page).then((res)=>{
         console.log(res)
         setTotalItem(()=>res.length)
         console.log("RESPONSE IS",res)
@@ -114,7 +117,7 @@ const nextPage= async(page)=>{
   console.log("NEXT PAGE");
   setCurrentpage(()=>(currenPage+1))
   if( searched ){
-    const data = await getSearchedData(searchitem , page).then((res)=>{
+    const data = await getSearchedData(URLS.SEARCH_CITY ,searchitem , page).then((res)=>{
       console.log(res)
       setTotalItem(()=>res.length)
       console.log(res.length);
@@ -125,7 +128,7 @@ const nextPage= async(page)=>{
     catch((e)=>{console.log(e)})  ;
   }
   else{
-    const data = await getSpecified(page).then((res)=>{
+    const data = await getSpecified(URLS.GET_CITY,page).then((res)=>{
       console.log(res)
       setTotalItem(()=>res.length);
       console.log(res.length);
@@ -138,7 +141,25 @@ const nextPage= async(page)=>{
 
 }
 
+const handleDelete= async  (id)=>{
+  setConfirmDialog(()=>true);
+  setCurreDel(()=>id);
+}
 
+
+const onDelete= async () => {
+  const data = await deleteEntity(URLS.DELETE_CITY , URLS.CITY_DB_NAME ,  currenDel).then((res)=>{
+    console.log(res)
+    setConfirmDialog(()=>false);
+    window.location.reload();
+}
+  ).
+  catch((e)=>{
+    setConfirmDialog(()=>false);
+    console.log(e)}
+    
+    )  ;
+}
 
 
 const getSearchedItem=()=>{
@@ -146,7 +167,7 @@ const getSearchedItem=()=>{
   console.log(searchitem);
   setSearchClicked(()=>true);
   setCurrentpage(()=>1);
-  getSearchedData(searchitem , currenPage).then((res)=>{
+  getSearchedData( URLS.SEARCH_CITY  ,searchitem , currenPage).then((res)=>{
     console.log(res);
     setlist(()=>res);
     setTotalItem(()=>res.length);
@@ -155,12 +176,12 @@ const getSearchedItem=()=>{
 }
 
   return store.getState().Loading.isLoading == true?  (
-    <div className="patientlistpage">
+    <div className="cliniclistpage">
               <i className="fas fa-spinner fa-pulse fa-2x "></i>
       </div>
   ):
   (
-    <div className="patientlistpage">
+    <div className="cliniclistpage">
      
          
          
@@ -168,6 +189,17 @@ const getSearchedItem=()=>{
     
       
     <div className="main_section">
+    <ConfirmDialogBox
+            openDailog={confirmDialog}
+            onSetOpenDailog={setConfirmDialog}
+            handleConfirmOkBtn={onDelete}
+           // isLoading={this.state.isDeleting}
+            title="Delete"
+            des={
+              "Are you sure to delete "             }
+          >
+          
+          </ConfirmDialogBox>
       <div className="topheader">
         <ul>
           <li>
@@ -177,7 +209,7 @@ const getSearchedItem=()=>{
             ></i>
           </li>
           <li>
-            <h5>User</h5>
+            <h5>CLinic</h5>
  
     
 
@@ -226,7 +258,7 @@ const getSearchedItem=()=>{
 
         </div>
 
-<Link to={{pathname: "addpatient",
+<Link to={{pathname: "addcity",
                     state:{  
                       showmodal: true,
                    
@@ -238,7 +270,7 @@ const getSearchedItem=()=>{
           className="btn btn-warning"
         
         >
-          + Add User
+          + Add City
         </button>
 </Link>
 
@@ -249,15 +281,13 @@ const getSearchedItem=()=>{
         <thead className="thead tablehead">
           <tr>
             <th scope="col">#</th>
-            <th scope="col">Profile</th>
-            <th scope="col">Name</th>
-            <th scope="col">Sex</th>
-            <th scope="col">Age</th>
-            <th scope="col">Mobile</th>
+            <th scope="col">Image</th>
+            <th scope="col">City Name</th>
+            <th scope="col">City Id</th>
+    
+            <th scope="col">Options</th>
             {/* <th scope="col">Email</th> */}
-            <th scope="col">City</th>
-            <th scope="col">Date</th>
-            <th scope="col">Option</th>
+       
           </tr>
         </thead>
         { 
@@ -279,36 +309,37 @@ const getSearchedItem=()=>{
                     <td className="align-middle"  >
                       {((currenPage-1)*10+index) +1 }
                         </td>
+
+                   
                         <td className="align-middle">
+                          <img style={{
+                            width:"100px",
+                            height:"100px",
+                           objectFit:"contain"
+                            }} src=  {p?.imageUrl !=null || p?.imageUrl != "undefined" ? p?.imageUrl:""  } alt="" srcset="" />
+               
+                        </td>
+                     
+                        {/* <td className="align-middle">
                     {p?.imageUrl}
-                        </td>
+                        </td> */}
                         <td className="align-middle">
-                   {p?.firstName + " "+ p?.lastName} 
-                        </td>
-                        <td className="align-middle">
-                    {p?.gender == "undefined" ? null : p?.gender}
-                        </td>
-                        <td className="align-middle">
-                       {p?.age == "und" ? null : p?.age}
+                   {p?.id} 
                         </td>
                      
                         <td className="align-middle">
-                    {p?.pNo +" " + p?.phone }
+                       {p?.cityName }
                         </td>
-                        <td className="align-middle">
-           
-                    {p?.city == "undefined" ? null : p?.city}
-                        </td>
-                        <td className="align-middle">
-                    {p?.createdTimeStamp}
-                        </td>
+                     
+                    
+                 
                      
                  
                     <td className="align-middle">
-                      <Link to={{pathname: "editpersondetails",
+                      <Link to={{pathname: "editcity",
                     state:{  
                       personDetails: p,
-                      collectionName: "patients",
+                      collectionName: "City",
                     }
                     
                     }}  >
@@ -316,15 +347,10 @@ const getSearchedItem=()=>{
                           onClick={async () => {
                             const sendData = {
                               ...p,
-                              collectionName: "patients",
+                              collectionName: "City",
                               personId: p.patientid,
                             };
-                            const reportDeatils = {
-                              bedallotementid: p.bedallotementid,
-                              operationreportid: p.operationreportid,
-                              birthreportid: p.birthreportid,
-                              deathreportid: p.deathreportid,
-                            };
+                       
 
                           //  this.props.setOnPatientDetails(sendData);
                          //   this.props.setOnReportDetails(reportDeatils);
@@ -337,15 +363,11 @@ const getSearchedItem=()=>{
 
 
                       </Link>
+                
                       <button
                         type="button"
                         className="btn btn-danger"
-                        onClick={() => {
-                          this.handleOnDelete(
-                            p.firstname + " " + p.lastname,
-                            p.patientid
-                          );
-                        }}
+                        onClick={() => { handleDelete( p.id ) }}
                       >
                         <i className="fa fa-trash" aria-hidden="true"></i>
                       </button>
@@ -371,7 +393,7 @@ const getSearchedItem=()=>{
   )
 
 }
-export default PatienList
+export default City
 
 
 

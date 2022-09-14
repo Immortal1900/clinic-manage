@@ -1,53 +1,98 @@
 import React, { Component } from "react";
 import "./login.css";
 import firebase from "../../firebase";
+import { useState } from "react";
+import { login_clinic } from "../../Service/login_service";
+import { useHistory } from "react-router-dom";
 
-class LoginPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      disableBtn: "",
-      email: "",
-      password: "",
-      invaild: "invaild",
-    };
+
+
+const LoginPage =(props)=> {
+  const history = useHistory()
+  
+  // constructor(props) {
+  //   super(props);
+  //   this.state = {
+  //     disableBtn: "",
+  //     email: "",
+  //     password: "",
+  //     invaild: "invaild",
+  //   };
+  // }
+  // login = (e) => {
+  //   this.setState({
+  //     disableBtn: "disable",
+  //     invaild: "invaild",
+  //   });
+  //   e.preventDefault();
+  //   console.log("jsjshshshs");
+  //   firebase
+  //     .auth()
+  //     .signInWithEmailAndPassword(
+  //       this.state.email,
+  //       this.state.password
+  //       //this.state.email, this.state.password
+  //     )
+  //     .then((u) => {
+  //       this.setState({
+  //         disableBtn: "",
+  //         invaild: "invaild",
+  //       });
+  //       // console.log(u);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //       this.setState({
+  //         disableBtn: "",
+  //         invaild: "",
+  //       });
+  //     });
+  // };
+
+  // onEdit = (e) => {
+  //   this.setState({
+  //     [e.target.name]: e.target.value,
+  //   });
+  // };
+  const [errors,setErrors] = useState(false);
+  const [loginObj,setLoginObj] = useState({
+    pass:null,
+    email:null
+  });
+
+
+  const onEdit = (event)=>{
+    console.log("CALLED")
+    const { name, value } = event.target;
+    console.log(value);
+    setLoginObj((loginObj)=>({...loginObj,[name]:value}))
   }
-  login = (e) => {
-    this.setState({
-      disableBtn: "disable",
-      invaild: "invaild",
-    });
-    e.preventDefault();
-    console.log("jsjshshshs");
-    firebase
-      .auth()
-      .signInWithEmailAndPassword(
-        this.state.email,
-        this.state.password
-        //this.state.email, this.state.password
-      )
-      .then((u) => {
-        this.setState({
-          disableBtn: "",
-          invaild: "invaild",
-        });
-        // console.log(u);
-      })
-      .catch((error) => {
-        console.log(error);
-        this.setState({
-          disableBtn: "",
-          invaild: "",
-        });
-      });
-  };
-  onEdit = (e) => {
-    this.setState({
-      [e.target.name]: e.target.value,
-    });
-  };
 
-  render() {
+const onlogin=(e)=>{
+  e.preventDefault();
+
+  login_clinic(loginObj).then((res)=>{
+    console.log(res);
+    if(res.length>0){
+      console.log("LOGGED IN");
+      localStorage.setItem('isLoggedIn', 'true');
+      localStorage.setItem('usertype', 'clinic');
+      window.location.reload();
+    }
+    else{
+      console.log("INVALID EMAIL OR PASS")
+      setErrors(true);
+    }
+    
+ 
+
+
+  });
+
+  }
+
+
+ 
     return (
       <div className="login_page">
         <div className="container-fluid p-0">
@@ -64,33 +109,51 @@ class LoginPage extends Component {
                     <li></li>
                   </ul>
 
-                  <form onSubmit={this.login}>
+                  <form onSubmit={onlogin}>
                     <input
                       name="email"
                       class="form-control form-control-lg"
                       type="email"
                       placeholder="admin@example.com"
-                      onChange={this.onEdit}
+                      onChange={onEdit}
        
                       autocomplete="off"
                       required
                     />
                     <input
                       class="form-control form-control-lg"
-                      type="password"
+                      type="pass"
                       placeholder="123456"
               
-                      name="password"
-                      onChange={this.onEdit}
+                      name="pass"
+                      onChange={onEdit}
                       required
                     />
-                    <p className={this.state.invaild}>
+
+                    { errors == true ?  <p className={errors}>
                       Invalid login or password
                     </p>
+                    :null
+                  }
+
+          <label htmlFor="validationDefault06">City ID</label>
+      
+
+<select     className="form-control login-select"   id="cityId"   onChange={onEdit}    name="cityId">
+    
+          
+                    <option value='admin'> Admin</option>
+                    <option value='clinic'>Clinic</option>
+                    <option value='doctor'>Doctor</option>
+               
+              
+                      </select>
+         
+
                     <button
                       type="submit"
                       class="btn btn-info"
-                      disabled={this.state.disableBtn}
+                  //    disabled={state.}
                     >
                       Login
                       <i class="fa fa-unlock" aria-hidden="true"></i>
@@ -109,6 +172,6 @@ class LoginPage extends Component {
       </div>
     );
   }
-}
+
 
 export default LoginPage;

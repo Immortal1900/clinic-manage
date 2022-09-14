@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
-import "./addclinicform.css";
+import "./addcityform.css";
 
-class AddClinicForm extends Component {
+class AddCityForm extends Component {
   render() {
     return (
       <form onSubmit={this.props.handleSubmit}>
@@ -21,61 +21,25 @@ class AddClinicForm extends Component {
               />
             </div>
             <div className="col-md-6 mb-3">
-              <label htmlFor="validationDefault02">iName</label>
-              <input
-                name="lName"
-                type="text"
-                className="form-control"
-                id="lName"
-                onChange={this.props.onEdit}
-                required
-              />
-            </div>
+                    <label htmlFor="validationDefault02">Image</label>
+                    {/* <img style={{
+                            width:"200px",
+                            height:"200px",
+                           objectFit:"contain"
+                            }} src=  {props.personDetails.imageUrl !=null || props.personDetails.imageUrl  != "undefined" ? props.personDetails.imageUrl :""  } alt="" srcset="" />
+                    */}
+                    <input
+                      name="imageUrl"
+                      type="text"
+                      className="form-control"
+                      id="imageUrl"
+                
+                      onChange={this.props.onEdit}
+         
+                    />
+                  </div>
           </div>
-          <div className="form-row">
-          <div className="col-md-6 mb-3">
-          <label htmlFor="validationDefault06">Google Map URL</label>
-              <input
-                name="gUrl"
-                type="text"
-                className="form-control"
-                id="gUrl"
-                onChange={this.props.onEdit}
-              />
-            </div>
-
-            <div className="col-md-6 mb-3">
-          <label htmlFor="validationDefault06">City ID</label>
-      
-
-<select     className="form-control"   id="cityId"       name="cityId"
-      onChange={this.props.onEdit}>
-              {
-                this.props.cityList.map((city,index)=>{
-                  return (
-          
-                    <option value={city.id}>{city.cityName}</option>
-           
-          
-                  )
-                })
-              }
-                      </select>
-            </div>
-
-          
-       
-            {/* <div className="col-md-6 mb-3">
-              <label htmlFor="validationDefault11">Age</label>
-              <input
-                name="age"
-                type="number"
-                className="form-control"
-                id="age"
-                onChange={this.props.onEdit}
-              />
-            </div> */}
-          </div>
+         
 
           <div className="form-row">
          
@@ -109,21 +73,8 @@ class AddClinicForm extends Component {
             </div> */}
           </div>
 
-          <div className="form-row">
-         
-          </div>
-          <div className="form-row">
-            <div className="col-md-12 mb-3">
-              <label htmlFor="validationDefault04">Email</label>
-              <input
-                type="email"
-                name="email"
-                className="form-control"
-                id="email"
-                onChange={this.props.onEdit}
-              />
-            </div>
-          </div>
+    
+        
           {/* <div className="form-row">
             <div className="col-md-12 mb-3">
               <label htmlFor="validationDefault05">Address</label>
@@ -136,18 +87,7 @@ class AddClinicForm extends Component {
               />
             </div>
           </div> */}
-          <div className="form-row">
-            <div className="col-md-6 mb-3">
-              <label htmlFor="validationDefault06">Password</label>
-              <input
-                name="pass"
-                type="text"
-                className="form-control"
-                id="pass"
-                onChange={this.props.onEdit}
-              />
-            </div>
-          </div>
+     
              {/*
             <div className="col-md-3 mb-3">
               <label htmlFor="validationDefault07">State</label>
@@ -222,4 +162,4 @@ class AddClinicForm extends Component {
   }
 }
 
-export default AddClinicForm;
+export default AddCityForm;

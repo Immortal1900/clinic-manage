@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "./patientlist.css";
+import "./department.css";
 import { Link } from "react-router-dom";
 import { connect, useDispatch } from "react-redux";
 import {
@@ -13,15 +13,16 @@ import ConfirmDialogBox from "../DailogBoxes/confirmdailogbox";
 import ErorrDialogBox from "../DailogBoxes/errordaologbox";
 import Service from "../../Service/firebase";
 import  { useState, useEffect } from 'react';
-import { getSearchedData, getSpecified } from '../../Service/fetch';
+import { getSearchedData, getSpecified } from '../../Service/department_fetch';
 import { useLocation } from 'react-router-dom'
 import { Button } from "@material-ui/core";
 import { loadingStart , loadingEnd } from "../../actions/loading";
 import store from "../../store";
+import { deleteEntity } from "../../Service/clinic_fetch";
 
 
 
- const PatienList= (props)=> {
+ const Department= (props)=> {
   const [list,setlist] = useState([]);
   const [count,setcount] = useState(0);
   const mycount = 0;
@@ -138,7 +139,15 @@ const nextPage= async(page)=>{
 
 }
 
-
+const handleDelete= async  (id)=>{
+  console.log("DELETE CALLED " , id)
+  const data = await deleteEntity(id).then((res)=>{
+    console.log(res)
+ 
+}
+  ).
+  catch((e)=>{console.log(e)})  ;
+}
 
 
 const getSearchedItem=()=>{
@@ -155,12 +164,12 @@ const getSearchedItem=()=>{
 }
 
   return store.getState().Loading.isLoading == true?  (
-    <div className="patientlistpage">
+    <div className="departmentlistpage">
               <i className="fas fa-spinner fa-pulse fa-2x "></i>
       </div>
   ):
   (
-    <div className="patientlistpage">
+    <div className="departmentlistpage">
      
          
          
@@ -177,7 +186,7 @@ const getSearchedItem=()=>{
             ></i>
           </li>
           <li>
-            <h5>User</h5>
+            <h5>Department</h5>
  
     
 
@@ -226,7 +235,7 @@ const getSearchedItem=()=>{
 
         </div>
 
-<Link to={{pathname: "addpatient",
+<Link to={{pathname: "adddepartment",
                     state:{  
                       showmodal: true,
                    
@@ -238,7 +247,7 @@ const getSearchedItem=()=>{
           className="btn btn-warning"
         
         >
-          + Add User
+          + Add Department
         </button>
 </Link>
 
@@ -249,15 +258,15 @@ const getSearchedItem=()=>{
         <thead className="thead tablehead">
           <tr>
             <th scope="col">#</th>
-            <th scope="col">Profile</th>
+            <th scope="col">ID</th>
+            <th scope="col">Image</th>
             <th scope="col">Name</th>
-            <th scope="col">Sex</th>
-            <th scope="col">Age</th>
-            <th scope="col">Mobile</th>
+            <th scope="col">City ID</th>
+            <th scope="col">Clinic ID</th>
+      
+            <th scope="col">Options</th>
             {/* <th scope="col">Email</th> */}
-            <th scope="col">City</th>
-            <th scope="col">Date</th>
-            <th scope="col">Option</th>
+       
           </tr>
         </thead>
         { 
@@ -279,36 +288,41 @@ const getSearchedItem=()=>{
                     <td className="align-middle"  >
                       {((currenPage-1)*10+index) +1 }
                         </td>
+
                         <td className="align-middle">
+                    {p?.id  }
+                        </td>
+                        {/* <td className="align-middle">
                     {p?.imageUrl}
-                        </td>
+                        </td> */}
                         <td className="align-middle">
-                   {p?.firstName + " "+ p?.lastName} 
-                        </td>
-                        <td className="align-middle">
-                    {p?.gender == "undefined" ? null : p?.gender}
-                        </td>
-                        <td className="align-middle">
-                       {p?.age == "und" ? null : p?.age}
+                          <img style={{
+                            width:"100px",
+                            height:"100px",
+                           objectFit:"contain"
+                            }} src=  {p?.imageUrl !=null || p?.imageUrl != "undefined" ? p?.imageUrl:""  } alt="" srcset="" />
+               
                         </td>
                      
                         <td className="align-middle">
-                    {p?.pNo +" " + p?.phone }
+                       {p?.name }
                         </td>
+                     
+                    
                         <td className="align-middle">
            
-                    {p?.city == "undefined" ? null : p?.city}
+                    {p?.city_id}
                         </td>
                         <td className="align-middle">
-                    {p?.createdTimeStamp}
+                    {p?.clinic_id}
                         </td>
                      
                  
                     <td className="align-middle">
-                      <Link to={{pathname: "editpersondetails",
+                      <Link to={{pathname: "editdepartment",
                     state:{  
                       personDetails: p,
-                      collectionName: "patients",
+                      collectionName: "Department",
                     }
                     
                     }}  >
@@ -337,15 +351,12 @@ const getSearchedItem=()=>{
 
 
                       </Link>
+
+
                       <button
                         type="button"
                         className="btn btn-danger"
-                        onClick={() => {
-                          this.handleOnDelete(
-                            p.firstname + " " + p.lastname,
-                            p.patientid
-                          );
-                        }}
+                        onClick={() => { handleDelete( p.id ) }}
                       >
                         <i className="fa fa-trash" aria-hidden="true"></i>
                       </button>
@@ -371,7 +382,7 @@ const getSearchedItem=()=>{
   )
 
 }
-export default PatienList
+export default Department
 
 
 

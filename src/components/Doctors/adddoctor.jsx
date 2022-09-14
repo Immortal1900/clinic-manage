@@ -1,27 +1,24 @@
 import React, { Component, useState } from "react";
 import firebase from "../../firebase";
 import "react-datepicker/dist/react-datepicker.css";
-import AddClinicForm from "./addclinicform";
+import AddDoctorForm from "./adddoctorform";
 import Service from "../../Service/firebase";
-import "./addclinicform.css";
+import "./adddoctorform.css";
 import  FormPrompt  from "../DailogBoxes/formprompt";
 import { useEffect } from "react";
 import { Link, useLocation } from 'react-router-dom'
-import { addPersondetail } from "../../Service/clinic_fetch"
+import { addPersondetail } from "../../Service/doctor_fetch"
 import AlertDialogBox from "../DailogBoxes/alertdailogbox";
 import { useHistory } from "react-router-dom";
 import { getAge } from "../../Service/helpers";
 import { changeFormat } from "../../Service/helpers";
 import ErorrDialogBox from "../DailogBoxes/errordaologbox";
-import { getSpecified } from "../../Service/fetch_general";
-import { URLS } from "../../Service/config";
 
 
-const AddClinic =(props)=> {
+const AddDoctor =(props)=> {
   const location = useLocation();
   const myprops = location?.state;
   let history = useHistory();
-  const [cityList,setCityList] = useState ([])
   const [modal,setModal]=useState({
     showModal:false
   });
@@ -56,7 +53,6 @@ const AddClinic =(props)=> {
 
     useEffect(()=>{
       console.log(personDetails.dob);
-       getClinic();
       if(myprops != null && myprops != undefined ){
         if(myprops.showmodal == true){
           setModal((modal)=>({...modal,showModal:true}));
@@ -65,20 +61,187 @@ const AddClinic =(props)=> {
       }
     },[])
 
-    const getClinic = async ()=>{
-      const data = await getSpecified(URLS.GET_CITY).then((res)=>{
-        console.log(res)
-    
-        console.log(res.length);
-        console.log("RESPONSE IS",res)
-        setCityList(res);
-    }
-      ).
-      catch((e)=>{console.log(e)})  ;
-    
-    }
 
 
+  // constructor() {
+  //   super();
+
+  //   this.state = {
+  //     imageAvatar: "",
+  //     imagefile: "",
+  //     date: null,
+  //     // startDate: new Date(),
+  //     isLoading: false,
+  //     htmlelement: <i className="fa fa-user fa-8x" aria-hidden="true"></i>,
+
+  //     formData: {
+  //       firstname: "",
+  //       lastname: "",
+  //       sex: "",
+  //       age: "",
+  //       bloodgroup: "",
+  //       phonenumber: "",
+  //       email: "",
+  //       address: "",
+  //       city: "",
+  //       state: "",
+  //       zip: "",
+  //       remark: "",
+  //       birthdate: null,
+  //     },
+  //   };
+  // }
+
+  // handleSubmit = () => {
+  //   this.setState({
+  //     isLoading: true,
+  //   });
+  //   this.props.setCloseBtnAppear();
+  //   this.handleImageForUpload();
+  // };
+  // handleImageForUpload = () => {
+  //   const image = this.state.imagefile;
+  //   const url = "";
+
+  //   if (this.state.imagefile !== "") {
+  //     this.onUploadImage(image);
+  //   } else {
+  //     this.onAddPerson(url);
+  //   }
+  // };
+  // onUploadImage = async (image) => {
+  //   const url = await Service.uploadImage(image);
+  //   if (url !== "") {
+  //     this.onAddPerson(url);
+  //   }
+  // };
+  // async onAddPerson(imageUrl) {
+  //   let sendData = {
+  //     ...this.state.formData,
+  //     searchbyname: (
+  //       this.state.formData.firstname + this.state.formData.lastname
+  //     ).toLowerCase(),
+  //     imgaeurl: imageUrl,
+  //     timeStamp: firebase.firestore.Timestamp.fromDate(new Date()),
+  //   };
+  //   if (this.props.collectionName === "patients") {
+  //     sendData = {
+  //       ...sendData,
+
+  //       bedallotementid: "",
+  //       operationreportid: "",
+  //       birthreportid: "",
+  //       deathreportid: "",
+  //     };
+  //   }
+
+  //   const res = await Service.addData(
+  //     sendData,
+  //     this.props.collectionName,
+  //     this.props.id
+  //   );
+
+  //   if (res === "success") {
+  //     this.setState({
+  //       isLoading: false,
+  //     });
+
+  //     this.props.handleSuccessDailog();
+  //   } else {
+  //     this.setState({
+  //       isLoading: false,
+  //     });
+  //     this.props.handleErrorDailog();
+  //   }
+  // }
+
+  // handleChange = (date) => {
+  //   if (date !== null) {
+  //     const birthDate = new Date(date);
+
+  //     this.setState({
+  //       date: date,
+  //       formData: {
+  //         ...this.state.formData,
+  //         birthdate: `${
+  //           birthDate.getMonth() + 1
+  //         }/${birthDate.getDate()}/${birthDate.getFullYear()}`,
+  //       },
+
+  //       startDate: date,
+  //     });
+  //   } else {
+  //     this.setState({
+  //       date: date,
+  //       formData: {
+  //         ...this.state.formData,
+  //         birthdate: date,
+  //       },
+
+  //       startDate: date,
+  //     });
+  //   }
+  // };
+  // onImageChange = (event) => {
+  //   if (event.target.files && event.target.files[0]) {
+  //     this.setState({
+  //       imagefile: event.target.files[0],
+  //     });
+  //     let reader = new FileReader();
+  //     reader.onload = (e) => {
+  //       this.setState({
+  //         imageAvatar: e.target.result,
+  //         htmlelement: (
+  //           <div className="addpersonpage">
+  //             <img
+  //               className="netimage"
+  //               srcSet={e.target.result}
+  //               alt="profileImage"
+  //             />
+  //           </div>
+  //         ),
+  //       });
+  //     };
+  //     reader.readAsDataURL(event.target.files[0]);
+  //     this.setState({});
+  //   }
+  // };
+  // onImageRemove = () => {
+  //   this.setState({
+  //     imagefile: "",
+  //     imageAvatar: "",
+  //     htmlelement: (
+  //       <div className="addpersonpage">
+  //         <i className="fa fa-user fa-8x" aria-hidden="true"></i>
+  //       </div>
+  //     ),
+  //   });
+  // };
+  // onEdit = (e) => {
+  //   const formData = this.state.formData;
+  //   this.setState({
+  //     formData: {
+  //       ...formData,
+  //       [e.target.name]: e.target.value,
+  //     },
+  //   });
+  // };
+
+  
+    // if (this.state.imageAvatar === "") {
+    //   this.state.htmlelement = (
+    //     <div className="addpersonpage">
+    //       <i className="fa fa-user fa-8x" aria-hidden="true"></i>
+    //     </div>
+    //   );
+    // } else {
+    //   this.state.htmlelement = (
+    //     <div className="addpersonpage">
+    //       <img className="netimage" srcSet={this.state.imageAvatar} alt="" />
+    //     </div>
+    //   );
+    // }
+  
     const addnewUser = (e)=>{
     addPersondetail(personDetails).then((res)=>{
       console.log(res);
@@ -113,14 +276,14 @@ const AddClinic =(props)=> {
       console.log("CLOSEING")
       setalerts((alerts)=>({...alerts,dialog: false}));
       closeModal();
-      history.push("/clinic");
+      history.push("/doctor");
       console.log(window.location.href);
       window.location.reload();
       
     }
     const closeModal=()=>{
       setModal((modal)=>({...modal,showModal:false}))
-      history.push("/clinic");
+      history.push("/doctor");
       console.log(window.location.href);
     }
   
@@ -171,7 +334,7 @@ const AddClinic =(props)=> {
             <FormPrompt
             
             openDailog={modal.showModal}
-            title="Add New Clinic"
+            title="Add New doctor"
             onSetOpenDailog={closeModal}
             isCloseBtnAppear={true}
             >
@@ -184,7 +347,7 @@ const AddClinic =(props)=> {
   
          // setOpenDailog={setalerts}
        //   onSetOpenDailog={setalerts}
-        destination = {"clinic"}
+        destination = {"doctor"}
           title="Update"
           des="successfully updated"
         ></AlertDialogBox>
@@ -208,19 +371,19 @@ const AddClinic =(props)=> {
 
 
 
-            <AddClinicForm
+            <AddDoctorForm
                handleSubmit={addnewUser}
                 onEdit={onEdit}
                 ondateChange={ondateChange}
                 dob = {personDetails.dob}
-                cityList = {cityList}
+
                 // startDate={this.state.startDate}
               //  date={this.state.date}
               //  htmlelement={this.state.htmlelement}
              //   handleChange={this.handleChange}
               //  onImageRemove={this.onImageRemove}
                // onImageChange={this.onImageChange}
-              ></AddClinicForm>
+              ></AddDoctorForm>
             </FormPrompt> 
           
             </div>
@@ -230,4 +393,4 @@ const AddClinic =(props)=> {
     );
   
 }
-export default AddClinic;
+export default AddDoctor;

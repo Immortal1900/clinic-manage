@@ -1,16 +1,16 @@
 import React, { Component } from "react";
 import DateFnsUtils from "@date-io/date-fns";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
-import "./editclinicform.css";
+import "./editdepartmentform.css";
 
 import { useEffect } from "react";
 
-const EditClinicForm  = (props)=> {
+const EditDepartmentForm  = (props)=> {
 
    
 useEffect(()=>{
   
-  console.log("PROPS EDIT CLINIC", props);
+  console.log("PROPS EDIT Department", props);
 },[props])
 
     return (
@@ -47,13 +47,13 @@ useEffect(()=>{
                     />
                   </div>
                   <div className="col-md-6 mb-3">
-                    <label htmlFor="validationDefault02">Location Name</label>
+                    <label htmlFor="validationDefault02">City ID</label>
                     <input
-                      name="lName"
+                      name="city_id"
                       type="text"
                       className="form-control"
-                      id="lName"
-                      value={props.personDetails.lName}
+                      id="city_id"
+                      value={props.personDetails.city_id}
                       onChange={props.onEdit}
                       required
                     />
@@ -62,33 +62,26 @@ useEffect(()=>{
 
                 <div className="form-row">
                 <div className="col-md-6 mb-3">
-          <label htmlFor="validationDefault06">Google Map URL</label>
+          <label htmlFor="validationDefault06">Clinic ID</label>
               <input
-                name="gUrl"
+                name="clinic_id"
                 type="text"
                 className="form-control"
-                id="gUrl"
-                value={props.personDetails.gUrl}
+                id="clinic_id"
+                value={props.personDetails.clinic_id}
                 onChange={props.onEdit}
               />
             </div>
-             <div className="col-md-6 mb-3">
-          <label htmlFor="validationDefault06">City ID</label>
-      
-
-<select     className="form-control"   id="cityId"  value={props.personDetails.city_id}     name="cityId"
-      onChange={props.onEdit}>
-              {
-                props.cityList.map((city,index)=>{
-                  return (
-          
-                    <option value={city.id}>{city.cityName}</option>
-           
-          
-                  )
-                })
-              }
-                      </select>
+            <div className="col-md-6 mb-3">
+          <label htmlFor="validationDefault06">Image URL</label>
+              <input
+                name="imageUrl"
+                type="text"
+                className="form-control"
+                id="imageUrl"
+                value={props.personDetails.imageUrl}
+                onChange={props.onEdit}
+              />
             </div>
                 
               
@@ -97,34 +90,7 @@ useEffect(()=>{
               
 
                
-                <div className="form-row">
-                  <div className="col-md-12 mb-3">
-                    <label htmlFor="validationDefault04">Email</label>
-                    <input
-                      type="email"
-                      name="email"
-                      className="form-control"
-                      id="validationDefault04"
-                      value={props.personDetails.email}
-                      onChange={props.onEdit}
-                    />
-                  </div>
-                </div>
-              
-                <div className="form-row">
-                  <div className="col-md-6 mb-3">
-                    <label htmlFor="validationDefault06">Password</label>
-                    <input
-                      name="pass"
-                      type="text"
-                      className="form-control"
-                      id="pass"
-                      value={props.personDetails.pass}
-                      onChange={props.onEdit}
-                    />
-                  </div>
-               
-                </div>
+
 
           
 
@@ -167,4 +133,4 @@ useEffect(()=>{
   
 }
 
-export default EditClinicForm;
+export default EditDepartmentForm;

@@ -1,16 +1,16 @@
 import React, { Component } from "react";
 import DateFnsUtils from "@date-io/date-fns";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
-import "./editclinicform.css";
+import "./editdoctorform.css";
 
 import { useEffect } from "react";
 
-const EditClinicForm  = (props)=> {
+const EditDoctorForm  = (props)=> {
 
    
 useEffect(()=>{
   
-  console.log("PROPS EDIT CLINIC", props);
+  console.log("PROPS EDIT DCoCTOR", props);
 },[props])
 
     return (
@@ -72,23 +72,16 @@ useEffect(()=>{
                 onChange={props.onEdit}
               />
             </div>
-             <div className="col-md-6 mb-3">
+            <div className="col-md-6 mb-3">
           <label htmlFor="validationDefault06">City ID</label>
-      
-
-<select     className="form-control"   id="cityId"  value={props.personDetails.city_id}     name="cityId"
-      onChange={props.onEdit}>
-              {
-                props.cityList.map((city,index)=>{
-                  return (
-          
-                    <option value={city.id}>{city.cityName}</option>
-           
-          
-                  )
-                })
-              }
-                      </select>
+              <input
+                name="cityId"
+                type="text"
+                className="form-control"
+                id="cityId"
+                value={props.personDetails.cityId}
+                onChange={props.onEdit}
+              />
             </div>
                 
               
@@ -167,4 +160,4 @@ useEffect(()=>{
   
 }
 
-export default EditClinicForm;
+export default EditDoctorForm;

@@ -39,3 +39,8 @@
 .MuiDialog-paperWidthSm{
   width: 100%;
 }
+
+.noSubCat{
+  text-align: left;
+  padding-left: 10px;
+}

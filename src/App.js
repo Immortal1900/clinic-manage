@@ -18,8 +18,9 @@ class App extends Component {
     return (
       <div className="App">
         {  
-        // this.props.loginDetails.isLoggedIn 
-        true
+        localStorage.getItem('isLoggedIn')  == 'true'
+
+      
         ? <SideNavBar /> : <LoginPage />}
       </div>
     );

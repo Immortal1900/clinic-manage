@@ -4,9 +4,34 @@ import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import "./editclinicform.css";
 
 import { useEffect } from "react";
+import { useState } from "react";
 
 const EditClinicForm  = (props)=> {
+  const [errors,setErrors] = useState({})
 
+
+
+  const checkClinicForm = (e)=>{
+    e.preventDefault();
+    console.log("CALED,",props.personDetails.confirm_pass);
+    if(props.personDetails.pass != props.personDetails.confirm_pass && errors.pass_touched == true){
+      console.log("PASS NOT MATCHEed");
+      setErrors((errors)=>({...errors,pass_match:true}));
+    }
+    else {
+      setErrors((errors)=>({...errors,pass_match:false}));
+      props.update(e);
+    }
+    
+   
+    
+  }
+
+  
+const passChangeHandler = (e)=>{
+  setErrors((errors)=>({...errors,pass_touched:true}));
+  props.onEdit(e);
+}
    
 useEffect(()=>{
   
@@ -32,7 +57,7 @@ useEffect(()=>{
           <hr />
           <div className="row">
             <div className="col-sm-12 first_section">
-              <form onSubmit={props.update}>
+              <form onSubmit={checkClinicForm}>
                 <div className="form-row">
                   <div className="col-md-6 mb-3">
                     <label htmlFor="validationDefault01">Name</label>
@@ -109,6 +134,7 @@ useEffect(()=>{
                       onChange={props.onEdit}
                     />
                   </div>
+                  
                 </div>
               
                 <div className="form-row">
@@ -116,13 +142,27 @@ useEffect(()=>{
                     <label htmlFor="validationDefault06">Password</label>
                     <input
                       name="pass"
-                      type="text"
+                      type="password"
                       className="form-control"
                       id="pass"
                       value={props.personDetails.pass}
+                      onChange={(e)=>passChangeHandler(e)}
+                    />
+                  </div>
+                  <div className="col-md-6 mb-3">
+                    <label htmlFor="validationDefault06">Confirm Password</label>
+                    <input
+                      name="confirm_pass"
+                      type="password"
+                      className="form-control"
+                      id="confirm_pass"
+                      value={props.personDetails.confirm_pass}
                       onChange={props.onEdit}
                     />
                   </div>
+                  {errors.pass_match == true ? <div className="invalid-text">
+                <p>Pass didn't matched</p>
+              </div> :null}
                
                 </div>
 

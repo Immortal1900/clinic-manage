@@ -209,7 +209,7 @@ const getSearchedItem=()=>{
             ></i>
           </li>
           <li>
-            <h5>CLinic</h5>
+            <h5>City</h5>
  
     
 

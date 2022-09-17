@@ -47,6 +47,9 @@ export function getClinicU(url, ) {
 }
 
 
+
+
+
  export  async function  getSpecifieds  (params) {
   //const ms = Date.now();
   //  let res = await fetch('https://techashna.com/myclinic/kuwait/api/get_all_user.php' + 't='+ms,{

@@ -25,6 +25,94 @@ export function getSpecified(page) {
 }
 
 
+export function getDoctorTimeSlots(doctorid) {
+  console.log("CURRENT doctorid",doctorid);
+  return new Promise((resolve, reject) => {
+    axios({
+      method:'get',
+      url: URLS.GET_DOCTOR_TIMESLOTS + doctorid +nocache ,
+  }).then((res)=>{
+      console.log(res);
+      resolve(res.data);
+  }).catch((e)=>{
+      console.log(e)
+      reject(e);
+  })
+})
+}
+
+export  async function  deleteDocTimeSlots  (id ) {
+
+  let formData = new FormData();    //formdata object
+
+
+formData.append('id', id); 
+formData.append('dbName', 'doct_time_slots' )
+  
+  return new Promise((resolve, reject) => {
+    axios({
+      method:'post',
+      url:URLS.DELETE_ENTITY,
+      data: formData,
+      headers: { "Content-Type": "multipart/form-data" },
+  }).then((res)=>{
+      console.log(res);
+ 
+       if(res.data == "error"){
+        reject('error')
+      }
+      else{
+        resolve(res.data);
+      }
+    //  else{
+    //    reject(res.data)
+    //  }
+  }).catch((e)=>{
+      console.log(e)
+      reject(e);
+  })
+})
+
+
+}
+export  async function  addDoctorTimeSlots  (params,doct_id) {
+  console.log("DATA CLININC FETCH" ,params.firstname);
+  let formData = new FormData();    //formdata object
+  for (var key in params) {
+    if (params.hasOwnProperty(key)) {
+     
+    
+        formData.append(key, params[key]);
+    }
+}
+formData.append('doct_id', doct_id);
+  return new Promise((resolve, reject) => {
+    axios({
+      method:'post',
+      url: URLS.ADD_DOCTOR_TIMELOT,
+      data : formData,
+  }).then((res)=>{
+      console.log(res);
+   
+       if(res.data == "error"){
+        reject('error')
+      }
+      else{
+        resolve(res.data);
+      }
+      
+    //  else{
+    //    reject(res.data)
+    //  }
+  }).catch((e)=>{
+      console.log(e)
+      reject(e);
+  })
+})
+
+
+}
+
  export  async function  getSpecifieds  (params) {
   //const ms = Date.now();
   //  let res = await fetch('https://techashna.com/myclinic/kuwait/api/get_all_user.php' + 't='+ms,{
@@ -94,26 +182,19 @@ export  async function  updatePersonData  (params) {
   let formData = new FormData();    //formdata object
   for (var key in params) {
     if (params.hasOwnProperty(key)) {
+     
         console.log(key + " -> " + params[key]);
+        formData.append(key, params[key]);
     }
 }
 
-formData.append('id', params.id); 
-formData.append('name', params.name);   //append the values with key, value pair
-formData.append('lName',params.lName );
-formData.append('gUrl', params.gUrl);
-formData.append('cityId', params.cityId);
-formData.append('imageUrl', params.imageUrl);
-formData.append('number_reveal', params.number_reveal);
-formData.append('email', params.email);
-formData.append('pass', params.pass);
 
 
   
   return new Promise((resolve, reject) => {
     axios({
       method:'post',
-      url: URLS.UPDATE_CLINIC,
+      url: URLS.UPDATE_DOCTOR,
       data: formData,
       headers: { "Content-Type": "multipart/form-data" },
   }).then((res)=>{
@@ -142,24 +223,18 @@ export  async function  addPersondetail  (params) {
   let formData = new FormData();    //formdata object
   for (var key in params) {
     if (params.hasOwnProperty(key)) {
+     
         console.log(key + " -> " + params[key]);
+        formData.append(key, params[key]);
     }
 }
-  formData.append('name', params.name);   //append the values with key, value pair
-  formData.append('lName',params.iName );
-  formData.append('gUrl', params.gUrl);
-  formData.append('cityId', params.cityId);
-  formData.append('imageUrl', params.imageUrl);
-  formData.append('number_reveal', params.number_reveal);
-  formData.append('email', params.email);
-  formData.append('pass', params.pass);
 
 
 
   return new Promise((resolve, reject) => {
     axios({
       method:'post',
-      url: URLS.ADD_CLINIC,
+      url: URLS.ADD_DOCTOR,
       data : formData,
   }).then((res)=>{
       console.log(res);

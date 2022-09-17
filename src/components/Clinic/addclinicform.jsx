@@ -4,9 +4,37 @@ import DateFnsUtils from "@date-io/date-fns";
 import "./addclinicform.css";
 
 class AddClinicForm extends Component {
+
+  constructor(props) {
+    super();
+      this.state = {
+         error_pass_match: false 
+        
+        };
+    }
+  checkDoctorForm = (e)=>{
+    e.preventDefault();
+    console.log("CALED,",this.props.personDetails.confirm_pass);
+    if(this.props.personDetails.pass != this.props.personDetails.confirm_pass){
+      console.log("PASS NOT MATCHEed");
+      this.setState({
+        error_pass_match: true
+      })
+    }
+    else {
+      this.setState({
+        error_pass_match: false
+      })
+      this.props.handleSubmit(e);
+    }
+
+
+  }
+
+
   render() {
     return (
-      <form onSubmit={this.props.handleSubmit}>
+      <form onSubmit={this.checkDoctorForm}>
         <div className="first_section">
           <div className="form-row">
             <div className="col-md-6 mb-3">
@@ -141,12 +169,23 @@ class AddClinicForm extends Component {
               <label htmlFor="validationDefault06">Password</label>
               <input
                 name="pass"
-                type="text"
+                type="password"
                 className="form-control"
                 id="pass"
                 onChange={this.props.onEdit}
               />
             </div>
+            <div className="col-md-6 mb-3">
+              <label htmlFor="validationDefault06">Confirm Password</label>
+              <input
+                name="confirm_pass"
+                type="password"
+                className="form-control"
+                id="confirm_pass"
+                onChange={this.props.onEdit}
+              />
+            </div>
+            {this.state.error_pass_match  == true ? <div className="invalid-text"> "Password Didn't matched"</div> : null}
           </div>
              {/*
             <div className="col-md-3 mb-3">

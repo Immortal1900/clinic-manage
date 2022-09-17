@@ -14,7 +14,24 @@
     align-items: center;
     width: 100px;
   }
-  
+  .div-flex-col{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+  }
+.place-baseline{
+  display: flex;
+  align-items: center;
+}
+
+.topheader li{
+  text-align: left;
+}
+  .timeslots-add{
+    max-height: 40%;
+    min-height: 200px;
+    width: 100%;
+  }
   .editd_person_details_formpage .main_section .topheader h5 {
     margin: auto;
   }

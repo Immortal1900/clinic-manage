@@ -4,72 +4,108 @@ import DateFnsUtils from "@date-io/date-fns";
 import "./adddoctorform.css";
 
 class AddDoctorForm extends Component {
+  constructor(props) {
+  super();
+    this.state = {
+       error_pass_match: false 
+      
+      };
+  }
+
+   checkDoctorForm = (e)=>{
+    e.preventDefault();
+    console.log("CALED,",this.props.personDetails.confirm_pass);
+    if(this.props.personDetails.pass != this.props.personDetails.confirm_pass){
+      console.log("PASS NOT MATCHEed");
+      this.setState({
+        error_pass_match: true
+      })
+    }
+    else {
+      this.setState({
+        error_pass_match: false
+      })
+      this.props.handleSubmit(e);
+    }
+    
+   
+    
+  }
+
+
   render() {
     return (
-      <form onSubmit={this.props.handleSubmit}>
+      <form onSubmit={
+       // this.props.handleSubmit
+       this.checkDoctorForm
+        }>
         <div className="first_section">
           <div className="form-row">
             <div className="col-md-6 mb-3">
-              <label htmlFor="validationDefault01">Name</label>
+              <label htmlFor="validationDefault01">First Name</label>
               <input
-                name="name"
+                name="firstName"
                 type="text"
                 className="form-control"
-                id="name"
+                id="firstName"
                 onChange={this.props.onEdit}
                 required
               />
             </div>
             <div className="col-md-6 mb-3">
-              <label htmlFor="validationDefault02">iName</label>
+              <label htmlFor="validationDefault01">Last Name</label>
               <input
-                name="lName"
+                name="lastName"
                 type="text"
                 className="form-control"
-                id="lName"
+                id="lastName"
                 onChange={this.props.onEdit}
                 required
               />
             </div>
+          
           </div>
           <div className="form-row">
           <div className="col-md-6 mb-3">
-          <label htmlFor="validationDefault06">Google Map URL</label>
+          <label htmlFor="validationDefault06">email</label>
               <input
-                name="gUrl"
+                name="email"
                 type="text"
                 className="form-control"
-                id="gUrl"
+                id="email"
                 onChange={this.props.onEdit}
               />
             </div>
+          
 
-            <div className="col-md-6 mb-3">
-          <label htmlFor="validationDefault06">City ID</label>
-              <input
-                name="cityId"
-                type="text"
-                className="form-control"
-                id="cityId"
-                onChange={this.props.onEdit}
-              />
-            </div>
+         
 
           
        
-            {/* <div className="col-md-6 mb-3">
-              <label htmlFor="validationDefault11">Age</label>
-              <input
-                name="age"
-                type="number"
-                className="form-control"
-                id="age"
-                onChange={this.props.onEdit}
-              />
-            </div> */}
+         
           </div>
 
           <div className="form-row">
+          <div className="col-md-6 mb-3">
+          <label htmlFor="validationDefault06">Phone No.</label>
+              <input
+                name="pNo1"
+                type="text"
+                className="form-control"
+                id="pNo1"
+                onChange={this.props.onEdit}
+              />
+            </div>
+          <div className="col-md-6 mb-3">
+          <label htmlFor="validationDefault06">Alternate Phone No.</label>
+              <input
+                name="pNo2"
+                type="text"
+                className="form-control"
+                id="pNo2"
+                onChange={this.props.onEdit}
+              />
+            </div>
          
             {/* <div className="col-md-6 mb-3">
               <label htmlFor="validationDefault13">Blood Group</label>
@@ -102,20 +138,40 @@ class AddDoctorForm extends Component {
           </div>
 
           <div className="form-row">
-         
-          </div>
-          <div className="form-row">
-            <div className="col-md-12 mb-3">
-              <label htmlFor="validationDefault04">Email</label>
+          <div className="col-md-6 mb-3">
+          <label htmlFor="validationDefault06">Password</label>
               <input
-                type="email"
-                name="email"
+                name="pass"
+                type="text"
                 className="form-control"
-                id="email"
+                id="pass"
                 onChange={this.props.onEdit}
               />
             </div>
+            <div className="col-md-6 mb-3">
+          <label htmlFor="validationDefault06">Confirm Password</label>
+              <input
+                name="confirm_pass"
+                type="text"
+                className="form-control"
+                id="confirm_pass"
+                onChange={this.props.onEdit}
+              />
+            </div>
+            {this.state.error_pass_match  == true ? <div className="invalid-text"> "Password Didn't matched"</div> : null}
           </div>
+
+          {/* <div className="col-md-6 mb-3">
+              <label htmlFor="validationDefault06">Password</label>
+              <input
+                name="pass"
+                type="text"
+                className="form-control"
+                id="pass"
+                onChange={this.props.onEdit}
+              />
+            </div> */}
+        
           {/* <div className="form-row">
             <div className="col-md-12 mb-3">
               <label htmlFor="validationDefault05">Address</label>
@@ -129,13 +185,13 @@ class AddDoctorForm extends Component {
             </div>
           </div> */}
           <div className="form-row">
-            <div className="col-md-6 mb-3">
-              <label htmlFor="validationDefault06">Password</label>
+          <div className="col-md-6 mb-3">
+          <label htmlFor="validationDefault06">Whatsapp No.</label>
               <input
-                name="pass"
+                name="whatsAppNo"
                 type="text"
                 className="form-control"
-                id="pass"
+                id="whatsAppNo"
                 onChange={this.props.onEdit}
               />
             </div>
@@ -206,6 +262,9 @@ class AddDoctorForm extends Component {
             </div>
           </div>
         </div> */}
+
+
+
         <button className="btn btn-success savebtn" type="submit" >
           Save
         </button>

@@ -9,7 +9,7 @@ import EditDoctorForm from "./editdoctorform.jsx";
 import { useState } from "react";
 import { useEffect } from "react";
 import { Link, useLocation } from 'react-router-dom'
-import { updatePersonData } from "../../Service/doctor_fetch"; 
+import { addDoctorTimeSlots, deleteDocTimeSlots, getDoctorTimeSlots, updatePersonData } from "../../Service/doctor_fetch"; 
 import { useHistory } from "react-router-dom";
 import { getAge,changeFormat } from "../../Service/helpers";
 
@@ -25,6 +25,9 @@ const EditDoctor =(props)=> {
   const [msg,setMsg] = useState(
   
     ) 
+    const [timeslots,setTimeSlots] = useState({});
+    const [stateUpdated,setStateupdate] = useState(0);
+    const [addTimeSlot,setaddTimeSlot] = useState({})
   const myprops = location?.state;
   useEffect(()=>{
     console.log("RAN ONCE EDITPERSONDETAIL");
@@ -33,6 +36,7 @@ const EditDoctor =(props)=> {
    
    const asynccaller = async ()=>{
     await initState();
+    await getDocTimeSlots();
     }
     console.log(myprops);
     asynccaller();
@@ -40,7 +44,7 @@ const EditDoctor =(props)=> {
 
   useEffect(()=>{
     console.log(personDetails);
-  },[personDetails])
+  },[initialized])
   
   const closedialog=(e)=>{
     e.preventDefault();
@@ -51,34 +55,74 @@ const EditDoctor =(props)=> {
     window.location.reload();
   }
 
+  const getDocTimeSlots= async()=>{
+   await getDoctorTimeSlots(myprops.personDetails.id).then((res)=>{
+      console.log("TIME SLOTS",res);
+      setTimeSlots(()=>(res));
+      setStateupdate((stateUpdated)=>stateUpdated+1)
+   
+      setinitialized(()=>true);
+    }).catch((e)=>console.log(e))
+
+
+  }
 
   const initState= async()=>{
     console.log("CALLED");
     console.log(myprops);
 
     if(      personDetails != null    ){
-      setpersonDetails((personDetails)=>({...personDetails,
-        id:myprops.personDetails?.id,
-        name:myprops.personDetails?.title,
-        imageUrl: myprops.personDetails?.imageUrl,
-        lName:myprops.personDetails?.location_name,
-        gUrl: myprops.personDetails?.location,
-        cityId: myprops.personDetails?.city_id,
-        number_reveal: myprops.personDetails?.number_reveal,
-        pass: myprops.personDetails?.pass,
-        email: myprops.personDetails?.email,
-    
- }))
-    }
-
-setinitialized(()=>true);
-
-  }
+      Object.keys(myprops.personDetails).forEach(function(key,index) {
+        // key: the name of the object key
+        // index: the ordinal position of the key within the object 
+      
+        let field_value = myprops.personDetails[key];
+        if(field_value != null ||  field_value != ''){
+          setpersonDetails((personDetails)=>({...personDetails,[key]:myprops.personDetails[key]}));
+        }
+  })
+  }}
   
     const onEdit = (event)=>{
       console.log("CALLED")
       const { name, value } = event.target;
       setpersonDetails((personDetails)=>({...personDetails,[name]:value}))
+    }
+
+    const addDoctorTimeSlot = ()=>{
+      console.log("CASD")
+      addDoctorTimeSlots(addTimeSlot, myprops.personDetails.id).then((res)=>{
+
+        console.log("addDoctorTimeSlot",res);
+        if(res == "success"){
+          setMsg("success");
+        //  setalerts((alerts)=>({...alerts,dialog:true}))
+          console.log("Added successfully");
+        }
+     //   window.location.reload();
+
+      }).catch((e)=>{})
+    }
+
+    
+    const deleteTimeSlots = (id)=>{
+      console.log("ID IS " ,id);
+      deleteDocTimeSlots(id).then((res)=>{
+        console.log(res);
+
+        window.location.reload();
+      }).catch((e)=>console.log(e))
+    }
+
+
+
+
+    const onEditTimeSlot = (event)=>{
+      console.log(" onEditTimeSlot CALLED" , event.target.value)
+      console.log(" onEditTimeSlot CALLED" , event.target.name)
+
+      const { name, value } = event.target;
+      setaddTimeSlot((addTimeSlot)=>({...addTimeSlot,[name]:value}))
     }
 
     const ondateChange = (e)=>{
@@ -152,7 +196,7 @@ e.preventDefault();
   
          // setOpenDailog={setalerts}
        //   onSetOpenDailog={setalerts}
-        destination = {"patientlist"}
+          //destination = {"patientlist"}
           title="Update"
           des="successfully updated"
         ></AlertDialogBox>
@@ -169,17 +213,22 @@ e.preventDefault();
         ></ErorrDialogBox>  */}
         
         
-        
+      
 
         {initialized == true ?   <EditDoctorForm
         // handleSubmit={this.handleSubmit}
          onEdit={onEdit}
         // date={personDetails.date}
         // handleChange={this.handleChange}
-        ondateChange={ondateChange}
+          ondateChange={ondateChange}
           personDetails={personDetails}
           update={updatePers}
           setpersonDetails={setpersonDetails}
+          timeslots ={timeslots}
+          addTimeSlot ={addTimeSlot}
+          addDoctorTimeSlot={addDoctorTimeSlot}
+          onEditTimeSlot = {onEditTimeSlot}
+          deleteTimeSlots={deleteTimeSlots}
         //profileHtmlelEment={personDetails.profileHtmlelEment}
         //onImageRemove={this.onImageRemove}
         //onImageChange={this.onImageChange}
@@ -191,7 +240,7 @@ e.preventDefault();
       </div>
     )
      }
-  
+   
 
 
 export default EditDoctor;

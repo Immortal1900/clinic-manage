@@ -2,6 +2,9 @@ const ms = Date.now();
 const nocache = "?t="+ ms;
 export const URLS = {
 
+    DELETE_ENTITY:"deleted_updated",
+
+
     BASE_URL : "https://techashna.com/myclinic/kuwait/api/",
     GET_PATIENT : "get_all_user.php?page=" ,
     UPDATE_USER:"update_user"  + nocache,
@@ -19,7 +22,12 @@ export const URLS = {
     ///get_dr_by_clinicdept?page=1&sr=&deptId=1&clinicId=1
     GET_DOCTOR : "get_all_dr?page=",
     SEARCH_DOCTOR:"get_all_dr?sr=" ,
+    ADD_DOCTOR:"add_doctors",
+    UPDATE_DOCTOR:"update_drprofile",
 
+
+    GET_DOCTOR_TIMESLOTS:"get_doct_timelsot?doctId=",
+    ADD_DOCTOR_TIMELOT :"add_doct_timeslot",
 
     /************Department ******** */
     GET_DEPT : "get_dep?page=",

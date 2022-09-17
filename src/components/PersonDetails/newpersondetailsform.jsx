@@ -100,6 +100,20 @@ class NewPersonDetailsForm extends Component {
               autoComplete="off"
             /> */}
             </div>
+
+            <div className="form-row">
+            <div className="col-md-6 mb-3">
+              <label htmlFor="validationDefault06">Age</label>
+              <input
+                name="age"
+                type="text"
+                className="form-control"
+                id="age"
+                value={this.props.personDetails.age}
+                onChange={this.props.onEdit}
+              />
+            </div>
+          </div>
             {/* <div className="col-md-6 mb-3">
               <label htmlFor="validationDefault13">Blood Group</label>
               <select

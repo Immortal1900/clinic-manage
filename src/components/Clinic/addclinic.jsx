@@ -214,6 +214,7 @@ const AddClinic =(props)=> {
                 ondateChange={ondateChange}
                 dob = {personDetails.dob}
                 cityList = {cityList}
+                personDetails={personDetails}
                 // startDate={this.state.startDate}
               //  date={this.state.date}
               //  htmlelement={this.state.htmlelement}

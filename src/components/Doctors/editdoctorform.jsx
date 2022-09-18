@@ -53,7 +53,7 @@ useEffect(()=>{
 
     return (
       <div className="row g-0">
-      <div className="col-8">
+      <div className="col-8 mycard p-3">
         <div className="container main_section_edit">
           <div className="topheader">
             <ul>
@@ -308,7 +308,7 @@ useEffect(()=>{
         </div>
       </div>
 
-      <div className="col-4" style={{height:"900px"}}>
+      <div className="col-4 mycard p-3" style={{height:"900px"}}>
 
 
             <div className="div-flex-col"  style={{marginTop:"35px"}}>

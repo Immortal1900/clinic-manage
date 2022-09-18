@@ -6,7 +6,10 @@
   height: 40vmin;
   pointer-events: none;
 }
+.mycard{
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
 
+}
 @media (prefers-reduced-motion: no-preference) {
   .App-logo {
     animation: App-logo-spin infinite 20s linear;

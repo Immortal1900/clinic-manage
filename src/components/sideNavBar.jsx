@@ -14,6 +14,13 @@ import {
   Link,
   Redirect,
 } from "react-router-dom";
+
+
+
+
+
+
+
 import { setLogInDetails } from "../actions/setpersondetailsaction";
 import { connect } from "react-redux";
 import AddClinic from "./Clinic/addclinic";
@@ -27,6 +34,18 @@ import Department from "./Department/department";
 import AddCity from "./City/addcity";
 import EditCity from "./City/editcity";
 import City from './City/city'
+import Appointment from "./Appointment/appointment";
+
+
+
+
+
+
+
+
+
+
+
 class SideNavBar extends Component {
   state = {
     addHamburgerClass: false,
@@ -178,6 +197,20 @@ class SideNavBar extends Component {
                       <i className="fa fa-user" aria-hidden="true"></i>
                     </span>
                     <span className="title">Doctor </span>
+                  </li>
+                </Link>
+
+                <Link to="/appointment">
+                  <li
+                    className={
+                      this.state.selectedCat === "appointment" ? "active" : ""
+                    }
+                    onClick={() => this.setTitleActive("appointment")}
+                  >
+                    <span className="icon">
+                      <i className="fa fa-user" aria-hidden="true"></i>
+                    </span>
+                    <span className="title">Appointment </span>
                   </li>
                 </Link>
 
@@ -474,6 +507,38 @@ class SideNavBar extends Component {
               <Route path="/editcity">
                 <EditCity />
               </Route>
+
+
+
+
+{/* ************************************** */}
+<Route path="/appointment">
+                <Appointment />
+              </Route>
+              <Route path="/addappointment">
+                <AddCity />
+              </Route>
+              <Route path="/editappointment">
+                <EditCity />
+              </Route>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
               {/* <Route path="/doctorslist">
                 <DoctorsLis />

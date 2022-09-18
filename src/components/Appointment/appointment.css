@@ -1,0 +1,64 @@
+.tab-container{
+    width: 100%;
+    background-color:white;
+    height: 1000px;
+}
+.tab-container button{
+    padding: 4px;
+    width: 100%;
+    border: solid transparent 1px ;
+    background-color: transparent;
+
+}
+
+.tab-container button:hover{
+    padding: 4px;
+    width: 100%;
+    border: solid gray 1px;
+    
+}
+
+
+.tab-button-container{
+    width: 100%;
+    background-color: gray;
+    border-radius: 6px;
+}
+.tab-button-container-active {
+
+    width: 100%;
+    border: none;
+    background-color: white;
+}
+
+.tab-container-active button{
+    padding: 4px;
+    width: 100%;
+    border: none;
+    background-color: white;
+}
+
+
+
+
+
+.div-f-tabs{
+    display: flex;
+    justify-content: space-around;
+    flex-direction: row;
+    width: 100%;
+}
+
+.tab-button-container{
+    width: 100%;
+
+}
+
+
+
+.tab-data-container{
+
+    height: 1000px;
+    width: 100%;
+    padding: 4px;
+}

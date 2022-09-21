@@ -48,29 +48,46 @@ useEffect(()=>{
                   </div>
                   <div className="col-md-6 mb-3">
                     <label htmlFor="validationDefault02">City ID</label>
-                    <input
-                      name="city_id"
-                      type="text"
-                      className="form-control"
-                      id="city_id"
-                      value={props.personDetails.city_id}
-                      onChange={props.onEdit}
-                      required
-                    />
+                 
+                             <select     className="form-control"   id="city_id"  required   name="city_id"          value={props.personDetails.city_id}
+                    onChange={(e)=>props.onEdit(e)}>    
+                               <option value=''>Select </option>  
+
+              {
+                props.cities.map((city,index)=>{
+       
+                  return (
+                    
+                    <option value={city.id}>{ city.cityName} </option>
+           
+          
+                  ) 
+                })
+              }
+              </select>
                   </div>
                 </div>
 
                 <div className="form-row">
                 <div className="col-md-6 mb-3">
           <label htmlFor="validationDefault06">Clinic ID</label>
-              <input
-                name="clinic_id"
-                type="text"
-                className="form-control"
-                id="clinic_id"
-                value={props.personDetails.clinic_id}
-                onChange={props.onEdit}
-              />
+          
+                  <select     className="form-control"   id="clinic_id"  required   name="clinic_id"   value={props.personDetails.clinic_id}
+                    onChange={(e)=>props.onEdit(e)}>    
+                               <option value=''>Select </option>  
+
+              {
+                props.allClinic.map((clinic,index)=>{
+       
+                  return (
+                    
+                    <option value={clinic.city_id}>{ clinic.title} - ID {clinic.city_id} </option>
+           
+          
+                  ) 
+                })
+              }
+              </select>
             </div>
             <div className="col-md-6 mb-3">
           <label htmlFor="validationDefault06">Image URL</label>

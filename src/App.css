@@ -15,6 +15,26 @@
     animation: App-logo-spin infinite 20s linear;
   }
 }
+
+.position-center{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+.position-baseline{
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
+
+}
+.position-end{
+  display: flex;
+  justify-content: center;
+  align-items: end;
+
+}
+
 .invalid-text{
   font-size: 12px;
   color: red;

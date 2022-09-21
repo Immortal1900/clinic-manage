@@ -101,7 +101,7 @@ useEffect(()=>{
           <label htmlFor="validationDefault06">City ID</label>
       
 
-<select     className="form-control"   id="cityId"  value={props.personDetails.city_id}     name="cityId"
+<select     className="form-control"   id="cityId"  value={props.personDetails.cityId}     name="cityId"
       onChange={props.onEdit}>
               {
                 props.cityList.map((city,index)=>{

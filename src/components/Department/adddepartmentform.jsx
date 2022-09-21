@@ -4,6 +4,19 @@ import DateFnsUtils from "@date-io/date-fns";
 import "./adddepartmentform.css";
 
 class AddDepartmentForm extends Component {
+
+  constructor(props) {
+    super();
+    this.state={
+      error_clinic_id:false,
+    }
+  }
+  componentDidMount(){
+    console.log("CLINICS",this.props.allClinic);
+    console.log("CITIES",this.props.cities);
+  }
+
+
   render() {
     return (
       <form onSubmit={this.props.handleSubmit}>
@@ -22,26 +35,41 @@ class AddDepartmentForm extends Component {
             </div>
             <div className="col-md-6 mb-3">
               <label htmlFor="validationDefault02">City ID</label>
-              <input
-                name="city_id"
-                type="text"
-                className="form-control"
-                id="city_id"
-                onChange={this.props.onEdit}
-                required
-              />
+        
+               <select     className="form-control"   id="city_id"  required   name="city_id"
+              onChange={(e)=>this.props.onEdit(e)}>    
+                         <option value=''>Select </option>  
+
+        {
+          this.props.cities.map((city,index)=>{
+ 
+            return (
+              
+              <option value={city.id}>{ city.cityName} </option>
+     
+    
+            ) 
+          })
+        }
+        </select>
             </div>
           </div>
           <div className="form-row">
           <div className="col-md-6 mb-3">
           <label htmlFor="validationDefault06">Clinic ID</label>
-              <input
-                name="clinic_id"
-                type="text"
-                className="form-control"
-                id="clinic_id"
-                onChange={this.props.onEdit}
-              />
+          <select     className="form-control"   id="clinic_id"  required   name="clinic_id"
+                    onChange={(e)=>this.props.onEdit(e)}>    
+                               <option value=''>Select </option>  
+
+              {
+                this.props.allClinic.map((clinic,index)=>{
+                  return (     
+                    <option value={clinic.city_id}>{ clinic.title} - ID {clinic.city_id} </option>
+                  ) 
+                })
+              }
+              </select>
+          
             </div>
 
             <div className="col-md-6 mb-3">

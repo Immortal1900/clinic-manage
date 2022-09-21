@@ -12,6 +12,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { updatePersonData } from "../../Service/fetch"; 
 import { useHistory } from "react-router-dom";
 import { getAge,changeFormat } from "../../Service/helpers";
+import { getAllCity } from "../../Service/dropdown_data";
 
 const EditPersonDetails =(props)=> {
 
@@ -22,9 +23,8 @@ const EditPersonDetails =(props)=> {
   })
   let history = useHistory();
   const location = useLocation();
-  const [msg,setMsg] = useState(
-  
-    )
+  const [msg,setMsg] = useState();
+    const [cities,setCities] = useState([]);
   const myprops = location?.state;
   useEffect(()=>{
     console.log("RAN ONCE EDITPERSONDETAIL");
@@ -32,10 +32,13 @@ const EditPersonDetails =(props)=> {
 
    
    const asynccaller = async ()=>{
-    await initState();
+    await initState().then(()=>{
+      setinitialized(()=>true);
+    })
     }
     console.log(props);
     asynccaller();
+    
   },[])
 
   useEffect(()=>{
@@ -63,6 +66,7 @@ const EditPersonDetails =(props)=> {
         age: myprops.personDetails?.age,
         dob: myprops.personDetails?.dob,
         civil_id: myprops.personDetails?.civil_id,
+        clinic_id :myprops.personDetails?.clinic_id,
         city: myprops.personDetails?.city,
         email: myprops.personDetails?.email,
         firstName: myprops.personDetails?.firstName,
@@ -73,12 +77,24 @@ const EditPersonDetails =(props)=> {
         state: myprops.personDetails?.state,
         zip: myprops.personDetails?.zip,
         collectionName: myprops.collectionName,
+
  }))
+ getallcity();
     }
 
-setinitialized(()=>true);
+
 
   }
+  const getallcity = async()=>{
+    await getAllCity().then((res)=>{
+      console.log("TIME SLOTS",res);
+      setCities(()=>(res));
+    //  setStateupdate((stateUpdated)=>stateUpdated+1)
+   
+
+    }).catch((e)=>console.log(e))
+  }
+
   
     const onEdit = (event)=>{
       console.log("CALLED")
@@ -176,6 +192,7 @@ e.preventDefault();
           personDetails={personDetails}
           update={updatePers}
           setpersonDetails={setpersonDetails}
+          cities={cities}
         //profileHtmlelEment={personDetails.profileHtmlelEment}
         //onImageRemove={this.onImageRemove}
         //onImageChange={this.onImageChange}

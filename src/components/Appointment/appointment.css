@@ -14,15 +14,15 @@
 .tab-container button:hover{
     padding: 4px;
     width: 100%;
-    border: solid gray 1px;
+    color: black;
     
 }
 
 
 .tab-button-container{
     width: 100%;
-    background-color: gray;
-    border-radius: 6px;
+    background-color: #D3D3D3;
+  
 }
 .tab-button-container-active {
 

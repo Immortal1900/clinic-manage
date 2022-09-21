@@ -155,6 +155,7 @@ export  async function  addPersondetail  (params) {
   formData.append('gender', params.sex);
   formData.append('age', params.age);
   formData.append('pNo', params.phonenumber);
+  formData.append('clinic_id', params.clinic_id);
 
   formData.append('civil_id', params.civil_id);
   formData.append('dob', params.dob);

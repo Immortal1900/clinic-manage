@@ -13,9 +13,12 @@ import { useHistory } from "react-router-dom";
 import { getAge } from "../../Service/helpers";
 import { changeFormat } from "../../Service/helpers";
 import ErorrDialogBox from "../DailogBoxes/errordaologbox";
+import { getAllCity, getAllCLinic } from "../../Service/dropdown_data";
 
 
 const AddPersonDetails =(props)=> {
+
+
   const location = useLocation();
   const myprops = location?.state;
   let history = useHistory();
@@ -24,17 +27,15 @@ const AddPersonDetails =(props)=> {
   });
   const [alerts,setalerts] = useState({
     dialog:false,
- 
   })
-
-  const [msg,setMsg] = useState(
-  
-  )
-    const [personDetails,setpersonDetails] = useState({
-    
-
+  const [msg,setMsg] = useState(  )
+  const [allClinic, setAllClinic ] = useState([]);
+  const [cities,setCities] = useState([]);
+  const [personDetails,setpersonDetails] = useState({
       dob : changeFormat( new Date())
     });
+    const [initialized, setinitialized] = useState(false);
+
   
 
     useEffect(()=>{
@@ -45,6 +46,12 @@ const AddPersonDetails =(props)=> {
         }
       
       }
+      getAllCLininc().then(()=>      
+      getallcity().then(()=>{
+        setinitialized(()=>true);
+      })
+      )
+
     },[])
 
 
@@ -77,7 +84,25 @@ const AddPersonDetails =(props)=> {
       e.preventDefault();
     }
 
-  
+  const getAllCLininc= async()=>{
+    await getAllCLinic().then((res)=>{
+      console.log("TIME SLOTS",res);
+      setAllClinic(()=>(res));
+    //  setStateupdate((stateUpdated)=>stateUpdated+1)
+   
+     // setinitialized(()=>true);
+    }).catch((e)=>console.log(e))
+  }
+  const getallcity = async()=>{
+    await getAllCity().then((res)=>{
+      console.log("TIME SLOTS",res);
+      setCities(()=>(res));
+    //  setStateupdate((stateUpdated)=>stateUpdated+1)
+   
+
+    }).catch((e)=>console.log(e))
+  }
+
 
     const closedialog=(e)=>{
       e.preventDefault();
@@ -177,22 +202,25 @@ const AddPersonDetails =(props)=> {
 
 
 
-
-
+{ initialized == true ?
             <NewPersonDetailsForm
                handleSubmit={addnewUser}
                 onEdit={onEdit}
                 ondateChange={ondateChange}
                 dob = {personDetails.dob}
-          
+                allClinic={allClinic}
                 personDetails={personDetails}
+                cities={cities}
                 // startDate={this.state.startDate}
               //  date={this.state.date}
               //  htmlelement={this.state.htmlelement}
              //   handleChange={this.handleChange}
               //  onImageRemove={this.onImageRemove}
                // onImageChange={this.onImageChange}
-              ></NewPersonDetailsForm>
+              ></NewPersonDetailsForm> :null}
+
+
+
             </FormPrompt>
           
             </div>

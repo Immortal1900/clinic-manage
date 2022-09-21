@@ -4,10 +4,53 @@ import DateFnsUtils from "@date-io/date-fns";
 import "./newpersondetailsform.css";
 
 class NewPersonDetailsForm extends Component {
+  constructor(props) {
+    super();
+    this.state={
+      error_clinic_id:false,
+    }
+  }
+  componentDidMount(){
+    console.log("CLINICS",this.props.allClinic);
+    console.log("CITIES",this.props.cities);
+  }
+
+   validate=(e)=>{
+
+    if(e.target.value == 'none'){
+
+    }
+    else{
+      this.props.onEdit(e)
+    }
+   
+  }
+
   render() {
     return (
       <form onSubmit={this.props.handleSubmit}>
         <div className="first_section">
+        <div className="form-row">
+            <div className="col-md-6 mb-3">
+              <label htmlFor="validationDefault01">Clinic ID</label>
+              <select     className="form-control"   id="clinic_id"  required   name="clinic_id"
+                    onChange={(e)=>this.props.onEdit(e)}>    
+                               <option value=''>Select </option>  
+
+              {
+                this.props.allClinic.map((clinic,index)=>{
+       
+                  return (
+                    
+                    <option value={clinic.city_id}>{ clinic.title} - ID {clinic.city_id} </option>
+           
+          
+                  ) 
+                })
+              }
+              </select>
+            </div>
+          </div>
           <div className="form-row">
             <div className="col-md-6 mb-3">
               <label htmlFor="validationDefault01">First name</label>
@@ -44,7 +87,7 @@ class NewPersonDetailsForm extends Component {
               />
             </div>
             <div className="col-md-6 mb-3">
-              <label htmlFor="validationDefault10">Sex</label>
+              <label htmlFor="validationDefault10">Gender</label>
               <select
                 name="sex"
                 className="custom-select"
@@ -150,6 +193,11 @@ class NewPersonDetailsForm extends Component {
               <input
                 name="phonenumber"
                 type="number"
+                onKeyPress={(event) => {
+                  if (!/[0-9]/.test(event.key)) {
+                    event.preventDefault();
+                  }
+                }}
                 className="form-control"
                 id="phonenumber"
                 onChange={this.props.onEdit}
@@ -184,13 +232,23 @@ class NewPersonDetailsForm extends Component {
           <div className="form-row">
             <div className="col-md-6 mb-3">
               <label htmlFor="validationDefault06">City</label>
-              <input
-                name="city"
-                type="text"
-                className="form-control"
-                id="city"
-                onChange={this.props.onEdit}
-              />
+              <select     className="form-control"   id="city"  required   name="city"
+                    onChange={(e)=>this.props.onEdit(e)}>    
+                               <option value=''>Select </option>  
+
+              {
+                this.props.cities.map((city,index)=>{
+       
+                  return (
+                    
+                    <option value={city.id}>{ city.cityName} </option>
+           
+          
+                  ) 
+                })
+              }
+              </select>
+          
             </div>
           </div>
              {/*

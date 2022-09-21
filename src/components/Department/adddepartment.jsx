@@ -13,6 +13,7 @@ import { useHistory } from "react-router-dom";
 import { getAge } from "../../Service/helpers";
 import { changeFormat } from "../../Service/helpers";
 import ErorrDialogBox from "../DailogBoxes/errordaologbox";
+import { getAllCity, getAllCLinic } from "../../Service/dropdown_data";
 
 
 const AddDepartment =(props)=> {
@@ -30,7 +31,12 @@ const AddDepartment =(props)=> {
   const [msg,setMsg] = useState(
   
   )
-    const [personDetails,setpersonDetails] = useState({
+  const [allClinic, setAllClinic ] = useState([]);
+  const [cities,setCities] = useState([]);
+  const [initialized, setinitialized] = useState(false);
+
+  
+  const [personDetails,setpersonDetails] = useState({
     
       // address:            '',
       // amount:             0,
@@ -59,10 +65,32 @@ const AddDepartment =(props)=> {
         }
       
       }
+      getallclinic().then(()=>      
+      getallcity().then(()=>{
+        setinitialized(()=>true);
+      })
+      )
     },[])
 
 
+    const getallclinic= async()=>{
+      await getAllCLinic().then((res)=>{
+   
+        setAllClinic(()=>(res));
+      //  setStateupdate((stateUpdated)=>stateUpdated+1)
+     
+       // setinitialized(()=>true);
+      }).catch((e)=>console.log(e))
+    }
+    const getallcity = async()=>{
+      await getAllCity().then((res)=>{
 
+        setCities(()=>(res));
+      //  setStateupdate((stateUpdated)=>stateUpdated+1)
+     
+  
+      }).catch((e)=>console.log(e))
+    }
   // constructor() {
   //   super();
 
@@ -155,92 +183,7 @@ const AddDepartment =(props)=> {
   //   }
   // }
 
-  // handleChange = (date) => {
-  //   if (date !== null) {
-  //     const birthDate = new Date(date);
-
-  //     this.setState({
-  //       date: date,
-  //       formData: {
-  //         ...this.state.formData,
-  //         birthdate: `${
-  //           birthDate.getMonth() + 1
-  //         }/${birthDate.getDate()}/${birthDate.getFullYear()}`,
-  //       },
-
-  //       startDate: date,
-  //     });
-  //   } else {
-  //     this.setState({
-  //       date: date,
-  //       formData: {
-  //         ...this.state.formData,
-  //         birthdate: date,
-  //       },
-
-  //       startDate: date,
-  //     });
-  //   }
-  // };
-  // onImageChange = (event) => {
-  //   if (event.target.files && event.target.files[0]) {
-  //     this.setState({
-  //       imagefile: event.target.files[0],
-  //     });
-  //     let reader = new FileReader();
-  //     reader.onload = (e) => {
-  //       this.setState({
-  //         imageAvatar: e.target.result,
-  //         htmlelement: (
-  //           <div className="addpersonpage">
-  //             <img
-  //               className="netimage"
-  //               srcSet={e.target.result}
-  //               alt="profileImage"
-  //             />
-  //           </div>
-  //         ),
-  //       });
-  //     };
-  //     reader.readAsDataURL(event.target.files[0]);
-  //     this.setState({});
-  //   }
-  // };
-  // onImageRemove = () => {
-  //   this.setState({
-  //     imagefile: "",
-  //     imageAvatar: "",
-  //     htmlelement: (
-  //       <div className="addpersonpage">
-  //         <i className="fa fa-user fa-8x" aria-hidden="true"></i>
-  //       </div>
-  //     ),
-  //   });
-  // };
-  // onEdit = (e) => {
-  //   const formData = this.state.formData;
-  //   this.setState({
-  //     formData: {
-  //       ...formData,
-  //       [e.target.name]: e.target.value,
-  //     },
-  //   });
-  // };
-
-  
-    // if (this.state.imageAvatar === "") {
-    //   this.state.htmlelement = (
-    //     <div className="addpersonpage">
-    //       <i className="fa fa-user fa-8x" aria-hidden="true"></i>
-    //     </div>
-    //   );
-    // } else {
-    //   this.state.htmlelement = (
-    //     <div className="addpersonpage">
-    //       <img className="netimage" srcSet={this.state.imageAvatar} alt="" />
-    //     </div>
-    //   );
-    // }
+ 
   
     const addnewUser = (e)=>{
     addPersondetail(personDetails).then((res)=>{
@@ -376,6 +319,8 @@ const AddDepartment =(props)=> {
                 onEdit={onEdit}
                 ondateChange={ondateChange}
                 dob = {personDetails.dob}
+                cities={cities}
+                allClinic={allClinic}
 
                 // startDate={this.state.startDate}
               //  date={this.state.date}

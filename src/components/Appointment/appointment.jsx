@@ -8,6 +8,8 @@ import { addPersondetail } from '../../Service/fetch';
 import Clinic_finding from './clinic_finding';
 import Fees from './fees';
 import Leaves from './leaves';
+import { getUserByPhno } from '../../Service/fetch_general';
+import Diagnosis from './diasgnosis';
 
 
 function Appointment(){
@@ -18,7 +20,7 @@ function Appointment(){
     const [alerts,setalerts] = useState({  dialog:false,  })
     const [msg,setMsg] = useState()
     const [currentTab,setCurrentTab] = useState('clinic_findings')
-
+    const [userDataByPhone, setUserDataByPhone] = useState(false);
 
     const onEdit = (event)=>{
         console.log("CALLED")
@@ -40,7 +42,19 @@ function Appointment(){
           setUser((user)=>({...user,dob:mydate}))
      
       }
-
+    const getuserdatabyphone = (phno)=>{
+      getUserByPhno(phno).then((res)=>{
+        if(res.length >=1 ){
+          setUser(()=>res[0]);
+          setUserDataByPhone(()=>true);
+        }
+        else{
+          
+          setUserDataByPhone(()=>false);
+        }
+        console.log(res);
+      })
+    }
         
     const addnewUser = (e)=>{
         addPersondetail(user).then((res)=>{
@@ -80,6 +94,7 @@ function Appointment(){
                // case "diagnosis":   return <Diagnosis />;
                 case "fees": return <Fees />;
                 case "leaves":  return <Leaves />;
+                case "diagnosis": return <Diagnosis/>;
         
                 default:      return <h1>No project match</h1>
               }
@@ -98,22 +113,24 @@ function Appointment(){
         <div className="col-md-4 nm-1">
           <label htmlFor="validationDefault01">First name</label>
           <input
-            name="firstname"
+            name="firstName"
             type="text"
             className="form-control"
-            id="firstname"
+            id="firstName"
             onChange={onEdit}
+            value={user.firstName}
             required
           />
         </div>
         <div className="col-md-4 nm-1">
           <label htmlFor="validationDefault02">Last name</label>
           <input
-            name="lastname"
+            name="lastName"
             type="text"
             className="form-control"
-            id="lastname"
+            id="lastName"
             onChange={onEdit}
+            value={user.lastName}
             required
           />
         </div>
@@ -126,29 +143,46 @@ function Appointment(){
             className="form-control"
             id="civil_id"
             onChange={onEdit}
+            value={user.civil_id}
           />
         </div>
       </div>
       <div className="form-row">
-      <div className="col-md-4 nm-1">
+      <div className="col-md-3 nm-1">
           <label htmlFor="validationDefault03">Mobile</label>
           <input
+           onKeyPress={(event) => {
+            if (!/[0-9]/.test(event.key)) {
+              event.preventDefault();
+            }
+          }}
             name="phonenumber"
-            type="number"
+            type="text"
             className="form-control"
             id="phonenumber"
             onChange={onEdit}
+            value={user.phone}
             required
           />
+         
         </div>
+
+
+        <div className="col-md-2 nm-1 position-end">
+         <button className='btn btn-primary btn-sm' type='button' onClick={()=>getuserdatabyphone(user.phonenumber)} > Auto Fill</button>
+        </div>
+
+
+
         <div className="col-md-2 nm-1">
-          <label htmlFor="validationDefault10">Sex</label>
+          <label htmlFor="validationDefault10">Gender</label>
           <select
             name="sex"
             className="custom-select"
             id="sex"
             onChange={onEdit}
             required
+            value={user.gender}
           >
             <option></option>
             <option>Male</option>
@@ -246,6 +280,7 @@ function Appointment(){
             className="form-control"
             id="email"
             onChange={onEdit}
+            value={user.age}
           />
         </div>
 
@@ -258,6 +293,7 @@ function Appointment(){
             className="form-control"
             id="city"
             onChange={onEdit}
+            value={user.city}
           />
         </div>
       </div>

@@ -26,6 +26,40 @@ export function getSpecified(url,page = 1) {
 })
 }
 
+export function getUserByPhno(phno) {
+  console.log("URLS.BASE_URL" ,URLS.BASE_URL)
+
+  return new Promise((resolve, reject) => {
+    axios({
+      method:'get',
+      url: URLS.GET_USER_BY_PHONE  + phno,
+  }).then((res)=>{
+      console.log(res);
+      resolve(res.data);
+  }).catch((e)=>{
+      console.log(e)
+      reject(e);
+  })
+})
+}
+
+
+export function getDiagnosisByClinicId() {
+  console.log("URLS.BASE_URL" ,URLS.BASE_URL)
+
+  return new Promise((resolve, reject) => {
+    axios({
+      method:'get',
+      url: URLS.GET_DIAGNOSIS_BY_CLINICID  + 1,
+  }).then((res)=>{
+      console.log(res);
+      resolve(res.data);
+  }).catch((e)=>{
+      console.log(e)
+      reject(e);
+  })
+})
+}
 
 export function getClinicU(url, ) {
   let page =1;

@@ -12,11 +12,16 @@ import { Link, useLocation } from 'react-router-dom'
 import { updatePersonData } from "../../Service/department_fetch"; 
 import { useHistory } from "react-router-dom";
 import { getAge,changeFormat } from "../../Service/helpers";
+import { getAllCity, getAllCLinic } from "../../Service/dropdown_data";
 
 const EditDepartment =(props)=> {
 
   const [personDetails,setpersonDetails] = useState({});
   const [initialized,setinitialized] = useState(false);
+  const [allClinic, setAllClinic ] = useState([]);
+  const [cities,setCities] = useState([]);
+
+  
   const [alerts,setalerts] = useState({
     dialog:false,
   })
@@ -33,6 +38,11 @@ const EditDepartment =(props)=> {
    
    const asynccaller = async ()=>{
     await initState();
+    getallclinic().then(()=>      
+    getallcity().then(()=>{
+      setinitialized(()=>true);
+    })
+    )
     }
     console.log(myprops);
     asynccaller();
@@ -51,6 +61,24 @@ const EditDepartment =(props)=> {
     window.location.reload();
   }
 
+  const getallclinic= async()=>{
+    await getAllCLinic().then((res)=>{
+ 
+      setAllClinic(()=>(res));
+    //  setStateupdate((stateUpdated)=>stateUpdated+1)
+   
+     // setinitialized(()=>true);
+    }).catch((e)=>console.log(e))
+  }
+  const getallcity = async()=>{
+    await getAllCity().then((res)=>{
+
+      setCities(()=>(res));
+    //  setStateupdate((stateUpdated)=>stateUpdated+1)
+   
+
+    }).catch((e)=>console.log(e))
+  }
 
   const initState= async()=>{
     console.log("CALLED");
@@ -177,6 +205,8 @@ e.preventDefault();
           personDetails={personDetails}
           update={updatePers}
           setpersonDetails={setpersonDetails}
+          cities={cities}
+          allClinic={allClinic}
         //profileHtmlelEment={personDetails.profileHtmlelEment}
         //onImageRemove={this.onImageRemove}
         //onImageChange={this.onImageChange}

@@ -4,13 +4,16 @@ import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import "./editpersondetailsform.css";
 import Reports from "./reports";
 import { useEffect } from "react";
+import { useState } from "react";
 
 const EditPersonDetailsForm  = (props)=> {
+const [stateupdated,setStateUpdated] = useState(1);
 
    
 useEffect(()=>{
   
   console.log("PROPS", props);
+  setStateUpdated(()=>stateupdated+1);
 },[props])
 
     return (
@@ -33,6 +36,21 @@ useEffect(()=>{
           <div className="row">
             <div className="col-sm-12 first_section">
               <form onSubmit={props.update}>
+              <div className="form-row">
+                  <div className="col-md-6 mb-3">
+                    <label htmlFor="validationDefault01">Clinic ID</label>
+                    <input
+                    disabled
+                      name="clinic_id"
+                      type="text"
+                      className="form-control"
+                      id="validationDefault01"
+                      required
+                      value={props.personDetails.clinic_id}
+                     // onChange={(e)=>props.onEdit(e)}
+                    />
+                  </div>
+                  </div>
                 <div className="form-row">
                   <div className="col-md-6 mb-3">
                     <label htmlFor="validationDefault01">First name</label>
@@ -148,14 +166,23 @@ useEffect(()=>{
                 <div className="form-row">
                   <div className="col-md-6 mb-3">
                     <label htmlFor="validationDefault06">City</label>
-                    <input
-                      name="city"
-                      type="text"
-                      className="form-control"
-                      id="validationDefault06"
-                      value={props.personDetails.city}
-                      onChange={props.onEdit}
-                    />
+                 
+                         <select     className="form-control"   id="city"  required   name="city"          value={props.personDetails.city}
+                    onChange={(e)=>props.onEdit(e)}>    
+                               <option value=''>Select </option>  
+
+              {
+                props.cities.map((city,index)=>{
+       
+                  return (
+                    
+                    <option value={city.id}>{ city.cityName} </option>
+           
+          
+                  ) 
+                })
+              }
+              </select>
                   </div>
                
                 </div>

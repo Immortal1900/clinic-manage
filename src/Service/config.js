@@ -10,7 +10,7 @@ export const URLS = {
     UPDATE_USER:"update_user"  + nocache,
     ADD_USER: "add_user" +nocache,
     SEARCH:"get_all_user?sr=" ,
-
+    GET_USER_BY_PHONE:"get_user_by_phn?phn=",
 
     /***********CLINIC*********** */
 
@@ -18,6 +18,8 @@ export const URLS = {
     ADD_CLINIC: "add_clinic",
     UPDATE_CLINIC: "update_clinic",
     DELETE_CLINIC: "deleted_updated",
+    GET_DIAGNOSIS_BY_CLINICID:"get_digno_by_clinicid?clinic_id=",
+
     /************Doctor********** */
     ///get_dr_by_clinicdept?page=1&sr=&deptId=1&clinicId=1
     GET_DOCTOR : "get_all_dr?page=",
@@ -53,4 +55,18 @@ export const URLS = {
     /***************CLININC LOGIN */
 
     LOGIN_CLINIC:"clinic_login",
+
+
+
+
+
+    /**************GET ALL LISTING ************* */
+
+    GET_ALL_CLINIC: "get_all_clinic",
+    GET_ALL_DEPT:"get_dep",
+    GET_ALL_CITY:"get_all_city",
+    GET_ALL_CITY_BY_CLINIC:"get_all_clinic_bycity",
+    GET_ALL_DIAGNOSIS:"get_digno_by_clinicid"
+    
+
 }

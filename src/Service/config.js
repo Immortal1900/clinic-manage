@@ -66,7 +66,7 @@ export const URLS = {
     GET_ALL_DEPT:"get_dep",
     GET_ALL_CITY:"get_all_city",
     GET_ALL_CITY_BY_CLINIC:"get_all_clinic_bycity",
-    GET_ALL_DIAGNOSIS:"get_digno_by_clinicid"
+    GET_ALL_DIAGNOSIS:"get_digno_by_clinicid?clinic_id="
     
 
 }

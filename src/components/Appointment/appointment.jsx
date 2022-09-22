@@ -19,8 +19,17 @@ function Appointment(){
     const [modal,setModal]=useState({showModal:false  });
     const [alerts,setalerts] = useState({  dialog:false,  })
     const [msg,setMsg] = useState()
-    const [currentTab,setCurrentTab] = useState('clinic_findings')
+    const [currentTab,setCurrentTab] = useState('diagnosis')
     const [userDataByPhone, setUserDataByPhone] = useState(false);
+    const [selectedDiagnosisList, setSelectedDiagnosisList] = useState([]);
+
+
+
+
+
+
+
+
 
     const onEdit = (event)=>{
         console.log("CALLED")
@@ -90,11 +99,13 @@ function Appointment(){
         const returnTab = ()=>{
             switch(currentTab) {
 
-                case "clinic_findings":   return <Clinic_finding />;
+                //case "clinic_findings":   return <Clinic_finding />;
                // case "diagnosis":   return <Diagnosis />;
                 case "fees": return <Fees />;
                 case "leaves":  return <Leaves />;
-                case "diagnosis": return <Diagnosis/>;
+                case "diagnosis": return <Diagnosis 
+                setSelectedDiagnosisList={setSelectedDiagnosisList}
+                selectedDiagnosisList={selectedDiagnosisList}/>;
         
                 default:      return <h1>No project match</h1>
               }
@@ -324,20 +335,20 @@ function Appointment(){
   <div className='tab-container mycard mt-3'>
       <div className='div-f-tabs'>
   
-        <div className={currentTab == "clinic_findings" ? "tab-button-container-active":"tab-button-container"  }>
+        {/* <div className={currentTab == "clinic_findings" ? "tab-button-container-active":"tab-button-container"  }>
             <button onClick=    {()=>tab_swicther('clinic_findings')}   > Clinic Findings </button>
-        </div>
+        </div> */}
         <div className={currentTab == "diagnosis" ? "tab-button-container-active":"tab-button-container"  }>
          
-            <button onClick=    {()=>tab_swicther('diagnosis')}   >  Diagnosis</button>
+            <button className='tab-button' onClick=    {()=>tab_swicther('diagnosis')}   >  Diagnosis</button>
         </div>
         <div className={currentTab == "fees" ? "tab-button-container-active":"tab-button-container"  }>
          
-            <button  onClick=   {()=>tab_swicther('fees')}   >  Fees</button>
+            <button className='tab-button' onClick=   {()=>tab_swicther('fees')}   >  Fees</button>
         </div>
         <div className={currentTab == "leaves" ? "tab-button-container-active":"tab-button-container"  }>
          
-        <button  onClick=   {()=>tab_swicther('leaves')}   >  Leaves </button>
+        <button className='tab-button' onClick=   {()=>tab_swicther('leaves')}   >  Leaves </button>
         </div>
 
       </div>

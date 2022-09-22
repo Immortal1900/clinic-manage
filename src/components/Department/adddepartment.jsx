@@ -277,7 +277,7 @@ const AddDepartment =(props)=> {
             <FormPrompt
             
             openDailog={modal.showModal}
-            title="Add New Clinic"
+            title="Add New Department"
             onSetOpenDailog={closeModal}
             isCloseBtnAppear={true}
             >

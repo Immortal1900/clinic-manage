@@ -3,7 +3,7 @@
     background-color:white;
     height: 1000px;
 }
-.tab-container button{
+.tab-container .tab-button{
     padding: 4px;
     width: 100%;
     border: solid transparent 1px ;
@@ -11,13 +11,33 @@
 
 }
 
-.tab-container button:hover{
+.tab-container .tab-button:hover{
     padding: 4px;
     width: 100%;
     color: black;
     
 }
+.left-form-container{
 
+    width: 100%;
+}
+.selected-items{
+    background-color: #D3D3D3;
+    width: 100%;
+
+    height: 400px;
+    overflow-y: auto;
+}
+.black{
+    color: black;
+}
+.dropdown-select{
+    width: 100%;
+}
+
+.add-container{
+    color: black;
+}
 
 .tab-button-container{
     width: 100%;

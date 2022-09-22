@@ -40,12 +40,12 @@ export function getAllCity() {
 })
 }
 
-export function getAllDiagnosis() {
+export function getAllDiagnosis( clinicId ) {
   console.log("GET ALL CITY");
   return new Promise((resolve, reject) => {
     axios({
       method:'get',
-      url: URLS.GET_ALL_DIAGNOSIS  + nocache,
+      url: URLS.GET_ALL_DIAGNOSIS  + clinicId,
   }).then((res)=>{
       console.log(res);
       resolve(res.data);

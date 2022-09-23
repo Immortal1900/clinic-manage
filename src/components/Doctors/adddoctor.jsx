@@ -19,19 +19,12 @@ const AddDoctor =(props)=> {
   const location = useLocation();
   const myprops = location?.state;
   let history = useHistory();
-  const [modal,setModal]=useState({
-    showModal:false
-  });
-  const [alerts,setalerts] = useState({
-    dialog:false,
- 
-  })
+  const [modal,setModal]=useState({    showModal:false  });
+  const [alerts,setalerts] = useState({    dialog:false,   })
 
-  const [msg,setMsg] = useState(
-  
-  )
+  const [msg,setMsg] = useState(    )
     const [personDetails,setpersonDetails] = useState({
-    
+          
       // address:            '',
       // amount:             0,
       // age:                null,

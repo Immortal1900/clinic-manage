@@ -5,12 +5,60 @@ import "./editdoctorform.css";
 
 import { useEffect } from "react";
 import { useState } from "react";
+import { getAllCity, getAllCLinicByCityId, getAllDeptByClinicId } from "../../Service/dropdown_data";
 
 const EditDoctorForm  = (props)=> {
 const [stateupdated,setStateUpdate] = useState(0);
 const day_code = ['0','1','2','3','4','5','6','7']
 const day = ['Select','Monday','Tuesday','Wednesday','Thursday','Fridat','Saturday','Sunday']  
 const [errors,setErrors] = useState({})
+const [clinicList,setClinicList] = useState([]);
+const [cityList,setCityList] = useState([])
+const [deptList,setDeptList] = useState([]);
+const [dropdownState,setDropDownState] = useState({})
+
+useEffect(()=>{
+  getallcity().then(()=>{
+    //setinitialized(()=>true);
+  })
+},[])
+
+useEffect(()=>{
+  setStateUpdate(()=>stateupdated+1)
+},[clinicList])
+
+
+
+
+
+const getallcity = async()=>{
+  await getAllCity().then((res)=>{
+    setCityList(()=>(           res      ));
+    console.log(  'City List',   res);
+  //  setStateupdate((stateUpdated)=>stateUpdated+1)
+  }).catch((e)=>console.log(e))
+}
+
+
+const getallclinicbycityid=(selectedCityId)=>{
+  console.log("Curremt CIty ID" ,dropdownState.city);
+   getAllCLinicByCityId(selectedCityId).then((res)=>{
+    setClinicList(()=>(           res      ));
+    console.log(  'Clinic List',   res);
+  //  setStateupdate((stateUpdated)=>stateUpdated+1)
+  }).catch((e)=>console.log(e))
+}
+
+const getalldeptbyclinicid=(selectedClinicId)=>{
+  
+  console.log(selectedClinicId);
+  getAllDeptByClinicId(selectedClinicId).then((res)=>{
+   setDeptList(()=>(           res      ));
+   console.log(  'Dept List',   res);
+ //  setStateupdate((stateUpdated)=>stateUpdated+1)
+ }).catch((e)=>console.log(e))
+}
+
 
 
 const  validate = (e)=>{
@@ -106,6 +154,11 @@ useEffect(()=>{
                 name="pNo1"
                 type="text"
                 className="form-control"
+                onKeyPress={(event) => {
+                  if (!/[0-9]/.test(event.key)) {
+                    event.preventDefault();
+                  }
+                }}
                 id="pNo1"
                 value={props.personDetails.pNo1}
                 onChange={props.onEdit}
@@ -115,6 +168,11 @@ useEffect(()=>{
           <label htmlFor="validationDefault06">Alternate Phone No.</label>
               <input
                 name="pNo2"
+                onKeyPress={(event) => {
+                  if (!/[0-9]/.test(event.key)) {
+                    event.preventDefault();
+                  }
+                }}
                 type="text"
                 className="form-control"
                 id="pNo2"
@@ -134,6 +192,11 @@ useEffect(()=>{
           <label htmlFor="validationDefault06">Whatsapp No.</label>
               <input
                 name="whatsAppNo"
+                onKeyPress={(event) => {
+                  if (!/[0-9]/.test(event.key)) {
+                    event.preventDefault();
+                  }
+                }}
                 type="text"
                 className="form-control"
                 id="whatsAppNo"
@@ -152,6 +215,98 @@ useEffect(()=>{
                       onChange={props.onEdit}
                     />
                   </div>
+                </div>
+                
+                <div className="form-row">
+                <div className="col-md-4 mb-3">
+                <label htmlFor="validationDefault04">City</label>
+                  
+                <select     className="form-control"   id="cityId"  required   name="cityId"          value={props.personDetails.cityId}
+                    onChange={(e)=>{
+                      let value = e.target.value;
+                      props.onEdit(e);
+                      
+                     // setDropDownState(()=>({...dropdownState, city : value}))
+                        getallclinicbycityid(e.target.value);
+                     
+            
+                      e.preventDefault();
+                    }}>    
+                               <option value=''>Select </option>  
+
+              {
+                cityList.map((city,index)=>{
+       
+                  return (
+                    
+                    <option value={city.id}>{ city.cityName} </option>
+           
+          
+                  ) 
+                })
+              }
+              </select>
+            </div>
+            <div className="col-md-4 mb-3">
+            <label htmlFor="validationDefault04">Clinic</label>
+                  
+                <select     className="form-control"  
+                 id="clinicId"  required   name="clinicId"          
+                 value={props.personDetails.clinicId}
+                    onChange={(e)=>{
+                      let value = e.target.value;
+                
+                      
+                    //  setDropDownState(()=>({...dropdownState, clinc : value}))
+                      getalldeptbyclinicid(e.target.value);
+                      props.onEdit(e);
+            
+                    
+                    }}>    
+                               <option value=''>Select </option>  
+
+              {
+                clinicList.map((clinic,index)=>{
+       
+                  return (
+                    
+                    <option value={clinic.id}>{ clinic.title} </option>
+           
+          
+                  ) 
+                })
+              }
+              </select>
+            </div>
+
+            <div className="col-md-4 mb-3">
+            <label htmlFor="validationDefault04"  >Department</label>
+                  
+                <select     className="form-control"   id="deptId"  required   name="deptId"          value={props.personDetails.deptId}
+                    onChange={(e)=>{               
+                      props.onEdit(e);
+                      
+                  
+            
+                      e.preventDefault();
+                    }}>    
+                               <option value=''>Select </option>  
+
+              {
+                deptList.map((dept,index)=>{
+       
+                  return (
+                    
+                    <option value={dept.id}>{ dept.name} </option>
+           
+          
+                  ) 
+                })
+              }
+              </select>
+            </div>
+
+            
                 </div>
               
                 <div className="form-row">

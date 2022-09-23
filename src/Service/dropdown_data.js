@@ -24,6 +24,39 @@ export function getAllCLinic(page) {
 })
 }
 
+export function getAllCLinicByCityId( cityId ) {
+  console.log("CURRENT cityId",cityId);
+  return new Promise((resolve, reject) => {
+    axios({
+      method:'get',
+      url: URLS.GET_ALL_CLINIC_BY_CITY  + cityId,
+  }).then((res)=>{
+      console.log(res);
+      resolve(res.data);
+  }).catch((e)=>{
+      console.log(e)
+      reject(e);
+  })
+})
+}
+
+
+export function getAllDeptByClinicId( clinicId ){
+  console.log("CURRENT clinicId",clinicId);
+  return new Promise((resolve, reject) => {
+    axios({
+      method:'get',
+      url: URLS.GET_ALL_DEPT_CLINIC_ID  + clinicId,
+  }).then((res)=>{
+      console.log(res);
+      resolve(res.data);
+  }).catch((e)=>{
+      console.log(e)
+      reject(e);
+  })
+})
+}
+
 export function getAllCity() {
   console.log("GET ALL CITY");
   return new Promise((resolve, reject) => {

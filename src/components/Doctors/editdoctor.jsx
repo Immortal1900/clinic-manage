@@ -12,6 +12,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { addDoctorTimeSlots, deleteDocTimeSlots, getDoctorTimeSlots, updatePersonData } from "../../Service/doctor_fetch"; 
 import { useHistory } from "react-router-dom";
 import { getAge,changeFormat } from "../../Service/helpers";
+import { getAllCity } from "../../Service/dropdown_data";
 
 const EditDoctor =(props)=> {
 
@@ -22,12 +23,12 @@ const EditDoctor =(props)=> {
   })
   let history = useHistory();
   const location = useLocation(); 
-  const [msg,setMsg] = useState(
-  
-    ) 
+  const [msg,setMsg] = useState();
     const [timeslots,setTimeSlots] = useState({});
     const [stateUpdated,setStateupdate] = useState(0);
     const [addTimeSlot,setaddTimeSlot] = useState({})
+
+  
   const myprops = location?.state;
   useEffect(()=>{
     console.log("RAN ONCE EDITPERSONDETAIL");
@@ -40,12 +41,38 @@ const EditDoctor =(props)=> {
     }
     console.log(myprops);
     asynccaller();
+
+   
   },[])
 
   useEffect(()=>{
     console.log(personDetails);
   },[initialized])
   
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
   const closedialog=(e)=>{
     e.preventDefault();
     console.log("CLOSEING")
@@ -80,7 +107,12 @@ const EditDoctor =(props)=> {
         if(field_value != null ||  field_value != ''){
           setpersonDetails((personDetails)=>({...personDetails,[key]:myprops.personDetails[key]}));
         }
-  })
+  }
+
+  )
+  setpersonDetails((personDetails)=>({...personDetails,clinicId:myprops.personDetails.clinic_id}));
+  setpersonDetails((personDetails)=>({...personDetails,cityId:myprops.personDetails.city_id}));
+
   }}
   
     const onEdit = (event)=>{

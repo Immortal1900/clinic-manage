@@ -56,8 +56,8 @@ export const URLS = {
 
     LOGIN_CLINIC:"clinic_login",
 
-
-
+    /**************Diagnosis */
+    ADD_DIAGNOSIS:"add_digno",
 
 
     /**************GET ALL LISTING ************* */
@@ -68,5 +68,5 @@ export const URLS = {
     GET_ALL_CLINIC_BY_CITY:"get_all_clinic_bycity?city_id=",
     GET_ALL_DIAGNOSIS:"get_digno_by_clinicid?clinic_id=",
     GET_ALL_DEPT_CLINIC_ID:"get_all_dept_by_clinic?clinicId="
-
+    
 }

@@ -32,7 +32,12 @@
     color: black;
 }
 .dropdown-select{
-    width: 100%;
+    width: 90%;
+}
+.flex-space-between{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
 }
 
 .add-container{

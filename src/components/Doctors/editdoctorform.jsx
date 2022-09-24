@@ -285,9 +285,7 @@ useEffect(()=>{
                 <select     className="form-control"   id="deptId"  required   name="deptId"          value={props.personDetails.deptId}
                     onChange={(e)=>{               
                       props.onEdit(e);
-                      
-                  
-            
+
                       e.preventDefault();
                     }}>    
                                <option value=''>Select </option>  

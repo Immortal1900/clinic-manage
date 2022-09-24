@@ -105,10 +105,18 @@ function Appointment(){
                 case "leaves":  return <Leaves />;
                 case "diagnosis": return <Diagnosis 
                 setSelectedDiagnosisList={setSelectedDiagnosisList}
-                selectedDiagnosisList={selectedDiagnosisList}/>;
-        
+                selectedDiagnosisList={selectedDiagnosisList}  
+                removeDiag={removeDiag}
+                />;
+ 
                 default:      return <h1>No project match</h1>
               }
+        }
+        const removeDiag =(id)=>{
+          console.log("CALLED" ,id)
+   
+          setSelectedDiagnosisList(()=>(selectedDiagnosisList.filter(item => item !== id)))
+
         }
 
 

@@ -4,7 +4,7 @@ import {URLS}  from './config';
 
 const ms = Date.now();
 const nocache = "?t="+ ms;
-
+const nocache_1 = "&t=" + ms;
 axios.defaults.baseURL = URLS.BASE_URL;
 
 
@@ -46,7 +46,23 @@ export function getAllDeptByClinicId( clinicId ){
   return new Promise((resolve, reject) => {
     axios({
       method:'get',
-      url: URLS.GET_ALL_DEPT_CLINIC_ID  + clinicId,
+      url: URLS.GET_ALL_DEPT_CLINIC_ID  + clinicId + nocache,
+  }).then((res)=>{
+      console.log(res);
+      resolve(res.data);
+  }).catch((e)=>{
+      console.log(e)
+      reject(e);
+  })
+})
+}
+
+export function getAllFeesByClinicId( clinicId ){
+  console.log("CURRENT clinicId",clinicId);
+  return new Promise((resolve, reject) => {
+    axios({
+      method:'get',
+      url: URLS.GET_FEE_BY_CLINIC_ID  + clinicId + nocache,
   }).then((res)=>{
       console.log(res);
       resolve(res.data);
@@ -78,7 +94,7 @@ export function getAllDiagnosis( clinicId ) {
   return new Promise((resolve, reject) => {
     axios({
       method:'get',
-      url: URLS.GET_ALL_DIAGNOSIS  + clinicId,
+      url: URLS.GET_ALL_DIAGNOSIS  + clinicId +nocache_1,
   }).then((res)=>{
       console.log(res);
       resolve(res.data);
@@ -88,3 +104,21 @@ export function getAllDiagnosis( clinicId ) {
   })
 })
 }
+
+export function getAllExamByClinicId( clinicId ) {
+  console.log("GET ALL CITY");
+  return new Promise((resolve, reject) => {
+    axios({
+      method:'get',
+      url: URLS.GET_EXAM_BY_CLINIC_ID  + clinicId + nocache_1,
+  }).then((res)=>{
+      console.log(res);
+      resolve(res.data);
+  }).catch((e)=>{
+      console.log(e)
+      reject(e);
+  })
+})
+}
+
+

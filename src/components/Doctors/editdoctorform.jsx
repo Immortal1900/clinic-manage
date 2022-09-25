@@ -6,7 +6,7 @@ import "./editdoctorform.css";
 import { useEffect } from "react";
 import { useState } from "react";
 import { getAllCity, getAllCLinicByCityId, getAllDeptByClinicId } from "../../Service/dropdown_data";
-
+import UploadFileService from '../../Service/file_upload';
 const EditDoctorForm  = (props)=> {
 const [stateupdated,setStateUpdate] = useState(0);
 const day_code = ['0','1','2','3','4','5','6','7']
@@ -16,11 +16,12 @@ const [clinicList,setClinicList] = useState([]);
 const [cityList,setCityList] = useState([])
 const [deptList,setDeptList] = useState([]);
 const [dropdownState,setDropDownState] = useState({})
-
+const [selectedFile, setSelectedFile] = useState(null);
 useEffect(()=>{
   getallcity().then(()=>{
     //setinitialized(()=>true);
   })
+
 },[])
 
 useEffect(()=>{
@@ -28,8 +29,9 @@ useEffect(()=>{
 },[clinicList])
 
 
+const getDoctorFileById=()=>{
 
-
+}
 
 const getallcity = async()=>{
   await getAllCity().then((res)=>{
@@ -58,7 +60,12 @@ const getalldeptbyclinicid=(selectedClinicId)=>{
  //  setStateupdate((stateUpdated)=>stateUpdated+1)
  }).catch((e)=>console.log(e))
 }
-
+function handleChangeImage(event) {
+  if (event.target.files && event.target.files[0]) {
+      setSelectedFile(event.target.files[0])
+     // setImage(URL.createObjectURL(event.target.files[0]));
+  }
+}
 
 
 const  validate = (e)=>{
@@ -72,7 +79,21 @@ else{
   props.onEditTimeSlot(e);
 }
 }
+const uploadFile = ()=>{
+  UploadFileService.addData(selectedFile, 'mynamefile' , props.personDetails.id).then((res) => {
+    if (res == 'error') {
+        console.log("error");
+    } else {
+        if (res['status'] == true) { 
+        
+          console.log("success");
+    }
 
+}
+  }
+  )}
+
+  
 const checkDoctorForm = (e)=>{
   e.preventDefault();
   console.log("CALED,",props.personDetails.confirm_pass);
@@ -100,6 +121,7 @@ useEffect(()=>{
 },[props])
 
     return (
+      <>
       <div className="row g-0">
       <div className="col-8 mycard p-3">
         <div className="container main_section_edit">
@@ -544,7 +566,7 @@ useEffect(()=>{
                     {slots?.time_slot}
                     </td>
                     <td>
-                  <button className="btn btn-danger" onClick={()=>props.deleteTimeSlots(slots.id)}>              <i className="fa fa-trash" aria-hidden="true"></i></button>
+                  <button className="btn btn-danger btn-sm" onClick={()=>props.deleteTimeSlots(slots.id)}>              <i className="fa fa-trash" aria-hidden="true"></i></button>
                     </td>
                   </tr>
              
@@ -572,8 +594,62 @@ useEffect(()=>{
       </div>
 
       </div>
+
+
+      <div>
+        
+      </div>
+
+      <div>
+      <div className="form-group">
+
+<input id="myInput"type="file" name="file" className="mb-4" 
+
+onChange={(e) => handleChangeImage(e)}  />
+</div>
+
+<button onClick={uploadFile}>Upload</button>
+
+      <table className="table table-striped">
+        <thead className="thead tablehead">
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">File Name</th>
+       
+            <th scope="col">Options</th>
+            {/* <th scope="col">Email</th> */}
+       
+          </tr>
+        </thead>
+        
+          <tbody className="tablebody">
+              {
+                props.doctor_files.map((file,key)=>{
+                  return (
+                    <tr>
+                      <td>
+                        {key+1}
+                      </td>
+                      <td>
+                     {file.file_name}
+                      </td>
+                      <td>
+                        <button onClick={null}>Remove</button>
+                      </td>
+                    </tr>
+                  )
+                })
+              }
+
+            </tbody>
+          </table>
+           
+      </div>
+      </>
     );
-  
+
+
+ 
 }
 
 export default EditDoctorForm;

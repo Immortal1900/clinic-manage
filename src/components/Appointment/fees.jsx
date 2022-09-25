@@ -2,8 +2,11 @@ import React, { useState } from 'react'
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { URLS } from '../../Service/config';
+import { getAllFeesByClinicId } from '../../Service/dropdown_data';
 
-import { addFees, addPersondetail } from '../../Service/fetch_general';
+import { addFees, addFeesByClininId, addPersondetail } from '../../Service/fetch_general';
+import AlertDialogBox from '../DailogBoxes/alertdailogbox';
+import ErorrDialogBox from '../DailogBoxes/errordaologbox';
 import FormPrompt from '../DailogBoxes/formprompt';
 import AddFees from './add_fees';
 import './appointment.css';
@@ -17,6 +20,9 @@ const [init,setinit] = useState(false);
 const [modal,setModal]=useState({    showModal: false  });
 const [adddiag,setadddiag] = useState();
 const [alerts,setalerts] = useState({    dialog:false,   })
+const [addfee,setaddfees] = useState();
+const [msg,setMsg] = useState( 
+  )
 let history = useHistory();
 
 useEffect(()=>{
@@ -24,22 +30,27 @@ useEffect(()=>{
   getallFees();
 },[])
 useEffect(()=>{
+  console.log("DIAGNOISIS PROPS ARE" , props);
+  getallFees();
+},[props.clinic_id])
+useEffect(()=>{
   console.log("STATE UPDATED",props.selectedFeesList);
   setStateUpdated(()=>stateupdate+1)
 
 },[props.selectedFeesList])
 
 const getallFees = ()=>{
-//   getAllFees(1).then((res)=>{
-//   console.log(res)
-//   setFees(()=>res);
-//   setinit(true);
-// })
+  getAllFeesByClinicId(1).then((res)=>{
+   console.log(res)
+   setFees(()=>res);
+   setinit(true);
+ })
 }
 const checkAlreadySelected=(id)=>{
  let found = props.selectedFeesList.includes(id) ?  true:  false;
  return found;
 }
+
 
 
 const addtoselectedFees=(e)=>{
@@ -65,31 +76,34 @@ const getTitle=(id)=>{
     event.preventDefault();
 
   }
-  const addDiag= (e)=>{
+  const addfees= (e)=>{
     e.preventDefault();
     console.log("CALED ADD DAIEG");
-    // addFees( adddiag,2).then((res)=>{
-    //   console.log(res);
-    //   if(res == "success"){
-    //     setalerts((alerts)=>({...alerts,dialog:true}))
-    //     getallFees();
-    //   }
-    // })
+    addFeesByClininId( adddiag,props.clinic_id).then((res)=>{
+       console.log(res);
+       if(res == "success"){
+        setMsg("success");
+         setalerts((alerts)=>({...alerts,dialog:true}))
+
+      
+         getallFees();
+       }
+     })
   }
   const closedialog=(e)=>{
     e.preventDefault();
     console.log("CLOSEING")
     setalerts((alerts)=>({...alerts,dialog: false}));
     closeModal();
-    history.push("/");
-    console.log(window.location.href);
-    window.location.reload();
+   // history.push("/");
+  //  console.log(window.location.href);
+ //   window.location.reload();
 
   }
   const closeModal=()=>{
     setModal((modal)=>({...modal,showModal:false}))
    // history.push("/doctor");
-    console.log(window.location.href);
+  //  console.log(window.location.href);
   }
 
 
@@ -107,16 +121,14 @@ const getTitle=(id)=>{
             isCloseBtnAppear={true}
 
             >
-
-{/*
-{ msg == "success" ?
+{ msg == "success" ? 
               <AlertDialogBox
           openDailog={alerts.dialog}
           closedialog={closedialog}
-
+  
          // setOpenDailog={setalerts}
        //   onSetOpenDailog={setalerts}
-        destination = {"clinic"}
+       // destination = {"clinic"}
           title="Update"
           des="successfully updated"
         ></AlertDialogBox>
@@ -126,23 +138,24 @@ const getTitle=(id)=>{
 
 <ErorrDialogBox
    openDailog={alerts.dialog}
-          closedialog={closeErrorSamepage}
-
+         // closedialog={closeErrorSamepage}
+  
          // setOpenDailog={setalerts}
        //   onSetOpenDailog={setalerts}
-        destination = {"patientlist"}
+        //destination = {"patientlist"}
           title="Add"
           des={msg}
 >
-</ErorrDialogBox> */}
+</ErorrDialogBox> 
+
 
 
 
 
             <AddFees
-               handleSubmit={addDiag}
+               handleSubmit={addfees}
                 onEdit={onEdit}
-                setadddiag={setadddiag}
+                setaddfees={setaddfees}
 
                // ondateChange={ondateChange}
                // dob = {personDetails.dob}
@@ -194,8 +207,11 @@ const getTitle=(id)=>{
               { props.selectedFeesList.length >=1 ?
                 props.selectedFeesList.map((diag,key)=>{
                 return (
-                  <div >
+                  <div className='flex-space-between'>
                     {getTitle(diag)}
+                    <button className='btn btn-danger btn-sm' style={{float:"right"}}  onClick={()=>props.removeFees(diag)}  >
+                    <i class="bi bi-trash"></i>
+                    </button>
                   </div>
                 )
                 })

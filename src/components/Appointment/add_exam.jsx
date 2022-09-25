@@ -1,7 +1,7 @@
 import React from 'react'
 import { useEffect } from 'react'
 
-function Add_fees(props) {
+function Add_exam(props) {
   useEffect(()=>{
     console.log("ADD DIAG PROPS", props)
   },[])
@@ -22,4 +22,4 @@ function Add_fees(props) {
   )
 }
 
-export default Add_fees
+export default Add_exam

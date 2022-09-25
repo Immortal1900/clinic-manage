@@ -26,6 +26,23 @@ export function getSpecified(url,page = 1) {
 })
 }
 
+export function getFileDoctor(doctor_id) {
+  console.log("URLS.BASE_URL" ,URLS.BASE_URL)
+
+  return new Promise((resolve, reject) => {
+    axios({
+      method:'get',
+      url: URLS.GET_FILE_FOR_DOCTOR  + doctor_id+ nocache,
+  }).then((res)=>{
+      console.log(res);
+      resolve(res.data);
+  }).catch((e)=>{
+      console.log(e)
+      reject(e);
+  })
+})
+}
+
 export  async function  addDiagnosis  (title,clinicId) {
   console.log("URLS.ADD_DIAGNOSIS",title);
   let formData = new FormData();    //formdata object
@@ -59,8 +76,73 @@ formData.append('title',title);
       reject(e);
   })
 })}
+export  async function  addFeesByClininId  (title,clinicId) {
+  console.log("URLS.ADD_DIAGNOSIS",title);
+  let formData = new FormData();    //formdata object
+//   for (var key in params) {
+//     if (params.hasOwnProperty(key)) {
+//         console.log(key + " -> " + params[key]);
+//     }    
+// }
+formData.append('clinic_id', clinicId);
+formData.append('title',title);
+  return new Promise((resolve, reject) => {
+    axios({
+      method:'post',
+      url: URLS.ADD_FEE,
+      data : formData,
+  }).then((res)=>{
+      console.log(res);
+   
+       if(res.data == "error"){
+        reject('error')
+      }
+      else{
+        resolve(res.data);
+      }
+      
+    //  else{
+    //    reject(res.data)
+    //  }
+  }).catch((e)=>{
+      console.log(e)
+      reject(e);
+  })
+})}
 
-
+export  async function  addExamByClininId  (title,clinicId) {
+  console.log("URLS.ADD_DIAGNOSIS",title);
+  let formData = new FormData();    //formdata object
+//   for (var key in params) {
+//     if (params.hasOwnProperty(key)) {
+//         console.log(key + " -> " + params[key]);
+//     }    
+// }
+formData.append('clinic_id', clinicId);
+formData.append('title',title);
+  return new Promise((resolve, reject) => {
+    axios({
+      method:'post',
+      url: URLS.ADD_EXAM ,
+      data : formData,
+  }).then((res)=>{
+      console.log(res);
+   
+       if(res.data == "error"){
+        reject('error')
+      }
+      else{
+        resolve(res.data);
+      }
+      
+    //  else{
+    //    reject(res.data)
+    //  }
+  }).catch((e)=>{
+      console.log(e)
+      reject(e);
+  })
+})}
 
 export function getUserByPhno(phno) {
   console.log("URLS.BASE_URL" ,URLS.BASE_URL)
@@ -86,7 +168,7 @@ export function getDiagnosisByClinicId() {
   return new Promise((resolve, reject) => {
     axios({
       method:'get',
-      url: URLS.GET_DIAGNOSIS_BY_CLINICID  + 1,
+      url: URLS.GET_DIAGNOSIS_BY_CLINICID  + nocache,
   }).then((res)=>{
       console.log(res);
       resolve(res.data);

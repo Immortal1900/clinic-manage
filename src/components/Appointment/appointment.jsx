@@ -7,9 +7,11 @@ import { changeFormat, getAge } from '../../Service/helpers';
 import { addPersondetail } from '../../Service/fetch';
 import Clinic_finding from './clinic_finding';
 import Fees from './fees';
-import Leaves from './leaves';
+import Exam from './exam';
 import { getUserByPhno } from '../../Service/fetch_general';
 import Diagnosis from './diasgnosis';
+import { getAllCLinic } from '../../Service/dropdown_data';
+import { useEffect } from 'react';
 
 
 function Appointment(){
@@ -19,15 +21,20 @@ function Appointment(){
     const [modal,setModal]=useState({showModal:false  });
     const [alerts,setalerts] = useState({  dialog:false,  })
     const [msg,setMsg] = useState()
-    const [currentTab,setCurrentTab] = useState('diagnosis')
+    const [currentTab,setCurrentTab] = useState('exam')
+    const [initlize,setinitlize] = useState(false);
     const [userDataByPhone, setUserDataByPhone] = useState(false);
     const [selectedDiagnosisList, setSelectedDiagnosisList] = useState([]);
+    const [selectedFeesList, setSelectedFeesList] = useState([]);
+    const [selectedExamList, setSelectedExamList] = useState([]);
+    const [allcliniclist,setAllcliniclist] = useState([]);
 
 
 
 
-
-
+  useEffect(()=>{
+    getclinicList();
+  },[])
 
 
 
@@ -64,7 +71,14 @@ function Appointment(){
         console.log(res);
       })
     }
-        
+  const getclinicList = ()=>{
+    getAllCLinic().then((res)=>{
+      if(res){
+        setAllcliniclist(()=>res);
+        setinitlize(()=>true);
+      }
+    })
+  }
     const addnewUser = (e)=>{
         addPersondetail(user).then((res)=>{
           console.log(res);
@@ -101,9 +115,21 @@ function Appointment(){
 
                 //case "clinic_findings":   return <Clinic_finding />;
                // case "diagnosis":   return <Diagnosis />;
-                case "fees": return <Fees />;
-                case "leaves":  return <Leaves />;
+                case "fees": return <Fees 
+                clinic_id={user.clinic_id}
+                selectedFeesList={selectedFeesList} 
+                setSelectedFeesList={setSelectedFeesList}
+                removeFees={removeFees}
+                />;
+                case "exam":  return <Exam
+                clinic_id={user.clinic_id}
+                removeExam={removeExam}
+                setSelectedExamList={setSelectedExamList}
+                selectedExamList={selectedExamList}
+                
+                />;
                 case "diagnosis": return <Diagnosis 
+                clinic_id={user.clinic_id}
                 setSelectedDiagnosisList={setSelectedDiagnosisList}
                 selectedDiagnosisList={selectedDiagnosisList}  
                 removeDiag={removeDiag}
@@ -118,6 +144,18 @@ function Appointment(){
           setSelectedDiagnosisList(()=>(selectedDiagnosisList.filter(item => item !== id)))
 
         }
+        const removeFees =(id)=>{
+          console.log("CALLED" ,id)
+   
+          setSelectedFeesList(()=>(selectedFeesList.filter(item => item !== id)))
+
+        }
+        const removeExam =(id)=>{
+          console.log("CALLED" ,id)
+   
+          setSelectedExamList(()=>(setSelectedExamList.filter(item => item !== id)))
+
+        }
 
 
 
@@ -129,7 +167,7 @@ function Appointment(){
     <form onSubmit={addnewUser}>
     <div className="first_section">
       <div className="form-row">
-        <div className="col-md-4 nm-1">
+        <div className="col-md-3 nm-1">
           <label htmlFor="validationDefault01">First name</label>
           <input
             name="firstName"
@@ -141,7 +179,7 @@ function Appointment(){
             required
           />
         </div>
-        <div className="col-md-4 nm-1">
+        <div className="col-md-3 nm-1">
           <label htmlFor="validationDefault02">Last name</label>
           <input
             name="lastName"
@@ -154,7 +192,7 @@ function Appointment(){
           />
         </div>
 
-        <div className="col-md-4 nm-1">
+        <div className="col-md-3 nm-1">
       <label htmlFor="validationDefault06">Civil ID</label>
           <input
             name="civil_id"
@@ -165,6 +203,22 @@ function Appointment(){
             value={user.civil_id}
           />
         </div>
+        <div className="col-md-3 nm-1">
+      <label htmlFor="validationDefault06">Clinic Id</label> <br />
+      <select style={{display:"block"}} name="clinic_id" id="clinic_id" onChange={onEdit} value={user.clinic_id}> 
+        <option value="">None</option>
+        {
+          allcliniclist.map((clinic,key)=>{
+            return (
+              <option value={clinic.id}> {clinic.title} </option>
+            )
+          })
+        }
+      </select>
+     
+        </div>
+
+        
       </div>
       <div className="form-row">
       <div className="col-md-3 nm-1">
@@ -354,9 +408,9 @@ function Appointment(){
          
             <button className='tab-button' onClick=   {()=>tab_swicther('fees')}   >  Fees</button>
         </div>
-        <div className={currentTab == "leaves" ? "tab-button-container-active":"tab-button-container"  }>
+        <div className={currentTab == "exam" ? "tab-button-container-active":"tab-button-container"  }>
          
-        <button className='tab-button' onClick=   {()=>tab_swicther('leaves')}   >  Leaves </button>
+        <button className='tab-button' onClick=   {()=>tab_swicther('exam')}   >  Exam </button>
         </div>
 
       </div>

@@ -13,6 +13,7 @@ import { addDoctorTimeSlots, deleteDocTimeSlots, getDoctorTimeSlots, updatePerso
 import { useHistory } from "react-router-dom";
 import { getAge,changeFormat } from "../../Service/helpers";
 import { getAllCity } from "../../Service/dropdown_data";
+import { getFileDoctor } from "../../Service/fetch_general";
 
 const EditDoctor =(props)=> {
 
@@ -27,7 +28,7 @@ const EditDoctor =(props)=> {
     const [timeslots,setTimeSlots] = useState({});
     const [stateUpdated,setStateupdate] = useState(0);
     const [addTimeSlot,setaddTimeSlot] = useState({})
-
+    const [doctor_files,setDoctorFiles] = useState([]);
   
   const myprops = location?.state;
   useEffect(()=>{
@@ -38,6 +39,7 @@ const EditDoctor =(props)=> {
    const asynccaller = async ()=>{
     await initState();
     await getDocTimeSlots();
+    await getdocfiles();
     }
     console.log(myprops);
     asynccaller();
@@ -49,30 +51,6 @@ const EditDoctor =(props)=> {
     console.log(personDetails);
   },[initialized])
   
-
-
-
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   const closedialog=(e)=>{
     e.preventDefault();
     console.log("CLOSEING")
@@ -93,6 +71,18 @@ const EditDoctor =(props)=> {
 
 
   }
+
+  const getdocfiles= async()=>{
+    await getFileDoctor(myprops.personDetails.id).then((res)=>{
+       console.log("DOCTOR DOCS",res);
+       setDoctorFiles(()=>(res));
+       setStateupdate((stateUpdated)=>stateUpdated+1)
+    
+       setinitialized(()=>true);
+     }).catch((e)=>console.log(e))
+ 
+ 
+   }
 
   const initState= async()=>{
     console.log("CALLED");
@@ -261,6 +251,7 @@ e.preventDefault();
           addDoctorTimeSlot={addDoctorTimeSlot}
           onEditTimeSlot = {onEditTimeSlot}
           deleteTimeSlots={deleteTimeSlots}
+          doctor_files={doctor_files}
         //profileHtmlelEment={personDetails.profileHtmlelEment}
         //onImageRemove={this.onImageRemove}
         //onImageChange={this.onImageChange}

@@ -58,15 +58,25 @@ export const URLS = {
 
     /**************Diagnosis */
     ADD_DIAGNOSIS:"add_digno",
+    /*************FEE     */
+    ADD_FEE:"add_fee",
 
-
+    /************EXAM */
+    ADD_EXAM:"add_exam",
     /**************GET ALL LISTING ************* */
+
+
+    /*****************FILES ***********/
+    GET_FILE_FOR_DOCTOR:"/get_files_by?files_for=1&file_cat=1&files_for_id=",
 
     GET_ALL_CLINIC: "get_all_clinic",
     GET_ALL_DEPT:"get_dep",
     GET_ALL_CITY:"get_all_city",
     GET_ALL_CLINIC_BY_CITY:"get_all_clinic_bycity?city_id=",
     GET_ALL_DIAGNOSIS:"get_digno_by_clinicid?clinic_id=",
-    GET_ALL_DEPT_CLINIC_ID:"get_all_dept_by_clinic?clinicId="
+    GET_ALL_DEPT_CLINIC_ID:"get_all_dept_by_clinic?clinicId=",
+    GET_FEE_BY_CLINIC_ID:"get_fee_by_clinic_id?clinic_id=",
+    GET_EXAM_BY_CLINIC_ID:"get_exam_by_clinic_id?clinic_id=",
+    
     
 }

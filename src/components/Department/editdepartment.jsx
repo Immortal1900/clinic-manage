@@ -12,7 +12,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { updatePersonData } from "../../Service/department_fetch"; 
 import { useHistory } from "react-router-dom";
 import { getAge,changeFormat } from "../../Service/helpers";
-import { getAllCity, getAllCLinic } from "../../Service/dropdown_data";
+import { getAllCity, getAllCLinic, getAllCLinicByCityId } from "../../Service/dropdown_data";
 
 const EditDepartment =(props)=> {
 
@@ -62,7 +62,7 @@ const EditDepartment =(props)=> {
   }
 
   const getallclinic= async()=>{
-    await getAllCLinic().then((res)=>{
+    await getAllCLinicByCityId(personDetails.city_id).then((res)=>{
  
       setAllClinic(()=>(res));
     //  setStateupdate((stateUpdated)=>stateUpdated+1)
@@ -207,6 +207,7 @@ e.preventDefault();
           setpersonDetails={setpersonDetails}
           cities={cities}
           allClinic={allClinic}
+          getallclinic={getallclinic}
         //profileHtmlelEment={personDetails.profileHtmlelEment}
         //onImageRemove={this.onImageRemove}
         //onImageChange={this.onImageChange}

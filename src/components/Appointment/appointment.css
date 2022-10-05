@@ -10,22 +10,106 @@
     background-color: transparent;
 
 }
+.addbuttoncyan{
+    color:#17a2b8;
+}
 
+.notescontainer{
+    padding-right: 22px !important ;
+ 
+}
+.appointment-label{
+    font-size: 12px;
+}
+.appointment-container select{
+    font-size: 12px;
+    width: 100%;
+
+}
+.notescontainer textarea{
+    height: 120px;
+    width: 99%;
+    /* margin: 10px; */
+    padding: 10px;
+    margin-top: 29px;
+    background: #ffffb0;
+    border-radius: 4px;
+    border: none;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+.notescontainer textarea:focus{
+    height: 120px;
+    width: 100%;
+    /* margin: 10px; */
+    margin-top: 29px;
+    
+    outline: none;
+    background: #ffffbb;
+    border: none;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.dropdown-tabs{
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border: none;
+    border-radius: 4px;
+}
+.dropdown-tabs option{
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border: none;
+    border-radius: 4px;
+}
+.dropdown-tabs :focus{
+    outline: none;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border: none;
+    border-radius: 4px;
+}
+.dropdown-tabs option:focus{
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    border: none;
+    border-radius: 4px;
+}
 .tab-container .tab-button:hover{
     padding: 4px;
     width: 100%;
     color: black;
     
 }
+.notes-container{
+    text-align: start;
+    overflow-x: auto;
+    width: 70%;
+    
+}
+.title-container{
+    text-align: start;
+    overflow-x: auto;
+    width:30%;
+}
+.btn-xsm{
+    height: 25px;
+    padding: 2px 6px 2px 6px;
+    margin: 2px;
+    font-size: 10px;
+      
+}
 .left-form-container{
-
+    font-size: 13px;
     width: 100%;
 }
+.shownotesonhover{
+    background-color: #ffffe6;
+    padding: 2px;
+    position: fixed;
+    font-size: 12px;
+}
 .selected-items{
-    background-color: #D3D3D3;
+    background-color: #F2F5F2;
     width: 100%;
-
-    height: 400px;
+    font-size: 12px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    height: 320px;
     overflow-y: auto;
 }
 .black{
@@ -38,6 +122,8 @@
     display: flex;
     justify-content: space-between;
     flex-direction: row;
+    gap: 7px;
+  
 }
 
 .add-container{
@@ -46,12 +132,13 @@
 
 .tab-button-container{
     width: 100%;
-    background-color: #D3D3D3;
+    background-color: #F2F5F2;
+    width: 100px;
   
 }
 .tab-button-container-active {
 
-    width: 100%;
+    width: 100px;
     border: none;
     background-color: white;
 }
@@ -69,15 +156,13 @@
 
 .div-f-tabs{
     display: flex;
-    justify-content: space-around;
+    justify-content: start;
     flex-direction: row;
     width: 100%;
+    font-size: 13px;
 }
 
-.tab-button-container{
-    width: 100%;
 
-}
 
 
 

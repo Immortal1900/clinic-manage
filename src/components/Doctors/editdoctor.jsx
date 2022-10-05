@@ -94,14 +94,19 @@ const EditDoctor =(props)=> {
         // index: the ordinal position of the key within the object 
       
         let field_value = myprops.personDetails[key];
-        if(field_value != null ||  field_value != ''){
+        if(key == 'clinic_id'){
+          setpersonDetails((personDetails)=>({...personDetails,clinicId:myprops.personDetails.clinic_id}));
+        }
+        else if(key == 'city_id'){
+          setpersonDetails((personDetails)=>({...personDetails,cityId:myprops.personDetails.city_id}));
+     
+        }
+        else if(field_value != null ||  field_value != '' ){
           setpersonDetails((personDetails)=>({...personDetails,[key]:myprops.personDetails[key]}));
         }
   }
 
   )
-  setpersonDetails((personDetails)=>({...personDetails,clinicId:myprops.personDetails.clinic_id}));
-  setpersonDetails((personDetails)=>({...personDetails,cityId:myprops.personDetails.city_id}));
 
   }}
   
@@ -114,14 +119,15 @@ const EditDoctor =(props)=> {
     const addDoctorTimeSlot = ()=>{
       console.log("CASD")
       addDoctorTimeSlots(addTimeSlot, myprops.personDetails.id).then((res)=>{
-
+        
         console.log("addDoctorTimeSlot",res);
         if(res == "success"){
           setMsg("success");
+          
         //  setalerts((alerts)=>({...alerts,dialog:true}))
           console.log("Added successfully");
         }
-     //   window.location.reload();
+        window.location.reload();
 
       }).catch((e)=>{})
     }

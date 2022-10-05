@@ -1,0 +1,159 @@
+[debug] [2022-10-01T21:03:57.688Z] ----------------------------------------------------------------------
+[debug] [2022-10-01T21:03:57.694Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\hp\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2022-10-01T21:03:57.695Z] CLI Version:   11.8.0
+[debug] [2022-10-01T21:03:57.695Z] Platform:      win32
+[debug] [2022-10-01T21:03:57.695Z] Node Version:  v16.17.0
+[debug] [2022-10-01T21:03:57.710Z] Time:          Sun Oct 02 2022 02:33:57 GMT+0530 (India Standard Time)
+[debug] [2022-10-01T21:03:57.710Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2022-10-01T21:03:57.718Z] >>> [apiv2][query] GET https://firebase-public.firebaseio.com/cli.json [none]
+[debug] [2022-10-01T21:03:57.908Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2022-10-01T21:03:57.908Z] > authorizing via signed-in user (himanshulahare9@gmail.com)
+[debug] [2022-10-01T21:03:57.909Z] [iam] checking project clinic-manage for permissions ["firebase.projects.get","firebasedatabase.instances.update","firebasehosting.sites.update"]
+[debug] [2022-10-01T21:03:57.910Z] > refreshing access token with scopes: []
+[debug] [2022-10-01T21:03:57.912Z] >>> [apiv2][query] POST https://www.googleapis.com/oauth2/v3/token [none]
+[debug] [2022-10-01T21:03:57.912Z] >>> [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2022-10-01T21:03:58.540Z] <<< [apiv2][status] POST https://www.googleapis.com/oauth2/v3/token 200
+[debug] [2022-10-01T21:03:58.541Z] <<< [apiv2][body] POST https://www.googleapis.com/oauth2/v3/token [omitted]
+[debug] [2022-10-01T21:03:58.830Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/clinic-manage:testIamPermissions [none]
+[debug] [2022-10-01T21:03:58.830Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/clinic-manage:testIamPermissions x-goog-quota-user=projects/clinic-manage
+[debug] [2022-10-01T21:03:58.830Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/clinic-manage:testIamPermissions {"permissions":["firebase.projects.get","firebasedatabase.instances.update","firebasehosting.sites.update"]}
+[debug] [2022-10-01T21:03:58.928Z] <<< [apiv2][status] GET https://firebase-public.firebaseio.com/cli.json 200
+[debug] [2022-10-01T21:03:58.928Z] <<< [apiv2][body] GET https://firebase-public.firebaseio.com/cli.json {"cloudBuildErrorAfter":1594252800000,"cloudBuildWarnAfter":1590019200000,"defaultNode10After":1594252800000,"minVersion":"3.0.5","node8DeploysDisabledAfter":1613390400000,"node8RuntimeDisabledAfter":1615809600000,"node8WarnAfter":1600128000000}
+[debug] [2022-10-01T21:04:00.863Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/clinic-manage:testIamPermissions 200
+[debug] [2022-10-01T21:04:00.863Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/clinic-manage:testIamPermissions {"permissions":["firebase.projects.get","firebasedatabase.instances.update","firebasehosting.sites.update"]}
+[debug] [2022-10-01T21:04:00.865Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/clinic-manage [none]
+[debug] [2022-10-01T21:04:02.296Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/clinic-manage 200
+[debug] [2022-10-01T21:04:02.296Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/clinic-manage {"projectId":"clinic-manage","projectNumber":"294971206675","displayName":"clinic-manage","name":"projects/clinic-manage","resources":{"hostingSite":"clinic-manage","realtimeDatabaseInstance":"clinic-manage-default-rtdb"},"state":"ACTIVE","etag":"1_3bd980c1-1bc3-4f93-98b5-51b17d79fc2d"}
+[debug] [2022-10-01T21:04:02.296Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/clinic-manage [none]
+[debug] [2022-10-01T21:04:03.549Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/clinic-manage 200
+[debug] [2022-10-01T21:04:03.550Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/clinic-manage {"projectId":"clinic-manage","projectNumber":"294971206675","displayName":"clinic-manage","name":"projects/clinic-manage","resources":{"hostingSite":"clinic-manage","realtimeDatabaseInstance":"clinic-manage-default-rtdb"},"state":"ACTIVE","etag":"1_3bd980c1-1bc3-4f93-98b5-51b17d79fc2d"}
+[info] 
+[info] === Deploying to 'clinic-manage'...
+[info] 
+[info] i  deploying database, hosting 
+[info] i  database: checking rules syntax... 
+[debug] [2022-10-01T21:04:03.570Z] >>> [apiv2][query] GET https://firebasedatabase.googleapis.com/v1beta/projects/clinic-manage/locations/-/instances/clinic-manage-default-rtdb [none]
+[debug] [2022-10-01T21:04:04.855Z] <<< [apiv2][status] GET https://firebasedatabase.googleapis.com/v1beta/projects/clinic-manage/locations/-/instances/clinic-manage-default-rtdb 200
+[debug] [2022-10-01T21:04:04.855Z] <<< [apiv2][body] GET https://firebasedatabase.googleapis.com/v1beta/projects/clinic-manage/locations/-/instances/clinic-manage-default-rtdb {"name":"projects/294971206675/locations/asia-southeast1/instances/clinic-manage-default-rtdb","project":"projects/294971206675","databaseUrl":"https://clinic-manage-default-rtdb.asia-southeast1.firebasedatabase.app","type":"DEFAULT_DATABASE","state":"ACTIVE"}
+[debug] [2022-10-01T21:04:04.858Z] >>> [apiv2][query] PUT https://clinic-manage-default-rtdb.asia-southeast1.firebasedatabase.app/.settings/rules.json dryRun=true
+[debug] [2022-10-01T21:04:04.858Z] >>> [apiv2][body] PUT https://clinic-manage-default-rtdb.asia-southeast1.firebasedatabase.app/.settings/rules.json "{\n  /* Visit https://firebase.google.com/docs/database/security to learn more about security rules. */\n  \"rules\": {\n    \".read\": false,\n    \".write\": false\n  }\n}"
+[debug] [2022-10-01T21:04:05.468Z] <<< [apiv2][status] PUT https://clinic-manage-default-rtdb.asia-southeast1.firebasedatabase.app/.settings/rules.json 200
+[debug] [2022-10-01T21:04:05.468Z] <<< [apiv2][body] PUT https://clinic-manage-default-rtdb.asia-southeast1.firebasedatabase.app/.settings/rules.json {"status":"ok"}
+[info] +  database: rules syntax for database clinic-manage-default-rtdb is valid 
+[debug] [2022-10-01T21:04:05.469Z] >>> [apiv2][query] GET https://firebase.googleapis.com/v1beta1/projects/clinic-manage [none]
+[debug] [2022-10-01T21:04:06.802Z] <<< [apiv2][status] GET https://firebase.googleapis.com/v1beta1/projects/clinic-manage 200
+[debug] [2022-10-01T21:04:06.802Z] <<< [apiv2][body] GET https://firebase.googleapis.com/v1beta1/projects/clinic-manage {"projectId":"clinic-manage","projectNumber":"294971206675","displayName":"clinic-manage","name":"projects/clinic-manage","resources":{"hostingSite":"clinic-manage","realtimeDatabaseInstance":"clinic-manage-default-rtdb"},"state":"ACTIVE","etag":"1_3bd980c1-1bc3-4f93-98b5-51b17d79fc2d"}
+[debug] [2022-10-01T21:04:06.806Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/294971206675/sites/clinic-manage/versions [none]
+[debug] [2022-10-01T21:04:06.807Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/294971206675/sites/clinic-manage/versions {"config":{"rewrites":[{"glob":"**","path":"/index.html"}]},"labels":{"deployment-tool":"cli-firebase"}}
+[debug] [2022-10-01T21:04:08.643Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/projects/294971206675/sites/clinic-manage/versions 200
+[debug] [2022-10-01T21:04:08.644Z] <<< [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/294971206675/sites/clinic-manage/versions {"name":"projects/294971206675/sites/clinic-manage/versions/8074977832115839","status":"CREATED","config":{"rewrites":[{"glob":"**","path":"/index.html"}]},"labels":{"deployment-tool":"cli-firebase"}}
+[info] i  hosting[clinic-manage]: beginning deploy... 
+[info] i  hosting[clinic-manage]: found 19 files in build 
+[debug] [2022-10-01T21:04:08.664Z] [hosting] uploading with 200 concurrency
+[debug] [2022-10-01T21:04:09.035Z] [hosting] hash cache [YnVpbGQ] stored for 19 files
+[debug] [2022-10-01T21:04:09.035Z] [hosting][hash queue][FINAL] {"max":357,"min":5,"avg":37.26315789473684,"active":0,"complete":19,"success":19,"errored":0,"retried":0,"total":19,"elapsed":367}
+[debug] [2022-10-01T21:04:09.036Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/294971206675/sites/clinic-manage/versions/8074977832115839:populateFiles [none]
+[debug] [2022-10-01T21:04:09.036Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/294971206675/sites/clinic-manage/versions/8074977832115839:populateFiles {"files":{"/favicon.ico":"d96ddbc4933b04e12c738ab39f469573143949ca2c39eda0a49d16f83d40c319","/manifest.json":"a40a4294484385ec155814f7d72caf5967a19f5efcbedf7a62b2cdff07e42711","/robots.txt":"bfe106a3fb878dc83461c86818bf74fc1bdc7f28538ba613cd3e775516ce8b49","/asset-manifest.json":"cc70f13b853ea77dbefdaa4ed6e342dd7c6fa397973a23212a0a0da539ee2c49","/index.html":"abb498e8b59a1c4095f401b4683e7ff6d113c4fc0f4be2b3d924e2cd61b14907","/service-worker.js":"6044edb2be0b505118d9c566b519b0e0bc5e7dc5df3cb18c6738135665992c38","/precache-manifest.745e1d68235423ae993ee8d1a5f8e6d1.js":"f7ef5d56f3253982f55e93bac9cc9086049fa9c3a98f37055b39ede5ed498a54","/static/css/2.8d4cdce2.chunk.css":"77d8ea29b19aa467e94cabb1846d0a4757ad5b0e2c1ad0bccb3ad1bbbfb1c529","/static/js/2.71fad2f6.chunk.js.LICENSE.txt":"163468ebf5f6f98b70dd7d476d27c6277d8ff37628f75b6b16d875a6676ec86a","/static/css/main.f2112e87.chunk.css":"8c88ddfe7c4b01f7ccdb84054892237c5ab510033a1e79e4b860881c090c3f4f","/static/css/2.8d4cdce2.chunk.css.map":"357fb1893e50e6f30b322900259e25e7dfc4c189c68edd3027d2fa163b65a3d2","/static/js/runtime-main.452d12bd.js":"3289a9cc016a7fda79f7acb72db58c548367c12ce0b2fe473d17e18b64f8d420","/static/js/runtime-main.452d12bd.js.map":"abeed1c39f06eefa64f10d8f17569e0386282a9bb6c2bc71f1f96b86d16b459b","/static/css/main.f2112e87.chunk.css.map":"45c3902a82706228e2352071c06fc0d82fbe8a100c2bc97bcaefc0e49ccfb028","/static/js/main.79f7ae4d.chunk.js":"f63ea90919c8c3d9cb5be40ab67d8b63ab8c8b74a1567d516e3563ac7a768456","/static/media/doctorbg.2b7c226d.jpg":"23d9c6b77b2d4ed3e1d3a84a15f183b75ac3bcfc231b7dea529a9c2840c91217","/static/js/2.71fad2f6.chunk.js":"2ed0d58579f0d93655c98a195bd2a26f6e10993f6511ab1f8c992e6c8a8ff7fc","/static/js/main.79f7ae4d.chunk.js.map":"6b8bd2c54acc2d7e21821a34ecb701486a7b53f7f958f329ebec8bb34f79d6c9","/static/js/2.71fad2f6.chunk.js.map":"b92f798957293d867b27610d00e666d3299a445af54d720ec3bd8bf4ea982404"}}
+[debug] [2022-10-01T21:04:10.416Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/projects/294971206675/sites/clinic-manage/versions/8074977832115839:populateFiles 200
+[debug] [2022-10-01T21:04:10.416Z] <<< [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/294971206675/sites/clinic-manage/versions/8074977832115839:populateFiles {"uploadRequiredHashes":["8c88ddfe7c4b01f7ccdb84054892237c5ab510033a1e79e4b860881c090c3f4f","f63ea90919c8c3d9cb5be40ab67d8b63ab8c8b74a1567d516e3563ac7a768456","45c3902a82706228e2352071c06fc0d82fbe8a100c2bc97bcaefc0e49ccfb028","2ed0d58579f0d93655c98a195bd2a26f6e10993f6511ab1f8c992e6c8a8ff7fc","f7ef5d56f3253982f55e93bac9cc9086049fa9c3a98f37055b39ede5ed498a54","6b8bd2c54acc2d7e21821a34ecb701486a7b53f7f958f329ebec8bb34f79d6c9","6044edb2be0b505118d9c566b519b0e0bc5e7dc5df3cb18c6738135665992c38","abb498e8b59a1c4095f401b4683e7ff6d113c4fc0f4be2b3d924e2cd61b14907","cc70f13b853ea77dbefdaa4ed6e342dd7c6fa397973a23212a0a0da539ee2c49","b92f798957293d867b27610d00e666d3299a445af54d720ec3bd8bf4ea982404"],"uploadUrl":"https://upload-firebasehosting.googleapis.com/upload/sites/clinic-manage/versions/8074977832115839/files"}
+[debug] [2022-10-01T21:04:10.422Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/clinic-manage/versions/8074977832115839/files/8c88ddfe7c4b01f7ccdb84054892237c5ab510033a1e79e4b860881c090c3f4f [none]
+[debug] [2022-10-01T21:04:10.422Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/clinic-manage/versions/8074977832115839/files/8c88ddfe7c4b01f7ccdb84054892237c5ab510033a1e79e4b860881c090c3f4f [stream]
+[debug] [2022-10-01T21:04:10.424Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/clinic-manage/versions/8074977832115839/files/f63ea90919c8c3d9cb5be40ab67d8b63ab8c8b74a1567d516e3563ac7a768456 [none]
+[debug] [2022-10-01T21:04:10.425Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/clinic-manage/versions/8074977832115839/files/f63ea90919c8c3d9cb5be40ab67d8b63ab8c8b74a1567d516e3563ac7a768456 [stream]
+[debug] [2022-10-01T21:04:10.427Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/clinic-manage/versions/8074977832115839/files/45c3902a82706228e2352071c06fc0d82fbe8a100c2bc97bcaefc0e49ccfb028 [none]
+[debug] [2022-10-01T21:04:10.427Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/clinic-manage/versions/8074977832115839/files/45c3902a82706228e2352071c06fc0d82fbe8a100c2bc97bcaefc0e49ccfb028 [stream]
+[debug] [2022-10-01T21:04:10.429Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/clinic-manage/versions/8074977832115839/files/2ed0d58579f0d93655c98a195bd2a26f6e10993f6511ab1f8c992e6c8a8ff7fc [none]
+[debug] [2022-10-01T21:04:10.429Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/clinic-manage/versions/8074977832115839/files/2ed0d58579f0d93655c98a195bd2a26f6e10993f6511ab1f8c992e6c8a8ff7fc [stream]
+[debug] [2022-10-01T21:04:10.430Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/clinic-manage/versions/8074977832115839/files/f7ef5d56f3253982f55e93bac9cc9086049fa9c3a98f37055b39ede5ed498a54 [none]
+[debug] [2022-10-01T21:04:10.430Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/clinic-manage/versions/8074977832115839/files/f7ef5d56f3253982f55e93bac9cc9086049fa9c3a98f37055b39ede5ed498a54 [stream]
+[debug] [2022-10-01T21:04:10.432Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/clinic-manage/versions/8074977832115839/files/6b8bd2c54acc2d7e21821a34ecb701486a7b53f7f958f329ebec8bb34f79d6c9 [none]
+[debug] [2022-10-01T21:04:10.432Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/clinic-manage/versions/8074977832115839/files/6b8bd2c54acc2d7e21821a34ecb701486a7b53f7f958f329ebec8bb34f79d6c9 [stream]
+[debug] [2022-10-01T21:04:10.433Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/clinic-manage/versions/8074977832115839/files/6044edb2be0b505118d9c566b519b0e0bc5e7dc5df3cb18c6738135665992c38 [none]
+[debug] [2022-10-01T21:04:10.433Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/clinic-manage/versions/8074977832115839/files/6044edb2be0b505118d9c566b519b0e0bc5e7dc5df3cb18c6738135665992c38 [stream]
+[debug] [2022-10-01T21:04:10.434Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/clinic-manage/versions/8074977832115839/files/abb498e8b59a1c4095f401b4683e7ff6d113c4fc0f4be2b3d924e2cd61b14907 [none]
+[debug] [2022-10-01T21:04:10.434Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/clinic-manage/versions/8074977832115839/files/abb498e8b59a1c4095f401b4683e7ff6d113c4fc0f4be2b3d924e2cd61b14907 [stream]
+[debug] [2022-10-01T21:04:10.435Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/clinic-manage/versions/8074977832115839/files/cc70f13b853ea77dbefdaa4ed6e342dd7c6fa397973a23212a0a0da539ee2c49 [none]
+[debug] [2022-10-01T21:04:10.436Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/clinic-manage/versions/8074977832115839/files/cc70f13b853ea77dbefdaa4ed6e342dd7c6fa397973a23212a0a0da539ee2c49 [stream]
+[debug] [2022-10-01T21:04:10.437Z] >>> [apiv2][query] POST https://upload-firebasehosting.googleapis.com/upload/sites/clinic-manage/versions/8074977832115839/files/b92f798957293d867b27610d00e666d3299a445af54d720ec3bd8bf4ea982404 [none]
+[debug] [2022-10-01T21:04:10.437Z] >>> [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/clinic-manage/versions/8074977832115839/files/b92f798957293d867b27610d00e666d3299a445af54d720ec3bd8bf4ea982404 [stream]
+[debug] [2022-10-01T21:04:10.438Z] [hosting][populate queue][FINAL] {"max":1390,"min":1390,"avg":1390,"active":0,"complete":1,"success":1,"errored":0,"retried":0,"total":1,"elapsed":1406}
+[debug] [2022-10-01T21:04:10.438Z] [hosting] uploads queued: 10
+[debug] [2022-10-01T21:04:14.072Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/clinic-manage/versions/8074977832115839/files/8c88ddfe7c4b01f7ccdb84054892237c5ab510033a1e79e4b860881c090c3f4f 200
+[debug] [2022-10-01T21:04:14.072Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/clinic-manage/versions/8074977832115839/files/8c88ddfe7c4b01f7ccdb84054892237c5ab510033a1e79e4b860881c090c3f4f [stream]
+[debug] [2022-10-01T21:04:14.376Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/clinic-manage/versions/8074977832115839/files/45c3902a82706228e2352071c06fc0d82fbe8a100c2bc97bcaefc0e49ccfb028 200
+[debug] [2022-10-01T21:04:14.376Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/clinic-manage/versions/8074977832115839/files/45c3902a82706228e2352071c06fc0d82fbe8a100c2bc97bcaefc0e49ccfb028 [stream]
+[debug] [2022-10-01T21:04:14.479Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/clinic-manage/versions/8074977832115839/files/abb498e8b59a1c4095f401b4683e7ff6d113c4fc0f4be2b3d924e2cd61b14907 200
+[debug] [2022-10-01T21:04:14.479Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/clinic-manage/versions/8074977832115839/files/abb498e8b59a1c4095f401b4683e7ff6d113c4fc0f4be2b3d924e2cd61b14907 [stream]
+[debug] [2022-10-01T21:04:14.888Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/clinic-manage/versions/8074977832115839/files/f7ef5d56f3253982f55e93bac9cc9086049fa9c3a98f37055b39ede5ed498a54 200
+[debug] [2022-10-01T21:04:14.888Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/clinic-manage/versions/8074977832115839/files/f7ef5d56f3253982f55e93bac9cc9086049fa9c3a98f37055b39ede5ed498a54 [stream]
+[debug] [2022-10-01T21:04:14.919Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/clinic-manage/versions/8074977832115839/files/cc70f13b853ea77dbefdaa4ed6e342dd7c6fa397973a23212a0a0da539ee2c49 200
+[debug] [2022-10-01T21:04:14.920Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/clinic-manage/versions/8074977832115839/files/cc70f13b853ea77dbefdaa4ed6e342dd7c6fa397973a23212a0a0da539ee2c49 [stream]
+[debug] [2022-10-01T21:04:14.990Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/clinic-manage/versions/8074977832115839/files/6044edb2be0b505118d9c566b519b0e0bc5e7dc5df3cb18c6738135665992c38 200
+[debug] [2022-10-01T21:04:14.990Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/clinic-manage/versions/8074977832115839/files/6044edb2be0b505118d9c566b519b0e0bc5e7dc5df3cb18c6738135665992c38 [stream]
+[debug] [2022-10-01T21:04:15.231Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/clinic-manage/versions/8074977832115839/files/f63ea90919c8c3d9cb5be40ab67d8b63ab8c8b74a1567d516e3563ac7a768456 200
+[debug] [2022-10-01T21:04:15.231Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/clinic-manage/versions/8074977832115839/files/f63ea90919c8c3d9cb5be40ab67d8b63ab8c8b74a1567d516e3563ac7a768456 [stream]
+[debug] [2022-10-01T21:04:16.220Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/clinic-manage/versions/8074977832115839/files/2ed0d58579f0d93655c98a195bd2a26f6e10993f6511ab1f8c992e6c8a8ff7fc 200
+[debug] [2022-10-01T21:04:16.220Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/clinic-manage/versions/8074977832115839/files/2ed0d58579f0d93655c98a195bd2a26f6e10993f6511ab1f8c992e6c8a8ff7fc [stream]
+[debug] [2022-10-01T21:04:17.554Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/clinic-manage/versions/8074977832115839/files/6b8bd2c54acc2d7e21821a34ecb701486a7b53f7f958f329ebec8bb34f79d6c9 200
+[debug] [2022-10-01T21:04:17.554Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/clinic-manage/versions/8074977832115839/files/6b8bd2c54acc2d7e21821a34ecb701486a7b53f7f958f329ebec8bb34f79d6c9 [stream]
+[debug] [2022-10-01T21:04:19.087Z] <<< [apiv2][status] POST https://upload-firebasehosting.googleapis.com/upload/sites/clinic-manage/versions/8074977832115839/files/b92f798957293d867b27610d00e666d3299a445af54d720ec3bd8bf4ea982404 200
+[debug] [2022-10-01T21:04:19.087Z] <<< [apiv2][body] POST https://upload-firebasehosting.googleapis.com/upload/sites/clinic-manage/versions/8074977832115839/files/b92f798957293d867b27610d00e666d3299a445af54d720ec3bd8bf4ea982404 [stream]
+[debug] [2022-10-01T21:04:19.087Z] [hosting][upload queue][FINAL] {"max":8665,"min":3655,"avg":5162.2,"active":0,"complete":10,"success":10,"errored":0,"retried":0,"total":10,"elapsed":8670}
+[info] +  hosting[clinic-manage]: file upload complete 
+[debug] [2022-10-01T21:04:19.089Z] [hosting] deploy completed after 10443ms
+[info] i  database: releasing rules... 
+[debug] [2022-10-01T21:04:19.095Z] >>> [apiv2][query] GET https://firebasedatabase.googleapis.com/v1beta/projects/clinic-manage/locations/-/instances/clinic-manage-default-rtdb [none]
+[debug] [2022-10-01T21:04:20.134Z] <<< [apiv2][status] GET https://firebasedatabase.googleapis.com/v1beta/projects/clinic-manage/locations/-/instances/clinic-manage-default-rtdb 200
+[debug] [2022-10-01T21:04:20.134Z] <<< [apiv2][body] GET https://firebasedatabase.googleapis.com/v1beta/projects/clinic-manage/locations/-/instances/clinic-manage-default-rtdb {"name":"projects/294971206675/locations/asia-southeast1/instances/clinic-manage-default-rtdb","project":"projects/294971206675","databaseUrl":"https://clinic-manage-default-rtdb.asia-southeast1.firebasedatabase.app","type":"DEFAULT_DATABASE","state":"ACTIVE"}
+[debug] [2022-10-01T21:04:20.135Z] >>> [apiv2][query] PUT https://clinic-manage-default-rtdb.asia-southeast1.firebasedatabase.app/.settings/rules.json 
+[debug] [2022-10-01T21:04:20.135Z] >>> [apiv2][body] PUT https://clinic-manage-default-rtdb.asia-southeast1.firebasedatabase.app/.settings/rules.json "{\n  /* Visit https://firebase.google.com/docs/database/security to learn more about security rules. */\n  \"rules\": {\n    \".read\": false,\n    \".write\": false\n  }\n}"
+[debug] [2022-10-01T21:04:21.135Z] <<< [apiv2][status] PUT https://clinic-manage-default-rtdb.asia-southeast1.firebasedatabase.app/.settings/rules.json 200
+[debug] [2022-10-01T21:04:21.136Z] <<< [apiv2][body] PUT https://clinic-manage-default-rtdb.asia-southeast1.firebasedatabase.app/.settings/rules.json {"status":"ok"}
+[info] +  database: rules for database clinic-manage-default-rtdb released successfully 
+[debug] [2022-10-01T21:04:21.136Z] [
+  {
+    "config": {
+      "public": "build",
+      "ignore": [
+        "firebase.json",
+        "**/.*",
+        "**/node_modules/**"
+      ],
+      "rewrites": [
+        {
+          "source": "**",
+          "destination": "/index.html"
+        }
+      ],
+      "site": "clinic-manage"
+    },
+    "site": "clinic-manage",
+    "version": "projects/294971206675/sites/clinic-manage/versions/8074977832115839"
+  }
+]
+[info] i  hosting[clinic-manage]: finalizing version... 
+[debug] [2022-10-01T21:04:21.138Z] >>> [apiv2][query] PATCH https://firebasehosting.googleapis.com/v1beta1/projects/294971206675/sites/clinic-manage/versions/8074977832115839 updateMask=status%2Cconfig
+[debug] [2022-10-01T21:04:21.138Z] >>> [apiv2][body] PATCH https://firebasehosting.googleapis.com/v1beta1/projects/294971206675/sites/clinic-manage/versions/8074977832115839 {"status":"FINALIZED","config":{"rewrites":[{"glob":"**","path":"/index.html"}]}}
+[debug] [2022-10-01T21:04:22.774Z] <<< [apiv2][status] PATCH https://firebasehosting.googleapis.com/v1beta1/projects/294971206675/sites/clinic-manage/versions/8074977832115839 200
+[debug] [2022-10-01T21:04:22.774Z] <<< [apiv2][body] PATCH https://firebasehosting.googleapis.com/v1beta1/projects/294971206675/sites/clinic-manage/versions/8074977832115839 {"name":"projects/294971206675/sites/clinic-manage/versions/8074977832115839","status":"FINALIZED","config":{"rewrites":[{"glob":"**","path":"/index.html"}]},"labels":{"deployment-tool":"cli-firebase"},"createTime":"2022-10-01T21:04:24.273809Z","createUser":{"email":"himanshulahare9@gmail.com"},"finalizeTime":"2022-10-01T21:04:38.481501Z","finalizeUser":{"email":"himanshulahare9@gmail.com"}}
+[debug] [2022-10-01T21:04:22.774Z] [hosting] finalized version for clinic-manage:[object Object]
+[info] +  hosting[clinic-manage]: version finalized 
+[info] i  hosting[clinic-manage]: releasing new version... 
+[debug] [2022-10-01T21:04:22.775Z] >>> [apiv2][query] POST https://firebasehosting.googleapis.com/v1beta1/projects/294971206675/sites/clinic-manage/releases versionName=projects%2F294971206675%2Fsites%2Fclinic-manage%2Fversions%2F8074977832115839
+[debug] [2022-10-01T21:04:22.775Z] >>> [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/294971206675/sites/clinic-manage/releases {"message":null}
+[debug] [2022-10-01T21:04:24.415Z] <<< [apiv2][status] POST https://firebasehosting.googleapis.com/v1beta1/projects/294971206675/sites/clinic-manage/releases 200
+[debug] [2022-10-01T21:04:24.415Z] <<< [apiv2][body] POST https://firebasehosting.googleapis.com/v1beta1/projects/294971206675/sites/clinic-manage/releases {"name":"projects/294971206675/sites/clinic-manage/releases/1664658279517682","version":{"name":"projects/294971206675/sites/clinic-manage/versions/8074977832115839","status":"FINALIZED","config":{"rewrites":[{"glob":"**","path":"/index.html"}]},"labels":{"deployment-tool":"cli-firebase"},"createTime":"2022-10-01T21:04:24.273809Z","createUser":{"email":"himanshulahare9@gmail.com","imageUrl":"https://lh3.googleusercontent.com/a-/ACNPEu_EwMGzW_m5qCOpbyYN_8B5wK7q2HNiH5lMEQjwdQ"},"finalizeTime":"2022-10-01T21:04:38.481501Z","finalizeUser":{"email":"himanshulahare9@gmail.com","imageUrl":"https://lh3.googleusercontent.com/a-/ACNPEu_EwMGzW_m5qCOpbyYN_8B5wK7q2HNiH5lMEQjwdQ"}},"type":"DEPLOY","releaseTime":"2022-10-01T21:04:39.517682928Z","releaseUser":{"email":"himanshulahare9@gmail.com","imageUrl":"https://lh3.googleusercontent.com/a-/ACNPEu_EwMGzW_m5qCOpbyYN_8B5wK7q2HNiH5lMEQjwdQ"}}
+[debug] [2022-10-01T21:04:24.416Z] [hosting] release: {"name":"projects/294971206675/sites/clinic-manage/releases/1664658279517682","version":{"name":"projects/294971206675/sites/clinic-manage/versions/8074977832115839","status":"FINALIZED","config":{"rewrites":[{"glob":"**","path":"/index.html"}]},"labels":{"deployment-tool":"cli-firebase"},"createTime":"2022-10-01T21:04:24.273809Z","createUser":{"email":"himanshulahare9@gmail.com","imageUrl":"https://lh3.googleusercontent.com/a-/ACNPEu_EwMGzW_m5qCOpbyYN_8B5wK7q2HNiH5lMEQjwdQ"},"finalizeTime":"2022-10-01T21:04:38.481501Z","finalizeUser":{"email":"himanshulahare9@gmail.com","imageUrl":"https://lh3.googleusercontent.com/a-/ACNPEu_EwMGzW_m5qCOpbyYN_8B5wK7q2HNiH5lMEQjwdQ"}},"type":"DEPLOY","releaseTime":"2022-10-01T21:04:39.517682928Z","releaseUser":{"email":"himanshulahare9@gmail.com","imageUrl":"https://lh3.googleusercontent.com/a-/ACNPEu_EwMGzW_m5qCOpbyYN_8B5wK7q2HNiH5lMEQjwdQ"}}
+[info] +  hosting[clinic-manage]: release complete 
+[debug] [2022-10-01T21:04:24.768Z] Error: kill ENOSYS
+    at process.kill (node:internal/process/per_thread:221:13)
+    at process.listener (C:\Users\hp\AppData\Roaming\npm\node_modules\firebase-tools\node_modules\signal-exit\index.js:95:15)
+    at process.emit (node:events:513:28)
+[error] 
+[error] Error: An unexpected error has occurred.
+[info] 
+[info] +  Deploy complete! 
+[info] 
+[info] Project Console: https://console.firebase.google.com/project/clinic-manage/overview
+[info] Hosting URL: https://clinic-manage.web.app

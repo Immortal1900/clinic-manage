@@ -12,7 +12,7 @@ class AddDepartmentForm extends Component {
     }
   }
   componentDidMount(){
-    console.log("CLINICS",this.props.allClinic);
+    console.log("CLINICS",this.props);
     console.log("CITIES",this.props.cities);
   }
 
@@ -37,7 +37,11 @@ class AddDepartmentForm extends Component {
               <label htmlFor="validationDefault02">City ID</label>
         
                <select     className="form-control"   id="city_id"  required   name="city_id"
-              onChange={(e)=>this.props.onEdit(e)}>    
+              onChange={
+                
+                (e)=>{this.props.onEdit(e);
+                  this.props.getallclinic();
+                  }}>    
                          <option value=''>Select </option>  
 
         {
@@ -64,7 +68,7 @@ class AddDepartmentForm extends Component {
               {
                 this.props.allClinic.map((clinic,index)=>{
                   return (     
-                    <option value={clinic.city_id}>{ clinic.title} - ID {clinic.city_id} </option>
+                    <option value={clinic.city_id}>{ clinic.title}</option>
                   ) 
                 })
               }

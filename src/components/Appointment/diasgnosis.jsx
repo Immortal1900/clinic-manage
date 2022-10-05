@@ -19,7 +19,8 @@ const [adddiag,setadddiag] = useState();
 const [alerts,setalerts] = useState({    dialog:false,   })
 const [msg,setMsg] = useState( 
   )
-
+const [notes,setNotes] = useState("");
+const [isHovering, setIsHovering] = useState(false);
 
 let history = useHistory();
 const forceUpdate = useForceUpdate();
@@ -64,15 +65,25 @@ const getalldiagnosis = ()=>{
 })
 }
 const checkAlreadySelected=(id)=>{
- let found = props.selectedDiagnosisList.includes(id) ?  true:  false;
+ let found = props.selectedDiagnosisList.find(ob => ob.id == id) ?  true:  false;
  return found;
 }
-
+ const handleMouseOver = () => {
+   setIsHovering(true);
+  
+ }
+ const handleMouseOut = () => {
+   setIsHovering(false);
+ };
 
 const addtoselecteddiagnosis=(e)=>{
   e.preventDefault();
   console.log("ADDE CALLED");
-    props.setSelectedDiagnosisList(()=>[...props.selectedDiagnosisList,diagnoisis ])
+    let obj = {
+      id: diagnoisis,
+      notes: notes
+    }
+    props.setSelectedDiagnosisList(()=>[...props.selectedDiagnosisList,obj ])
 }
 
 const getTitle=(id)=>{
@@ -125,7 +136,19 @@ const getTitle=(id)=>{
    // console.log(window.location.href);
   }
 
-
+const showDataonHover=(data)=>{
+  return (
+    <>
+ {isHovering && (
+      <div className='shownotesonhover'>
+          <p>{data}</p>
+      </div>
+    )}
+    </>
+  )
+   
+  
+}
 
   return (
 
@@ -196,7 +219,7 @@ const getTitle=(id)=>{
           {init == true ?<div className="form-row">
         <div className="col-md-8 nm-1 input-group">
           <label htmlFor="validationDefault01"></label>
-          <select className='dropdown-select' name="diagnosis" id="diagnosis" onChange={(e)=>setSelecteddiagnoisis(e.target.value)}
+          <select className='dropdown-select dropdown-tabs' name="diagnosis" id="diagnosis" onChange={(e)=>setSelecteddiagnoisis(e.target.value)}
             >
             <option value="">None</option>
           {diagnosis.map((obj,key)=>{
@@ -206,30 +229,56 @@ const getTitle=(id)=>{
             )
           })}
                  </select>
-                 <button className='btn  btn-sm' type='button' onClick={()=>setModal({...modal,showModal:true})}><i class="bi bi-plus-circle-fill"></i></button>
+                 <button className='btn btn-sm' type='button' onClick={()=>setModal({...modal,showModal:true})}><i class="bi bi-plus-circle-fill addbuttoncyan"></i></button>
 
         </div>
         <div className="col-md-4 nm-1 add-container">
 
-        <button className='btn btn-info btn-sm' onClick={ addtoselecteddiagnosis }>
+        <button className='btn btn-info btn-sm' onClick={ addtoselecteddiagnosis }  disabled = {checkAlreadySelected(diagnoisis)}>
           
        Add
                  </button>
         </div>
  
-    </div> :null }
+        <div className='col-md-8  nm-1 notescontainer'>
+           <textarea name="note" id="" cols="30" rows="10"  onChange={(e)=>setNotes(e.target.value)}></textarea>
+        </div>
+    
+  
+
+      
+    </div> :null 
+   
+    
+    
+    }
     </form>
           </div>
           </div>
           <div className="col-5">
-            <div className='selected-items p-2 pl-5 pr-5'>
-           
+            <div className='selected-items p-2 '>
+            <div className='flex-space-between'>
+                    <div className='title-container'>
+                      Title
+                    </div>
+                <div className='notes-container'>
+      Notes
+                    </div>
+            
+                  </div>
+                  <hr />
               { props.selectedDiagnosisList.length >=1 ? 
                 props.selectedDiagnosisList.map((diag,key)=>{
                 return (
                   <div className='flex-space-between'>
-                    {getTitle(diag)}
-                    <button className='btn btn-danger btn-sm' style={{float:"right"}}  onClick={()=>props.removeDiag(diag)}  >
+                    <div className='title-container'>
+                    {getTitle(diag.id)}
+                    </div>
+                <div className='notes-container'>
+           
+          <p>{diag.notes}</p>
+                    </div>
+                <button className='btn btn-danger btn-xsm'  onClick={()=>props.removeDiag(diag)}  >
                     <i class="bi bi-trash"></i>
                     </button>
                   </div>

@@ -192,7 +192,7 @@ class NewPersonDetailsForm extends Component {
               <label htmlFor="validationDefault03">Mobile</label>
               <input
                 name="phonenumber"
-                type="number"
+                type="text"
                 onKeyPress={(event) => {
                   if (!/[0-9]/.test(event.key)) {
                     event.preventDefault();

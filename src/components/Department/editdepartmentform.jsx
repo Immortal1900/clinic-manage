@@ -81,7 +81,7 @@ useEffect(()=>{
        
                   return (
                     
-                    <option value={clinic.city_id}>{ clinic.title} - ID {clinic.city_id} </option>
+                    <option value={clinic.city_id}>{ clinic.title}  </option>
            
           
                   ) 

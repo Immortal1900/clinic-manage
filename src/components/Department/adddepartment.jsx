@@ -13,7 +13,7 @@ import { useHistory } from "react-router-dom";
 import { getAge } from "../../Service/helpers";
 import { changeFormat } from "../../Service/helpers";
 import ErorrDialogBox from "../DailogBoxes/errordaologbox";
-import { getAllCity, getAllCLinic } from "../../Service/dropdown_data";
+import { getAllCity, getAllCLinic, getAllCLinicByCityId } from "../../Service/dropdown_data";
 
 
 const AddDepartment =(props)=> {
@@ -74,7 +74,7 @@ const AddDepartment =(props)=> {
 
 
     const getallclinic= async()=>{
-      await getAllCLinic().then((res)=>{
+      await getAllCLinicByCityId(personDetails.city_id).then((res)=>{
    
         setAllClinic(()=>(res));
       //  setStateupdate((stateUpdated)=>stateUpdated+1)
@@ -321,7 +321,7 @@ const AddDepartment =(props)=> {
                 dob = {personDetails.dob}
                 cities={cities}
                 allClinic={allClinic}
-
+                getallclinic={getallclinic}
                 // startDate={this.state.startDate}
               //  date={this.state.date}
               //  htmlelement={this.state.htmlelement}

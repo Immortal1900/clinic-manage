@@ -293,7 +293,7 @@ const getSearchedItem=()=>{
                         </td>
                      
                         <td className="align-middle">
-                    {p?.pNo +" " + p?.phone }
+                    {p?.pNo  }
                         </td>
                         <td className="align-middle">
            

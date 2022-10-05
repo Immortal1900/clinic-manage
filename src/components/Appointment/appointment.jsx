@@ -4,14 +4,15 @@ import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import { useState } from 'react';
 import { changeFormat, getAge } from '../../Service/helpers';
-import { addPersondetail } from '../../Service/fetch';
+
 import Clinic_finding from './clinic_finding';
 import Fees from './fees';
 import Exam from './exam';
-import { getUserByPhno } from '../../Service/fetch_general';
+import { addPersondetail, getAllDocByDoctId, getUserByPhno, updatePersonData } from '../../Service/fetch_general';
 import Diagnosis from './diasgnosis';
 import { getAllCLinic } from '../../Service/dropdown_data';
 import { useEffect } from 'react';
+import { URLS } from '../../Service/config';
 
 
 function Appointment(){
@@ -21,22 +22,96 @@ function Appointment(){
     const [modal,setModal]=useState({showModal:false  });
     const [alerts,setalerts] = useState({  dialog:false,  })
     const [msg,setMsg] = useState()
-    const [currentTab,setCurrentTab] = useState('exam')
+    const [currentTab,setCurrentTab] = useState('fees')
     const [initlize,setinitlize] = useState(false);
     const [userDataByPhone, setUserDataByPhone] = useState(false);
     const [selectedDiagnosisList, setSelectedDiagnosisList] = useState([]);
     const [selectedFeesList, setSelectedFeesList] = useState([]);
     const [selectedExamList, setSelectedExamList] = useState([]);
     const [allcliniclist,setAllcliniclist] = useState([]);
-
-
-
+    const [appointment,setAppointment] = useState({})
+    const [totalAmount,setTotalAmount] = useState();
+    const [doctId , setDoctId] = useState();
 
   useEffect(()=>{
     getclinicList();
   },[])
 
+  useEffect(()=>{
 
+    updateAppointObj();
+  },
+  [user])
+
+  const updateAppointAmount = (ta)=>{
+    console.log("WE ARE HERE" , ta);
+    setAppointment((appointment)=>({...appointment,amount:ta}));
+   
+  }
+  const updateAppointObj=()=>{
+    setAppointment((appointment)=>({...appointment,paymentMode:"Pay Later"}));
+    setAppointment((appointment)=>({...appointment,paymentStatus:"Pay Later"}));
+    setAppointment((appointment)=>({...appointment,orderId:13132}));
+
+    Object.keys(user).forEach(function(key,index) {
+      // key: the name of the object key
+      // index: the ordinal position of the key within the object 
+    
+      let field_value = user[key];
+
+      if(key == 'clinic_id'){
+        setAppointment((appointment)=>({...appointment,clinicId:user.clinic_id}));
+      }
+      else if(key == 'city'){
+        setAppointment((appointment)=>({...appointment,cityId:user.city}));
+   
+      }
+      else if(key == 'phone'){
+        setAppointment((appointment)=>({...appointment,pPhn:user.phone}));
+   
+      }
+
+      else if( key == "firstName" || key=="lastName" ||key=="phone" || key == "email"){
+        console.log("key is",key);
+        console.log("Value is",user[key]);
+        setAppointment((appointment)=>({...appointment,['p' + key]:user[key]}));
+   
+      }
+      else if(field_value != null ||  field_value != '' ){
+        setAppointment((appointment)=>({...appointment,[key]:user[key]}));
+      }
+
+}
+
+
+)
+  }
+  const updateAppointDoc=()=>{
+    getAllDocByDoctId(doctId).then((res)=>{
+      console.log("UPDATING RES",res);
+      if(doctId){
+        setAppointment((appointment)=>({...appointment,doctId: doctId}));
+    
+      }
+      if(res.deptId){
+        setAppointment((appointment)=>({...appointment,deptId: res.deptId}));
+    
+      }
+      if(res.firstName || res.lastName){
+        setAppointment((appointment)=>({...appointment,doctName: (res.firstName + res.lastName) }));
+    
+      }
+      if(res.hname){
+        setAppointment((appointment)=>({...appointment,hName: res.hName}));
+    
+      }
+      if(res.deptId){
+        setAppointment((appointment)=>({...appointment,deptId: res.deptId}));
+    
+      }
+      
+    })
+  }
 
     const onEdit = (event)=>{
         console.log("CALLED")
@@ -76,6 +151,30 @@ function Appointment(){
       if(res){
         setAllcliniclist(()=>res);
         setinitlize(()=>true);
+      }
+    })
+  }
+
+  const bookAppointment=(e)=>{
+    e.preventDefault();
+    updateAppointDoc();
+      addPersondetail(URLS.ADD_APPOINTMENT, appointment ).then((res)=>{
+        console.log("APPIOINTMENT BOOK");
+        console.log(res);
+      })
+
+  }
+
+  
+  const updateUser=(e)=>{
+    e.preventDefault();
+    updatePersonData(URLS.UPDATE_USER , user).then((res)=>{
+      console.log(res);
+      if(res == "success"){
+        console.log("UPDATED");
+      }
+      else{
+        console.log("ERROR OCCUERED");
       }
     })
   }
@@ -120,6 +219,8 @@ function Appointment(){
                 selectedFeesList={selectedFeesList} 
                 setSelectedFeesList={setSelectedFeesList}
                 removeFees={removeFees}
+                setTotalAmount={updateAppointAmount}
+                setDoctId={setDoctId}
                 />;
                 case "exam":  return <Exam
                 clinic_id={user.clinic_id}
@@ -153,7 +254,7 @@ function Appointment(){
         const removeExam =(id)=>{
           console.log("CALLED" ,id)
    
-          setSelectedExamList(()=>(setSelectedExamList.filter(item => item !== id)))
+          setSelectedExamList(()=>(selectedExamList.filter(item => item !== id)))
 
         }
 
@@ -164,11 +265,14 @@ function Appointment(){
   return (
     <>
     <div className='appointment-container mycard p-3'>
-    <form onSubmit={addnewUser}>
+    <form onSubmit={
+     // updateUser
+     bookAppointment
+      }>
     <div className="first_section">
       <div className="form-row">
         <div className="col-md-3 nm-1">
-          <label htmlFor="validationDefault01">First name</label>
+                 <label className='appointment-label' htmlFor="validationDefault01">First name</label>
           <input
             name="firstName"
             type="text"
@@ -180,7 +284,7 @@ function Appointment(){
           />
         </div>
         <div className="col-md-3 nm-1">
-          <label htmlFor="validationDefault02">Last name</label>
+                 <label className='appointment-label' htmlFor="validationDefault02">Last name</label>
           <input
             name="lastName"
             type="text"
@@ -193,7 +297,7 @@ function Appointment(){
         </div>
 
         <div className="col-md-3 nm-1">
-      <label htmlFor="validationDefault06">Civil ID</label>
+             <label className='appointment-label' htmlFor="validationDefault06">Civil ID</label>
           <input
             name="civil_id"
             type="text"
@@ -204,8 +308,8 @@ function Appointment(){
           />
         </div>
         <div className="col-md-3 nm-1">
-      <label htmlFor="validationDefault06">Clinic Id</label> <br />
-      <select style={{display:"block"}} name="clinic_id" id="clinic_id" onChange={onEdit} value={user.clinic_id}> 
+             <label className='appointment-label' htmlFor="validationDefault06">Clinic</label> <br />
+      <select className='form-control' style={{display:"block"}} name="clinic_id" id="clinic_id" onChange={onEdit} value={user.clinic_id}> 
         <option value="">None</option>
         {
           allcliniclist.map((clinic,key)=>{
@@ -217,12 +321,15 @@ function Appointment(){
       </select>
      
         </div>
-
+        <pre>
+          {JSON.stringify(doctId)}
+          {JSON.stringify(totalAmount)}
+          {JSON.stringify(appointment)}</pre>
         
       </div>
       <div className="form-row">
       <div className="col-md-3 nm-1">
-          <label htmlFor="validationDefault03">Mobile</label>
+                 <label className='appointment-label' htmlFor="validationDefault03">Mobile</label>
           <input
            onKeyPress={(event) => {
             if (!/[0-9]/.test(event.key)) {
@@ -248,7 +355,7 @@ function Appointment(){
 
 
         <div className="col-md-2 nm-1">
-          <label htmlFor="validationDefault10">Gender</label>
+                 <label className='appointment-label' htmlFor="validationDefault10">Gender</label>
           <select
             name="sex"
             className="custom-select"
@@ -257,15 +364,15 @@ function Appointment(){
             required
             value={user.gender}
           >
-            <option></option>
-            <option>Male</option>
-            <option>Female</option>
-            <option>Other</option>
+            <option value="">select</option>
+            <option value="Male">Male</option>
+            <option value="Female">Female</option>
+            <option value="Other">Other</option>
           </select>
         </div>
 
         <div className="col-md-2 nm-1">
-          <label htmlFor="validationDefault12">Birth Date</label>
+                 <label className='appointment-label' htmlFor="validationDefault12">Birth Date</label>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <DatePicker
               style={{
@@ -294,7 +401,7 @@ function Appointment(){
         /> */}
         </div>
         <div className="col-md-2 nm-1">
-          <label htmlFor="validationDefault06">Age</label>
+                 <label className='appointment-label'  htmlFor="validationDefault06">Age</label>
           <input
             name="age"
             type="text"
@@ -312,7 +419,7 @@ function Appointment(){
 
       
         {/* <div className="col-md-6 nm-1">
-          <label htmlFor="validationDefault13">Blood Group</label>
+                 <label className='appointment-label' htmlFor="validationDefault13">Blood Group</label>
           <select
             name="bloodgroup"
             type="text"
@@ -346,20 +453,20 @@ function Appointment(){
       </div>
       <div className="form-row">
         <div className="col-md-6 nm-1">
-          <label htmlFor="validationDefault04">Email</label>
+                 <label className='appointment-label' htmlFor="validationDefault04">Email</label>
           <input
             type="email"
             name="email"
             className="form-control"
             id="email"
             onChange={onEdit}
-            value={user.age}
+            value={user.email}
           />
         </div>
 
         
         <div className="col-md-4 nm-1">
-          <label htmlFor="validationDefault06">City</label>
+                 <label className='appointment-label' htmlFor="validationDefault06">City</label>
           <input
             name="city"
             type="text"
@@ -372,7 +479,7 @@ function Appointment(){
       </div>
       {/* <div className="form-row">
         <div className="col-md-12 nm-1">
-          <label htmlFor="validationDefault05">Address</label>
+                 <label className='appointment-label' htmlFor="validationDefault05">Address</label>
           <input
             name="address"
             type="text"
@@ -389,7 +496,7 @@ function Appointment(){
       
     </div>
 
-    <button className="btn btn-success savebtn" type="submit" >
+    <button className="btn btn-success savebtn" type="submit"  >
       Save
     </button>
   </form>
@@ -404,14 +511,15 @@ function Appointment(){
          
             <button className='tab-button' onClick=    {()=>tab_swicther('diagnosis')}   >  Diagnosis</button>
         </div>
-        <div className={currentTab == "fees" ? "tab-button-container-active":"tab-button-container"  }>
-         
-            <button className='tab-button' onClick=   {()=>tab_swicther('fees')}   >  Fees</button>
-        </div>
+     
         <div className={currentTab == "exam" ? "tab-button-container-active":"tab-button-container"  }>
          
         <button className='tab-button' onClick=   {()=>tab_swicther('exam')}   >  Exam </button>
         </div>
+        <div className={currentTab == "fees" ? "tab-button-container-active":"tab-button-container"  }>
+         
+         <button className='tab-button' onClick=   {()=>tab_swicther('fees')}   >  Fees</button>
+     </div>
 
       </div>
 

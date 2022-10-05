@@ -7,7 +7,11 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { getAllCity, getAllCLinicByCityId, getAllDeptByClinicId } from "../../Service/dropdown_data";
 import UploadFileService from '../../Service/file_upload';
+
+
 const EditDoctorForm  = (props)=> {
+
+
 const [stateupdated,setStateUpdate] = useState(0);
 const day_code = ['0','1','2','3','4','5','6','7']
 const day = ['Select','Monday','Tuesday','Wednesday','Thursday','Fridat','Saturday','Sunday']  
@@ -17,11 +21,16 @@ const [cityList,setCityList] = useState([])
 const [deptList,setDeptList] = useState([]);
 const [dropdownState,setDropDownState] = useState({})
 const [selectedFile, setSelectedFile] = useState(null);
+const [fileName,setFileName] = useState('');
+
+
+
 useEffect(()=>{
   getallcity().then(()=>{
     //setinitialized(()=>true);
   })
-
+  getallclinicbycityid();
+  getalldeptbyclinicid();
 },[])
 
 useEffect(()=>{
@@ -44,7 +53,7 @@ const getallcity = async()=>{
 
 const getallclinicbycityid=(selectedCityId)=>{
   console.log("Curremt CIty ID" ,dropdownState.city);
-   getAllCLinicByCityId(selectedCityId).then((res)=>{
+   getAllCLinicByCityId(selectedCityId ? selectedCityId :"").then((res)=>{
     setClinicList(()=>(           res      ));
     console.log(  'Clinic List',   res);
   //  setStateupdate((stateUpdated)=>stateUpdated+1)
@@ -54,16 +63,18 @@ const getallclinicbycityid=(selectedCityId)=>{
 const getalldeptbyclinicid=(selectedClinicId)=>{
   
   console.log(selectedClinicId);
-  getAllDeptByClinicId(selectedClinicId).then((res)=>{
+  getAllDeptByClinicId(selectedClinicId ? selectedClinicId :"").then((res)=>{
    setDeptList(()=>(           res      ));
    console.log(  'Dept List',   res);
  //  setStateupdate((stateUpdated)=>stateUpdated+1)
  }).catch((e)=>console.log(e))
 }
+
+
 function handleChangeImage(event) {
   if (event.target.files && event.target.files[0]) {
       setSelectedFile(event.target.files[0])
-     // setImage(URL.createObjectURL(event.target.files[0]));
+      setFileName(event.target.files[0].name);
   }
 }
 
@@ -80,13 +91,14 @@ else{
 }
 }
 const uploadFile = ()=>{
-  UploadFileService.addData(selectedFile, 'mynamefile' , props.personDetails.id).then((res) => {
+  UploadFileService.addData(selectedFile, fileName , props.personDetails.id).then((res) => {
     if (res == 'error') {
         console.log("error");
     } else {
-        if (res['status'] == true) { 
+        if (res.status == true) { 
         
           console.log("success");
+          window.location.reload();
     }
 
 }
@@ -249,7 +261,7 @@ useEffect(()=>{
                       props.onEdit(e);
                       
                      // setDropDownState(()=>({...dropdownState, city : value}))
-                        getallclinicbycityid(e.target.value);
+                        getallclinicbycityid(value);
                      
             
                       e.preventDefault();
@@ -269,6 +281,7 @@ useEffect(()=>{
               }
               </select>
             </div>
+        
             <div className="col-md-4 mb-3">
             <label htmlFor="validationDefault04">Clinic</label>
                   
@@ -280,7 +293,7 @@ useEffect(()=>{
                 
                       
                     //  setDropDownState(()=>({...dropdownState, clinc : value}))
-                      getalldeptbyclinicid(e.target.value);
+                      getalldeptbyclinicid(value);
                       props.onEdit(e);
             
                     
@@ -304,7 +317,7 @@ useEffect(()=>{
             <div className="col-md-4 mb-3">
             <label htmlFor="validationDefault04"  >Department</label>
                   
-                <select     className="form-control"   id="deptId"  required   name="deptId"          value={props.personDetails.deptId}
+                <select     className="form-control"   id="deptId"     name="deptId"          value={props.personDetails.deptId}
                     onChange={(e)=>{               
                       props.onEdit(e);
 
@@ -433,7 +446,7 @@ useEffect(()=>{
               />
             </div>
                   <div className="col-md-6 mb-3">
-                    <label htmlFor="validationDefault04">Wspd</label>
+                    <label htmlFor="validationDefault04">Slot per day</label>
                     <input
                       type="text"
                       name="wspd"
@@ -483,7 +496,7 @@ useEffect(()=>{
         </div>
       </div>
 
-      <div className="col-4 mycard p-3" style={{height:"900px"}}>
+      <div className="col-4 mycard p-3 slot-select" >
 
 
             <div className="div-flex-col"  style={{marginTop:"35px"}}>
@@ -492,7 +505,7 @@ useEffect(()=>{
           <label htmlFor="validationDefault06">Day</label>
       
 
-<select     className="form-control"   id="day_code"     name="day_code"
+<select     className="form-control "   id="day_code"     name="day_code"
       onChange={        (e)=>validate(e) }>      
 
               {
@@ -528,7 +541,7 @@ useEffect(()=>{
 
               <div className="col-2 place-baseline">
                 <div>
-                <button className="btn btn-info" onClick={props.addDoctorTimeSlot}> ADD</button>
+                <button className="btn btn-info btn-sm" onClick={props.addDoctorTimeSlot}> ADD</button>
                 </div>
            
             </div>
@@ -539,7 +552,7 @@ useEffect(()=>{
 
 
             <div className="">
-            <table className="table">
+            <table className="table slot-select">
                   <thead>
                     <tr>
                       <th>
@@ -548,7 +561,7 @@ useEffect(()=>{
                       <th>
                         Slots
                       </th>
-                      <th>
+                      <th colSpan={2}>
                         Options
                       </th>
                     </tr>
@@ -601,14 +614,16 @@ useEffect(()=>{
       </div>
 
       <div>
-      <div className="form-group">
-
+      <div className="form-group"  style={{paddingTop:"15px"}} >
+<label className="addfile" htmlFor="myInput">Add file</label>
 <input id="myInput"type="file" name="file" className="mb-4" 
 
 onChange={(e) => handleChangeImage(e)}  />
+<button className="btn btn-success" style={ selectedFile ? {display:"unset"}:{display:"none"}} onClick={uploadFile}>Upload</button>
 </div>
 
-<button onClick={uploadFile}>Upload</button>
+
+
 
       <table className="table table-striped">
         <thead className="thead tablehead">
@@ -623,7 +638,7 @@ onChange={(e) => handleChangeImage(e)}  />
         </thead>
         
           <tbody className="tablebody">
-              {
+              {  props.doctor_files.length>0?
                 props.doctor_files.map((file,key)=>{
                   return (
                     <tr>
@@ -634,11 +649,17 @@ onChange={(e) => handleChangeImage(e)}  />
                      {file.file_name}
                       </td>
                       <td>
-                        <button onClick={null}>Remove</button>
+                        <button className="btn btn-sm btn-danger" onClick={null}> <i className="fa fa-trash" aria-hidden="true"></i></button>
+                        <a style={{marginLeft:"10px"}} target="_blank" href={file.file_url}>
+                          <button className="btn btn-sm btn-info"><i class="bi bi-download"></i></button>
+                        </a>
                       </td>
+                    
+                      
+                 
                     </tr>
                   )
-                })
+                }):"No files Found"
               }
 
             </tbody>

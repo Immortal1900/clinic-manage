@@ -49,8 +49,8 @@ export const URLS = {
     /************Department ******** */
 
 
-
-
+    /***********APPOINTMENT****** */
+    ADD_APPOINTMENT:"add_appointment",
 
     /***************CLININC LOGIN */
 
@@ -75,8 +75,9 @@ export const URLS = {
     GET_ALL_CLINIC_BY_CITY:"get_all_clinic_bycity?city_id=",
     GET_ALL_DIAGNOSIS:"get_digno_by_clinicid?clinic_id=",
     GET_ALL_DEPT_CLINIC_ID:"get_all_dept_by_clinic?clinicId=",
+    GET_ALL_DOCTOR_BY_CLINIC_ID:"get_dr_by_clinic?page=1&sr=&clinicId=",
     GET_FEE_BY_CLINIC_ID:"get_fee_by_clinic_id?clinic_id=",
     GET_EXAM_BY_CLINIC_ID:"get_exam_by_clinic_id?clinic_id=",
-    
+    GET_DOCTOR_BY_DOCTID:"get_doct_by_id?doctId=",
     
 }

@@ -23,7 +23,7 @@ const AddDoctor =(props)=> {
   const [alerts,setalerts] = useState({    dialog:false,   })
 
   const [msg,setMsg] = useState(    )
-    const [personDetails,setpersonDetails] = useState({
+  const [personDetails,setpersonDetails] = useState({
           
       // address:            '',
       // amount:             0,

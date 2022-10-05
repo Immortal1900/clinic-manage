@@ -23,12 +23,20 @@ const [alerts,setalerts] = useState({    dialog:false,   })
 const [addfee,setaddexam] = useState();
 const [msg,setMsg] = useState( 
   )
+const [notes,setNotes] = useState("");
+
 let history = useHistory();
 
 useEffect(()=>{
   console.log("DIAGNOISIS PROPS ARE" , props);
   getallExam();
 },[])
+
+useEffect(()=>{
+  console.log("DIAGNOISIS PROPS ARE" , props);
+  getallExam();
+},[props.clinic_id]);
+
 useEffect(()=>{
   console.log("STATE UPDATED",props.selectedExamList);
   setStateUpdated(()=>stateupdate+1)
@@ -43,7 +51,7 @@ const getallExam = ()=>{
  })
 }
 const checkAlreadySelected=(id)=>{
- let found = props.selectedExamList.includes(id) ?  true:  false;
+ let found = props.selectedExamList.find(ob => ob.id == id) ?  true:  false;
  return found;
 }
 
@@ -51,7 +59,12 @@ const checkAlreadySelected=(id)=>{
 
 const addtoselectedExam=(e)=>{
   e.preventDefault();
-    props.setSelectedExamList(()=>[...props.selectedExamList,diagnoisis ])
+  console.log("ADDE CALLED");
+  let obj = {
+    id: diagnoisis,
+    notes: notes
+  }
+    props.setSelectedExamList(()=>[...props.selectedExamList,obj ])
 }
 
 const getTitle=(id)=>{
@@ -172,7 +185,7 @@ const getTitle=(id)=>{
           {init == true ?<div className="form-row">
         <div className="col-md-8 nm-1 input-group">
           <label htmlFor="validationDefault01"></label>
-          <select className='dropdown-select' name="Exam" id="Exam" onChange={(e)=>setSelecteddiagnoisis(e.target.value)}
+          <select className='dropdown-select dropdown-tabs' name="Exam" id="Exam" onChange={(e)=>setSelecteddiagnoisis(e.target.value)}
             >
             <option value="">None</option>
           {Exam.map((obj,key)=>{
@@ -182,7 +195,7 @@ const getTitle=(id)=>{
             )
           })}
                  </select>
-                 <button className='btn  btn-sm' type='button' onClick={()=>setModal({...modal,showModal:true})}><i class="bi bi-plus-circle-fill"></i></button>
+                 <button className='btn  btn-sm' type='button' onClick={()=>setModal({...modal,showModal:true})}><i class="bi bi-plus-circle-fill addbuttoncyan"></i></button>
 
         </div>
         <div className="col-md-4 nm-1 add-container">
@@ -193,23 +206,53 @@ const getTitle=(id)=>{
                  </button>
         </div>
 
-    </div> :null }
+        <div className='col-md-8  nm-1 notescontainer'>
+           <textarea name="note" id="" cols="30" rows="10"  onChange={(e)=>setNotes(e.target.value)}></textarea>
+        </div>
+        <pre>
+    
+  
+    </pre>
+  
+
+      
+    </div> :null 
+   
+    
+    
+    }
     </form>
           </div>
           </div>
           <div className="col-5">
-            <div className='selected-items'>
+            <div className='selected-items p-2 '>
+            <div className='flex-space-between'>
+                    <div className='title-container'>
+                      Title
+                    </div>
+                <div className='notes-container'>
+      Notes
+                    </div>
 
-              { props.selectedExamList.length >=1 ?
+                  </div>
+                  <hr />
+              { props.selectedExamList.length >=1 ? 
                 props.selectedExamList.map((diag,key)=>{
                 return (
                   <div className='flex-space-between'>
-                    {getTitle(diag)}
-                    <button className='btn btn-danger btn-sm' style={{float:"right"}}  onClick={()=>props.removeExam(diag)}  >
+                    <div className='title-container'>
+                    {getTitle(diag.id)}
+                    </div>
+                <div className='notes-container'>
+           
+          <p>{diag.notes}</p>
+                    </div>
+                <button className='btn btn-danger btn-xsm'  onClick={()=>props.removeExam(diag)}  >
                     <i class="bi bi-trash"></i>
                     </button>
                   </div>
                 )
+            
                 })
                 :
                 "No Exam Selected"

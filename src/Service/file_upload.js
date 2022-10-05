@@ -29,10 +29,11 @@ class UploadFileService{
             const data = await response.json();
             console.log("-----------------------------------------")
             console.log(data);
-            if(data['status']==true)
-            return data['message']; 
-            else return "error";
-          }else return"error";
+     
+            return data; 
+        
+          }
+          else return"error";
         }catch(e){
   
           return"error";

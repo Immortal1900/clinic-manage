@@ -2,30 +2,67 @@ import React, { Component } from "react";
 import { DatePicker, MuiPickersUtilsProvider } from "@material-ui/pickers";
 import DateFnsUtils from "@date-io/date-fns";
 import "./adddoctorform.css";
+import { useState } from "react";
+import { useEffect } from "react";
+import { getAllCity, getAllCLinicByCityId, getAllDeptByClinicId } from "../../Service/dropdown_data";
 
-class AddDoctorForm extends Component {
-  constructor(props) {
-  super();
-    this.state = {
-       error_pass_match: false 
-      
-      };
+
+
+  const AddDoctorForm  = (props)=> {
+
+  const [clinicList,setClinicList] = useState([]);
+  const [cityList,setCityList] = useState([])
+  const [deptList,setDeptList] = useState([]);
+  const [error_pass_match,seterror_pass_match] = useState(false);
+  const [dropdownState,setDropDownState] = useState({})
+  useEffect(()=>{
+    getallcity().then(()=>{
+      //setinitialized(()=>true);
+    })
+  
+  },[])
+
+
+  const getallclinicbycityid=(selectedCityId)=>{
+    console.log("Curremt CIty ID" ,dropdownState.city);
+     getAllCLinicByCityId(selectedCityId).then((res)=>{
+      setClinicList(()=>(           res      ));
+      console.log(  'Clinic List',   res);
+    //  setStateupdate((stateUpdated)=>stateUpdated+1)
+    }).catch((e)=>console.log(e))
+  }
+  
+  const getalldeptbyclinicid=(selectedClinicId)=>{
+    
+    console.log(selectedClinicId);
+    getAllDeptByClinicId(selectedClinicId).then((res)=>{
+     setDeptList(()=>(           res      ));
+     console.log(  'Dept List',   res);
+   //  setStateupdate((stateUpdated)=>stateUpdated+1)
+   }).catch((e)=>console.log(e))
   }
 
-   checkDoctorForm = (e)=>{
+  const getallcity = async()=>{
+    await getAllCity().then((res)=>{
+      setCityList(()=>(           res      ));
+      console.log(  'City List',   res);
+    //  setStateupdate((stateUpdated)=>stateUpdated+1)
+    }).catch((e)=>console.log(e))
+  }
+  
+
+   const checkDoctorForm = (e)=>{
     e.preventDefault();
-    console.log("CALED,",this.props.personDetails.confirm_pass);
-    if(this.props.personDetails.pass != this.props.personDetails.confirm_pass){
+    console.log("CALED,",props.personDetails.confirm_pass);
+    if(props.personDetails.pass != props.personDetails.confirm_pass){
       console.log("PASS NOT MATCHEed");
-      this.setState({
-        error_pass_match: true
-      })
+      seterror_pass_match(()=>true);
+   
     }
     else {
-      this.setState({
-        error_pass_match: false
-      })
-      this.props.handleSubmit(e);
+     
+      seterror_pass_match(()=>false);
+      props.handleSubmit(e);
     }
     
    
@@ -33,13 +70,102 @@ class AddDoctorForm extends Component {
   }
 
 
-  render() {
+
     return (
       <form onSubmit={
-       // this.props.handleSubmit
-       this.checkDoctorForm
+       // props.handleSubmit
+       checkDoctorForm
         }>
         <div className="first_section">
+        <div className="form-row">
+                <div className="col-md-4 mb-3">
+                <label htmlFor="validationDefault04">City</label>
+                  
+                <select     className="form-control"   id="cityId"  required   name="cityId"      
+                    onChange={(e)=>{
+                      let value = e.target.value;
+                      props.onEdit(e);
+                      
+                     // setDropDownState(()=>({...dropdownState, city : value}))
+                        getallclinicbycityid(e.target.value);
+                     
+            
+                      e.preventDefault();
+                    }}>    
+                               <option value=''>Select </option>  
+
+              {
+                cityList.map((city,index)=>{
+       
+                  return (
+                    
+                    <option value={city.id}>{ city.cityName} </option>
+           
+          
+                  ) 
+                })
+              }
+              </select>
+            </div>
+            <div className="col-md-4 mb-3">
+            <label htmlFor="validationDefault04">Clinic</label>
+                  
+                <select     className="form-control"  
+                 id="clinicId"  required   name="clinicId"          
+              
+                    onChange={(e)=>{
+                      let value = e.target.value;
+                
+                      
+                    //  setDropDownState(()=>({...dropdownState, clinc : value}))
+                      getalldeptbyclinicid(e.target.value);
+                      props.onEdit(e);
+            
+                    
+                    }}>    
+                               <option value=''>Select </option>  
+
+              {
+                clinicList.map((clinic,index)=>{
+       
+                  return (
+                    
+                    <option value={clinic.id}>{ clinic.title} </option>
+           
+          
+                  ) 
+                })
+              }
+              </select>
+            </div>
+
+            <div className="col-md-4 mb-3">
+            <label htmlFor="validationDefault04"  >Department</label>
+                  
+                <select     className="form-control"   id="deptId"     name="deptId"     
+                    onChange={(e)=>{               
+                      props.onEdit(e);
+
+                      e.preventDefault();
+                    }}>    
+                               <option value=''>Select </option>  
+
+              {
+                deptList.map((dept,index)=>{
+       
+                  return (
+                    
+                    <option value={dept.id}>{ dept.name} </option>
+           
+          
+                  ) 
+                })
+              }
+              </select>
+            </div>
+
+            
+                </div>
           <div className="form-row">
             <div className="col-md-6 mb-3">
               <label htmlFor="validationDefault01">First Name</label>
@@ -48,7 +174,7 @@ class AddDoctorForm extends Component {
                 type="text"
                 className="form-control"
                 id="firstName"
-                onChange={this.props.onEdit}
+                onChange={props.onEdit}
                 required
               />
             </div>
@@ -59,7 +185,7 @@ class AddDoctorForm extends Component {
                 type="text"
                 className="form-control"
                 id="lastName"
-                onChange={this.props.onEdit}
+                onChange={props.onEdit}
                 required
               />
             </div>
@@ -73,7 +199,7 @@ class AddDoctorForm extends Component {
                 type="text"
                 className="form-control"
                 id="email"
-                onChange={this.props.onEdit}
+                onChange={props.onEdit}
               />
             </div>
           
@@ -93,7 +219,7 @@ class AddDoctorForm extends Component {
                 type="text"
                 className="form-control"
                 id="pNo1"
-                onChange={this.props.onEdit}
+                onChange={props.onEdit}
               />
             </div>
           <div className="col-md-6 mb-3">
@@ -103,7 +229,7 @@ class AddDoctorForm extends Component {
                 type="text"
                 className="form-control"
                 id="pNo2"
-                onChange={this.props.onEdit}
+                onChange={props.onEdit}
               />
             </div>
          
@@ -114,7 +240,7 @@ class AddDoctorForm extends Component {
                 type="text"
                 className="form-control"
                 id="bloodgroup"
-                onChange={this.props.onEdit}
+                onChange={props.onEdit}
               >
                 <option></option>
                 <option>A+</option>
@@ -132,7 +258,7 @@ class AddDoctorForm extends Component {
               type="text"
               className="form-control"
               id="bloodgroup"
-              onChange={this.props.onEdit}
+              onChange={props.onEdit}
             /> 
             </div> */}
           </div>
@@ -142,23 +268,23 @@ class AddDoctorForm extends Component {
           <label htmlFor="validationDefault06">Password</label>
               <input
                 name="pass"
-                type="text"
+                type="password"
                 className="form-control"
                 id="pass"
-                onChange={this.props.onEdit}
+                onChange={props.onEdit}
               />
             </div>
             <div className="col-md-6 mb-3">
           <label htmlFor="validationDefault06">Confirm Password</label>
               <input
                 name="confirm_pass"
-                type="text"
+                type="password"
                 className="form-control"
                 id="confirm_pass"
-                onChange={this.props.onEdit}
+                onChange={props.onEdit}
               />
             </div>
-            {this.state.error_pass_match  == true ? <div className="invalid-text"> "Password Didn't matched"</div> : null}
+            {error_pass_match  == true ? <div className="invalid-text"> "Password Didn't matched"</div> : null}
           </div>
 
           {/* <div className="col-md-6 mb-3">
@@ -168,7 +294,7 @@ class AddDoctorForm extends Component {
                 type="text"
                 className="form-control"
                 id="pass"
-                onChange={this.props.onEdit}
+                onChange={props.onEdit}
               />
             </div> */}
         
@@ -180,7 +306,7 @@ class AddDoctorForm extends Component {
                 type="text"
                 className="form-control"
                 id="address"
-                onChange={this.props.onEdit}
+                onChange={props.onEdit}
               />
             </div>
           </div> */}
@@ -192,7 +318,7 @@ class AddDoctorForm extends Component {
                 type="text"
                 className="form-control"
                 id="whatsAppNo"
-                onChange={this.props.onEdit}
+                onChange={props.onEdit}
               />
             </div>
           </div>
@@ -203,7 +329,7 @@ class AddDoctorForm extends Component {
                 name="state"
                 className="custom-select"
                 id="state"
-                onChange={this.props.onEdit}
+                onChange={props.onEdit}
               >
                 <option></option>
                 <option>CG</option>
@@ -218,7 +344,7 @@ class AddDoctorForm extends Component {
                 type="text"
                 className="form-control"
                 id="zip"
-                onChange={this.props.onEdit}
+                onChange={props.onEdit}
               />
             </div>
           </div> */}
@@ -229,7 +355,7 @@ class AddDoctorForm extends Component {
               name="remarks"
               className="form-control"
               id="remark"
-              onChange={this.props.onEdit}
+              onChange={props.onEdit}
               rows="3"
             ></textarea>
           </div> */}
@@ -238,7 +364,7 @@ class AddDoctorForm extends Component {
         {/* <div className="container">
           <div className="row second_section">
             <div className="clo-sm-6">
-              <div className="profileimage">{this.props.htmlelement}</div>
+              <div className="profileimage">{props.htmlelement}</div>
             </div>
 
             <div className="col-sm-6 btn_section">
@@ -249,12 +375,12 @@ class AddDoctorForm extends Component {
                 name="avatarimage"
                 id="files"
                 type="file"
-                onChange={this.props.onImageChange}
+                onChange={props.onImageChange}
               />
               <button
                 type="button"
                 className="removebutton"
-                onClick={this.props.onImageRemove}
+                onClick={props.onImageRemove}
               >
                 {" "}
                 Remove
@@ -270,7 +396,7 @@ class AddDoctorForm extends Component {
         </button>
       </form>
     );
-  }
+  
 }
 
 export default AddDoctorForm;

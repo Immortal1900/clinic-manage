@@ -127,7 +127,7 @@ class SideNavBar extends Component {
             <div className="noSubCat">
               <ul>
              
-            <div className ={  localStorage.getItem('usertype') == 'clinic' ? 'div-hide': 'show' }>
+            <div className ={  localStorage.getItem('Patient') == 'clinic' ? 'div-hide': 'show' }>
                 <Link to="/patientlist">
                   <li  
                     className={
@@ -148,7 +148,7 @@ class SideNavBar extends Component {
                     className={
                       this.state.selectedCat === "city" ? "active" : ""
                     }
-                    onClick={() => this.setTitleActive("doctor")}
+                    onClick={() => this.setTitleActive("city")}
                   >
                     <span className="icon">
                       <i className="fa fa-user" aria-hidden="true"></i>

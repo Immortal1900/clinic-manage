@@ -29,7 +29,23 @@ export function getAllCLinicByCityId( cityId ) {
   return new Promise((resolve, reject) => {
     axios({
       method:'get',
-      url: URLS.GET_ALL_CLINIC_BY_CITY  + cityId,
+      url: URLS.GET_ALL_CLINIC_BY_CITY  + cityId + nocache_1,
+  }).then((res)=>{
+      console.log(res);
+      resolve(res.data);
+  }).catch((e)=>{
+      console.log(e)
+      reject(e);
+  })
+})
+}
+
+export function getAllDocByClinicId(clinicId){
+  console.log("CURRENT clinicId",clinicId);
+  return new Promise((resolve, reject) => {
+    axios({
+      method:'get',
+      url: URLS.GET_ALL_DOCTOR_BY_CLINIC_ID  + clinicId + nocache,
   }).then((res)=>{
       console.log(res);
       resolve(res.data);

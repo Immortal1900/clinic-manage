@@ -199,7 +199,21 @@ export function getClinicU(url, ) {
   })
 })
 }
-
+export function getAllDocByDoctId( docid ) {
+  console.log("CURRENT docid",docid);
+  return new Promise((resolve, reject) => {
+    axios({
+      method:'get',
+      url: URLS.GET_ALL_DOCTOR_BY_CLINIC_ID  + docid + nocache,
+  }).then((res)=>{
+      console.log(res);
+      resolve(res.data);
+  }).catch((e)=>{
+      console.log(e)
+      reject(e);
+  })
+})
+}
 
 
 

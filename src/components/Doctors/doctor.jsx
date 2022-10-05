@@ -252,7 +252,7 @@ const getSearchedItem=()=>{
             <th scope="col">Name</th>
             <th scope="col">Email</th>
             <th scope="col">Subtitle</th>
-            <th scope="col">Designation</th>
+            <th scope="col">Clinic</th>
             <th scope="col">City Name</th>
             <th scope="col">Fee</th>
             <th scope="col">Whatsapp No</th>
@@ -294,7 +294,7 @@ const getSearchedItem=()=>{
                        {p?.subTitle }
                         </td>
                         <td className="align-middle">
-                       {p?.hName }
+                       {p?.clinic_id }
                         </td>
                         
                         <td className="align-middle">

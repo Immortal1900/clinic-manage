@@ -1,8 +1,9 @@
+import id from 'date-fns/esm/locale/id/index.js';
 import React, { useState } from 'react'
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { URLS } from '../../Service/config';
-import { getAllFeesByClinicId } from '../../Service/dropdown_data';
+import { getAllDocByClinicId, getAllFeesByClinicId } from '../../Service/dropdown_data';
 
 import { addFees, addFeesByClininId, addPersondetail } from '../../Service/fetch_general';
 import AlertDialogBox from '../DailogBoxes/alertdailogbox';
@@ -20,6 +21,7 @@ const [init,setinit] = useState(false);
 const [modal,setModal]=useState({    showModal: false  });
 const [adddiag,setadddiag] = useState();
 const [alerts,setalerts] = useState({    dialog:false,   })
+const [doctorList,setDoctorList] = useState([]);
 const [addfee,setaddfees] = useState();
 const [msg,setMsg] = useState( 
   )
@@ -28,21 +30,25 @@ let history = useHistory();
 useEffect(()=>{
   console.log("DIAGNOISIS PROPS ARE" , props);
   getallFees();
+  getalldoctorbyclinicid();
 },[])
 useEffect(()=>{
   console.log("DIAGNOISIS PROPS ARE" , props);
   getallFees();
+  getalldoctorbyclinicid();
 },[props.clinic_id])
 useEffect(()=>{
   console.log("STATE UPDATED",props.selectedFeesList);
   setStateUpdated(()=>stateupdate+1)
-
+  getTotalAmount();
+  props.setTotalAmount(  getTotalAmount())
 },[props.selectedFeesList])
 
 const getallFees = ()=>{
-  getAllFeesByClinicId(1).then((res)=>{
+  getAllFeesByClinicId(props.clinic_id).then((res)=>{
    console.log(res)
    setFees(()=>res);
+   console.log("FES S")
    setinit(true);
  })
 }
@@ -54,15 +60,38 @@ const checkAlreadySelected=(id)=>{
 
 
 const addtoselectedFees=(e)=>{
+
   e.preventDefault();
-    props.setSelectedFeesList(()=>[...props.selectedFeesList,diagnoisis ])
+  console.log("FEES DROPDOEN CHANGE");
+
+    props.setSelectedFeesList(()=>[...props.selectedFeesList,diagnoisis ]);
+    let totalamount = getTotalAmount();
+    console.log("SETTTING TOTAL AMOUNT" , totalamount)
+    props.setTotalAmount(totalamount)
 }
 
 const getTitle=(id)=>{
-  let obj = Fees.find(obj => obj.id == id);
+
+  let obj = Fees.find(obj=>obj.id == id);
+  console.log(obj)
   if(obj){
+
    return obj.title
   }else{
+ 
+    return ""
+  }
+
+}
+const getFees=(id)=>{
+
+  let obj = Fees.find(obj=>obj.id == id);
+
+  if(obj){
+
+   return obj.fee
+  }else{
+
     return ""
   }
 
@@ -106,7 +135,35 @@ const getTitle=(id)=>{
   //  console.log(window.location.href);
   }
 
+  const getalldoctorbyclinicid=()=>{
+    getAllDocByClinicId(props.clinic_id).then((res)=>{
+      console.log(res);
+      setDoctorList(()=>res);
+     
+    })
+  }
 
+const onFeesDropDownChange = ()=>{
+  
+}
+
+const getTotalAmount =()=>{
+  console.log("AAAA");
+  let totalAmount=0;
+  console.log(props.selectedFeesList);
+  props.selectedFeesList.forEach(item => {
+    //  let amount = getTitle(item);
+    console.log("ITWM IS",item);
+    let amount = getFees(item);
+      console.log(parseFloat(amount));
+      console.log(parseFloat(totalAmount))
+      totalAmount = parseFloat(totalAmount) + parseFloat(amount);
+      console.log(totalAmount);
+  
+  });
+  totalAmount = parseFloat(totalAmount).toFixed(3)
+  return totalAmount;
+}
 
   return (
 
@@ -172,11 +229,28 @@ const getTitle=(id)=>{
         <div className="row">
           <div className="col-7">
             <div className='left-form-container'>
-      <form action={addtoselectedFees}>
+      <form  onSubmit={addtoselectedFees}>
           {init == true ?<div className="form-row">
-        <div className="col-md-8 nm-1 input-group">
+          <div className="col-md-6 nm-1 input-group">
           <label htmlFor="validationDefault01"></label>
-          <select className='dropdown-select' name="Fees" id="Fees" onChange={(e)=>setSelecteddiagnoisis(e.target.value)}
+          <select className='dropdown-select' name="Fees" id="Fees" onChange={(e)=>props.setDoctId(()=>e.target.value)}  >
+            <option value="">None</option>
+           
+          {doctorList.map((obj,key)=>{
+            return(
+              <option disabled = {checkAlreadySelected(obj.id)}  value={obj.id}> {obj.firstName + obj.lastName} </option>
+
+            )
+          })}
+                 </select>
+                 <button className='btn  btn-sm' type='button' onClick={()=>setModal({...modal,showModal:true})}><i class="bi bi-plus-circle-fill addbuttoncyan"></i></button>
+
+        </div>
+    
+        <div className="col-md-6 nm-1 input-group">
+
+          <label htmlFor="validationDefault01"></label>
+          <select className='dropdown-select dropdown-tabs' name="Fees" id="Fees" onChange={(e)=>setSelecteddiagnoisis(e.target.value)} required
             >
             <option value="">None</option>
           {Fees.map((obj,key)=>{
@@ -186,12 +260,12 @@ const getTitle=(id)=>{
             )
           })}
                  </select>
-                 <button className='btn  btn-sm' type='button' onClick={()=>setModal({...modal,showModal:true})}><i class="bi bi-plus-circle-fill"></i></button>
+                 <button className='btn btn-sm' type='button' onClick={()=>setModal({...modal,showModal:true})}><i class="bi bi-plus-circle-fill addbuttoncyan"></i></button>
 
         </div>
-        <div className="col-md-4 nm-1 add-container">
+        <div className="col-md-10  pt-2 nm-1 add-container">
 
-        <button className='btn btn-info btn-sm' onClick={ addtoselectedFees }>
+        <button className='btn btn-info btn-sm' type='submit'>
 
        Add
                  </button>
@@ -202,14 +276,24 @@ const getTitle=(id)=>{
           </div>
           </div>
           <div className="col-5">
-            <div className='selected-items'>
-
+            <div className='selected-items p-2 pl-5 pr-5'>
+            <div className='flex-space-between'>
+                    <div className='title-container'>
+                      Amount
+                    </div>
+       
+            
+                  </div>
               { props.selectedFeesList.length >=1 ?
                 props.selectedFeesList.map((diag,key)=>{
                 return (
                   <div className='flex-space-between'>
-                    {getTitle(diag)}
-                    <button className='btn btn-danger btn-sm' style={{float:"right"}}  onClick={()=>props.removeFees(diag)}  >
+                    <div className='title-container'>
+                    {getTitle(diag)} - 
+                    {getFees(diag)}
+                    </div>
+               
+                <button className='btn btn-danger btn-xsm'  onClick={()=>props.removeFees(diag)}  >
                     <i class="bi bi-trash"></i>
                     </button>
                   </div>
@@ -218,6 +302,10 @@ const getTitle=(id)=>{
                 :
                 "No Fees Selected"
               }
+
+              <div>
+                Total Amount: {getTotalAmount()}
+              </div>
             </div>
           </div>
         </div>

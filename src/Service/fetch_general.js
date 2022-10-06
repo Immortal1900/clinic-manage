@@ -204,7 +204,42 @@ export function getAllDocByDoctId( docid ) {
   return new Promise((resolve, reject) => {
     axios({
       method:'get',
-      url: URLS.GET_ALL_DOCTOR_BY_CLINIC_ID  + docid + nocache,
+      url: URLS.GET_DOCTOR_BY_DOCTID  + docid + nocache,
+  }).then((res)=>{
+      console.log(res);
+      resolve(res.data);
+  }).catch((e)=>{
+      console.log(e)
+      reject(e);
+  })
+})
+}
+
+export function getSlotsByDoc( docid ) {
+  console.log("CURRENT docid",docid);
+  return new Promise((resolve, reject) => {
+    axios({
+      method:'get',
+      url: URLS.GET_DOCTOR_TIMESLOTS  + docid + nocache,
+  }).then((res)=>{
+      console.log(res);
+      resolve(res.data);
+  }).catch((e)=>{
+      console.log(e)
+      reject(e);
+  })
+})
+}
+
+export function addappointinfo( title , desc,app_id,type ) {
+  console.log("APP _ID",app_id);
+  console.log("title",title);
+  console.log("desc",desc);
+  console.log("TYPE",type);
+  return new Promise((resolve, reject) => {
+    axios({
+      method:'get',
+      url: URLS.ADD_MOREINDO + nocache,
   }).then((res)=>{
       console.log(res);
       resolve(res.data);

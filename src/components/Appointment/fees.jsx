@@ -1,16 +1,18 @@
+import { DatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import id from 'date-fns/esm/locale/id/index.js';
 import React, { useState } from 'react'
 import { useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import { URLS } from '../../Service/config';
 import { getAllDocByClinicId, getAllFeesByClinicId } from '../../Service/dropdown_data';
-
-import { addFees, addFeesByClininId, addPersondetail } from '../../Service/fetch_general';
+import DateFnsUtils from "@date-io/date-fns";
+import { addFees, addFeesByClininId, addPersondetail, getSlotsByDoc } from '../../Service/fetch_general';
 import AlertDialogBox from '../DailogBoxes/alertdailogbox';
 import ErorrDialogBox from '../DailogBoxes/errordaologbox';
 import FormPrompt from '../DailogBoxes/formprompt';
 import AddFees from './add_fees';
 import './appointment.css';
+import { changeFormat, changeFormatdmy, changeFormatmdy, getdaycode } from '../../Service/helpers';
 
 
 function Fees(props) {
@@ -23,8 +25,10 @@ const [adddiag,setadddiag] = useState();
 const [alerts,setalerts] = useState({    dialog:false,   })
 const [doctorList,setDoctorList] = useState([]);
 const [addfee,setaddfees] = useState();
-const [msg,setMsg] = useState( 
-  )
+const [msg,setMsg] = useState(   )
+const [selectedDayCode, setSelectedDayCode] = useState();
+const [appoinDate,setAppoinDate] = useState(new Date());
+const [daySlots, setDaySlots] = useState([]);
 let history = useHistory();
 
 useEffect(()=>{
@@ -165,6 +169,32 @@ const getTotalAmount =()=>{
   return totalAmount;
 }
 
+const getslotsbydocid=(id)=>{
+  getSlotsByDoc(id).then((res)=>{
+      console.log("SLOTS" , res);
+      setDaySlots(()=>res);
+  })
+}
+
+const onDoctorDropdownChange=(doctid)=>{
+  props.updateAppointDoc(doctid);
+  getSlotsByDoc(doctid).then((res)=>{
+    console.log("SLOTS" , res);
+    setDaySlots(()=>res);
+})
+}
+
+const onAppointDateChange = (e)=>{
+  console.log(e);
+  let mydate =  new Date(e);
+  let mydateymd = changeFormatmdy(mydate)
+  let mydatedmy = changeFormat(mydate)
+  console.log((e.getDay()));
+  setAppoinDate(e);
+  props.appintDateHandler(mydateymd, mydatedmy);
+  setSelectedDayCode(e.getDay());
+}
+
   return (
 
       <div className="p-lg-5">
@@ -226,14 +256,41 @@ const getTotalAmount =()=>{
                // onImageChange={this.onImageChange}
               ></AddFees>
             </FormPrompt>
-        <div className="row">
+        <div className="row" 
+        // style={{alignItems:"flex-end"}}
+        >
           <div className="col-7">
             <div className='left-form-container'>
       <form  onSubmit={addtoselectedFees}>
           {init == true ?<div className="form-row">
-          <div className="col-md-6 nm-1 input-group">
-          <label htmlFor="validationDefault01"></label>
-          <select className='dropdown-select' name="Fees" id="Fees" onChange={(e)=>props.setDoctId(()=>e.target.value)}  >
+
+          <div className='row  container-fluid'>
+          <div className="col-md-6 nm-1  pb-3">
+          <label className='appointment-label'  >Appointment Date</label> 
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <DatePicker
+              style={{
+                padding: "0px 10px",
+                border: "1px solid rgb(197, 197, 197)",
+              }}
+              name="appointmentDate"
+              id="appointmentDate"
+              className="  form-control"
+              InputProps={{
+                disableUnderline: true,
+              }}
+              value={appoinDate}
+              onChange={(e)=>onAppointDateChange(e)}
+              autoComplete="off"
+              format="yyyy-MM-dd"
+            />
+          </MuiPickersUtilsProvider>
+        </div>
+
+
+        <div className="col-md-6 nm-1 pb-3 align-item-fe">
+        <label className='appointment-label'  >Doctor</label>  
+          <select className='dropdown-select' name="doctor" id="doctor" onChange={(e)=>onDoctorDropdownChange(e.target.value) }  >
             <option value="">None</option>
            
           {doctorList.map((obj,key)=>{
@@ -246,10 +303,28 @@ const getTotalAmount =()=>{
                  <button className='btn  btn-sm' type='button' onClick={()=>setModal({...modal,showModal:true})}><i class="bi bi-plus-circle-fill addbuttoncyan"></i></button>
 
         </div>
-    
-        <div className="col-md-6 nm-1 input-group">
+        </div>
 
-          <label htmlFor="validationDefault01"></label>
+
+
+          <div className="col-md-6 nm-1 ">
+          <label className='appointment-label'  > Slots </label>  
+          <select className='dropdown-select' name="timeslot" id="timeslot" onChange={(e)=>props.updateTimeSlot(e.target.value)}  >
+            <option value="">None</option>
+           
+          {daySlots && daySlots.filter(obj => selectedDayCode == obj.day_code ).map((obj,key)=>{
+            return(
+              <option value={obj.id}> {obj.time_slot} </option>
+            )
+          })}
+                 </select>
+                 <button className='btn  btn-sm' type='button' onClick={()=>setModal({...modal,showModal:true})}><i class="bi bi-plus-circle-fill addbuttoncyan"></i></button>
+
+        </div>
+    
+        <div className="col-md-6 nm-1 ">
+
+        <label className='appointment-label'  >Fees</label>  
           <select className='dropdown-select dropdown-tabs' name="Fees" id="Fees" onChange={(e)=>setSelecteddiagnoisis(e.target.value)} required
             >
             <option value="">None</option>

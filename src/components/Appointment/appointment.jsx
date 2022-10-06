@@ -8,7 +8,7 @@ import { changeFormat, getAge } from '../../Service/helpers';
 import Clinic_finding from './clinic_finding';
 import Fees from './fees';
 import Exam from './exam';
-import { addPersondetail, getAllDocByDoctId, getUserByPhno, updatePersonData } from '../../Service/fetch_general';
+import { addappointinfo, addPersondetail, getAllDocByDoctId, getUserByPhno, updatePersonData } from '../../Service/fetch_general';
 import Diagnosis from './diasgnosis';
 import { getAllCLinic } from '../../Service/dropdown_data';
 import { useEffect } from 'react';
@@ -32,7 +32,7 @@ function Appointment(){
     const [appointment,setAppointment] = useState({})
     const [totalAmount,setTotalAmount] = useState();
     const [doctId , setDoctId] = useState();
-
+    const [appointDate, setAppointmentDate] = useState( new Date());
   useEffect(()=>{
     getclinicList();
   },[])
@@ -51,7 +51,7 @@ function Appointment(){
   const updateAppointObj=()=>{
     setAppointment((appointment)=>({...appointment,paymentMode:"Pay Later"}));
     setAppointment((appointment)=>({...appointment,paymentStatus:"Pay Later"}));
-    setAppointment((appointment)=>({...appointment,orderId:13132}));
+    setAppointment((appointment)=>({...appointment,orderId:'xxxxx'}));
 
     Object.keys(user).forEach(function(key,index) {
       // key: the name of the object key
@@ -86,32 +86,40 @@ function Appointment(){
 
 )
   }
-  const updateAppointDoc=()=>{
-    getAllDocByDoctId(doctId).then((res)=>{
+  const updateTimeSlot = (e) =>{
+    setAppointment((appointment)=>({...appointment,appointmentTime: e}));
+    
+  }
+  const updateAppointDoc=(dct)=>{
+    console.log("UPDAYE APPONH DOC");
+    return new Promise((resolve, reject) => {
+    getAllDocByDoctId(dct).then((res)=>{
       console.log("UPDATING RES",res);
-      if(doctId){
-        setAppointment((appointment)=>({...appointment,doctId: doctId}));
+      console.log("ASDSADASD" , res[0].firstName);
+      if(dct){
+        setAppointment((appointment)=>({...appointment,doctId: res[0].dct}));
     
       }
-      if(res.deptId){
-        setAppointment((appointment)=>({...appointment,deptId: res.deptId}));
+      if(res[0].deptId){
+        setAppointment((appointment)=>({...appointment,deptId: res[0].deptId}));
     
       }
-      if(res.firstName || res.lastName){
-        setAppointment((appointment)=>({...appointment,doctName: (res.firstName + res.lastName) }));
+      if(res[0].firstName || res[0].lastName){
+        setAppointment((appointment)=>({...appointment,doctName: (res[0].firstName + res[0].lastName) }));
     
       }
-      if(res.hname){
-        setAppointment((appointment)=>({...appointment,hName: res.hName}));
+      if(res[0].hname){
+        setAppointment((appointment)=>({...appointment,hName: res[0].hName}));
     
       }
-      if(res.deptId){
-        setAppointment((appointment)=>({...appointment,deptId: res.deptId}));
+      if(res[0].deptId){
+        setAppointment((appointment)=>({...appointment,deptId: res[0].deptId}));
     
       }
-      
+      resolve('updated');
     })
   }
+    )}
 
     const onEdit = (event)=>{
         console.log("CALLED")
@@ -157,12 +165,30 @@ function Appointment(){
 
   const bookAppointment=(e)=>{
     e.preventDefault();
-    updateAppointDoc();
+
       addPersondetail(URLS.ADD_APPOINTMENT, appointment ).then((res)=>{
         console.log("APPIOINTMENT BOOK");
         console.log(res);
+        addmoreinfoappoint(res);
       })
+  }
 
+  const addmoreinfoappoint = (appoitid)=>{
+    selectedDiagnosisList.forEach(diag => {
+      addappointinfo(diag.title  ,diag.desc, appoitid , 1).then((res)=>console.log("resDiag" ,res));
+      });
+    selectedExamList.forEach(exam => {
+        addappointinfo().then((res)=>console.log("resExam" ,res));
+        });
+    selectedFeesList.forEach(fees => {
+          addappointinfo().then((res)=>console.log("resfees" ,res));
+          });
+  }
+  const appintDateHandler = (ymd , mdy  )=>{
+    console.log(ymd , mdy)
+    setAppointment((appointment)=>({...appointment,appointmentDate: mdy}));
+    setAppointment((appointment)=>({...appointment,date_c: ymd}));
+    
   }
 
   
@@ -221,6 +247,10 @@ function Appointment(){
                 removeFees={removeFees}
                 setTotalAmount={updateAppointAmount}
                 setDoctId={setDoctId}
+                updateAppointDoc={updateAppointDoc}
+                appointDate={appointDate}
+                appintDateHandler={appintDateHandler}
+                updateTimeSlot={updateTimeSlot}
                 />;
                 case "exam":  return <Exam
                 clinic_id={user.clinic_id}
@@ -341,7 +371,9 @@ function Appointment(){
             className="form-control"
             id="phonenumber"
             onChange={onEdit}
-            value={user.phone}
+            value={
+              user.phone
+            }
             required
           />
          

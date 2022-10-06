@@ -26,3 +26,30 @@ export function changeFormat(date){
   const mydate  = `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
   return mydate; 
 }
+export function changeFormatdmy(date){
+  //const mydate =   date.toDateString();
+  //return mydate;
+
+
+  const mydate  = `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+  return mydate; 
+}
+
+export function changeFormatmdy(date){
+  //const mydate =   date.toDateString();
+  //return mydate;
+
+
+  const mydate  = `${date.getMonth() + 1}-${date.getDate()}-${date.getFullYear()}`;
+  return mydate; 
+}
+
+
+export function getdaycode(date){
+  //const mydate =   date.toDateString();
+  //return mydate;
+
+
+  //const mydate  = `${date.getMonth() + 1}-${date.getDate()}-${date.getFullYear()}`;
+  return `${date.getDate()}`; 
+}

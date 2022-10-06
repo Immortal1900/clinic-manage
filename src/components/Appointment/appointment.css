@@ -20,11 +20,16 @@
 }
 .appointment-label{
     font-size: 12px;
+    display: block;
 }
 .appointment-container select{
     font-size: 12px;
     width: 100%;
 
+}
+
+.hide{
+    display: none;
 }
 .notescontainer textarea{
     height: 120px;
@@ -112,11 +117,15 @@
     height: 320px;
     overflow-y: auto;
 }
+.align-item-fe{
+    align-items: flex-end;
+}
 .black{
     color: black;
 }
 .dropdown-select{
     width: 90%;
+    height: 30px;
 }
 .flex-space-between{
     display: flex;

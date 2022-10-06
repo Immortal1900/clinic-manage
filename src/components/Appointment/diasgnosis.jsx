@@ -68,13 +68,7 @@ const checkAlreadySelected=(id)=>{
  let found = props.selectedDiagnosisList.find(ob => ob.id == id) ?  true:  false;
  return found;
 }
- const handleMouseOver = () => {
-   setIsHovering(true);
-  
- }
- const handleMouseOut = () => {
-   setIsHovering(false);
- };
+
 
 const addtoselecteddiagnosis=(e)=>{
   e.preventDefault();

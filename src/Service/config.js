@@ -51,7 +51,7 @@ export const URLS = {
 
     /***********APPOINTMENT****** */
     ADD_APPOINTMENT:"add_appointment",
-
+    ADD_MOREINDO:"add_mi",
     /***************CLININC LOGIN */
 
     LOGIN_CLINIC:"clinic_login",
